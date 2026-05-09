@@ -6,18 +6,16 @@ import { config } from "./config";
 import { connectDB } from "./config/database";
 import { apiLimiter } from "./middleware/rateLimiter";
 import { errorHandler } from "./middleware/errorHandler";
+import { apiKeyAuth } from "./middleware/apiKeyAuth";
 import generateRouter from "./routes/generate";
 import historyRouter from "./routes/history";
+import shareRouter from "./routes/share";
+import statsRouter from "./routes/stats";
+import apiKeysRouter from "./routes/apiKeys";
+import publicGenerateRouter from "./routes/publicGenerate";
 
 // ─────────────────────────────────────────────────────────────
 //  index.ts  —  TextForge AI Backend Entry Point
-//
-//  Startup sequence:
-//  1. Create Express app
-//  2. Register security + logging middleware
-//  3. Mount route handlers
-//  4. Connect to MongoDB
-//  5. Start listening for connections
 // ─────────────────────────────────────────────────────────────
 
 const app = express();
@@ -25,26 +23,24 @@ const app = express();
 // ── Security Middleware ───────────────────────────────────────
 app.use(
   helmet({
-    // Allows SSE streaming (disables certain content policies that block it)
     contentSecurityPolicy: false,
   })
 );
 
 app.use(
   cors({
-    origin: config.cors.clientUrl,
+    origin: config.cors.allowedOrigins,
     credentials: true,
-    methods: ["GET", "POST", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-user-id"],
   })
 );
 
 // ── Request Parsing ───────────────────────────────────────────
-app.use(express.json({ limit: "10kb" })); // Reject oversized bodies
+app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true }));
 
 // ── Logging ───────────────────────────────────────────────────
-// 'dev' format in development, 'combined' (Apache-style) in production
 app.use(morgan(config.isDev ? "dev" : "combined"));
 
 // ── Rate Limiting ─────────────────────────────────────────────
@@ -55,14 +51,20 @@ app.get("/health", (_req, res) => {
   res.json({
     status: "ok",
     service: "TextForge AI Backend",
-    version: "1.0.0",
+    version: "1.1.0",
     timestamp: new Date().toISOString(),
   });
 });
 
-// ── Routes ────────────────────────────────────────────────────
+// ── Internal API Routes (used by the web app) ─────────────────
 app.use("/api/generate", generateRouter);
 app.use("/api/history", historyRouter);
+app.use("/api/share", shareRouter);
+app.use("/api/stats", statsRouter);
+app.use("/api/keys", apiKeysRouter);
+
+// ── Public API (third-party API key access) ───────────────────
+app.use("/v1/generate", apiKeyAuth, publicGenerateRouter);
 
 // 404 — catch any unmatched routes
 app.use((_req, res) => {
@@ -76,7 +78,6 @@ app.use(errorHandler);
 async function bootstrap() {
   try {
     await connectDB();
-
     app.listen(config.port, () => {
       console.log(`
 ╔══════════════════════════════════════════╗
