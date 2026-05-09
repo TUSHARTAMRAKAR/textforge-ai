@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://img.shields.io/badge/TextForge-AI-6366f1?style=for-the-badge&logo=fire&logoColor=white" alt="TextForge AI" height="40"/>
+<img src="https://img.shields.io/badge/TextForge-AI-D47E30?style=for-the-badge&logo=fire&logoColor=white" alt="TextForge AI" height="40"/>
 
 # 🔥 TextForge AI
 
@@ -10,13 +10,13 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
 [![Express](https://img.shields.io/badge/Express-4.19-000000?style=flat-square&logo=express)](https://expressjs.com)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://mongodb.com/atlas)
-[![Gemini](https://img.shields.io/badge/Gemini-2.0_Flash-4285F4?style=flat-square&logo=google&logoColor=white)](https://aistudio.google.com)
+[![Gemini](https://img.shields.io/badge/Gemini-2.5_Flash-4285F4?style=flat-square&logo=google&logoColor=white)](https://aistudio.google.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
 
-**Generate coherent, high-quality text on any topic with real-time AI streaming.**  
-Built with Next.js 14, Node.js/Express, MongoDB Atlas, and Google Gemini 2.0 Flash.
+**Generate coherent, high-quality text on any topic with real-time AI streaming.**
+Built with Next.js 14, Node.js/Express, MongoDB Atlas, and Google Gemini 2.5 Flash.
 
-[Live Demo](#) · [API Docs](docs/API.md) · [Setup Guide](docs/SETUP.md) · [LSTM Notebook](notebook/)
+[Setup Guide](docs/SETUP.md) · [API Docs](docs/API.md) · [Deploy Guide](docs/DEPLOY.md) · [LSTM Notebook](notebook/)
 
 </div>
 
@@ -24,89 +24,49 @@ Built with Next.js 14, Node.js/Express, MongoDB Atlas, and Google Gemini 2.0 Fla
 
 ## ✨ Features
 
-- **🤖 AI-powered generation** — Google Gemini 2.0 Flash for state-of-the-art text quality
-- **⚡ Real-time streaming** — Watch text appear token-by-token via Server-Sent Events (SSE)
-- **🎛️ Full control** — Choose topic, tone (formal / casual / creative / academic) and length
-- **📚 Generation history** — Every output saved to MongoDB with word count and metadata
-- **🔒 Rate limiting** — Protects API quota with per-IP limits (5 generations/min)
-- **📓 LSTM Notebook** — Bonus Jupyter notebook demonstrating character-level LSTM from scratch
-- **📱 Responsive UI** — Mobile-first dark theme built with Tailwind CSS
+### Core
+- **🤖 Gemini 2.5 Flash** — Google's latest free model for state-of-the-art text quality
+- **⚡ Real-time streaming** — Watch text appear token-by-token via Server-Sent Events
+- **🎛️ Full control** — Topic, tone (formal / casual / creative / academic) and length
+- **🔒 Rate limited** — Smart per-IP and per-API-key limits
+- **📓 LSTM notebook** — Bonus academic deliverable from scratch in PyTorch
+
+### New in v1.1
+- **🌍 Multi-language output** — English · Hindi · Spanish · French · German · Japanese · Arabic · Chinese
+- **🔑 SEO keywords** — Up to 10 keywords woven naturally into the output
+- **📝 Custom templates** — Blog post, email, essay, cover letter, product description, social, summary, story
+- **♻️ Refine / Regenerate** — Shorter · Longer · More formal · Simpler — one click
+- **⭐ Favourites & bookmarks** — Star generations, separate Favourites tab
+- **🔍 Search & filter history** — Full-text search + filter by tone or language
+- **🔗 Share generations** — Public read-only links anyone can open
+- **📤 Export to PDF / DOCX / Markdown** — Download in any format
+- **📊 Stats dashboard** — Total generations, words forged, 30-day usage chart, tone & language breakdown
+- **🔐 User authentication (optional)** — Google + GitHub via NextAuth, per-user history
+- **🛠️ Public API mode** — Mint API keys, call `/v1/generate` from your own apps
 
 ---
 
 ## 🏗️ Architecture
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    FRONTEND (Next.js 14)                 │
-│  Home Page → Generate Page → History Page               │
-│  Zustand state · React Query · Tailwind CSS             │
-└────────────────────┬────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────┐
+│                  FRONTEND (Next.js 14)                    │
+│  Home · Generate · History · Stats · API Keys · /s/:id    │
+│  Zustand state · Recharts · jsPDF · docx · NextAuth (opt) │
+└────────────────────┬─────────────────────────────────────┘
                      │ REST + SSE (fetch)
-┌────────────────────▼────────────────────────────────────┐
-│                  BACKEND (Express + TypeScript)          │
-│  POST /api/generate  ·  GET|DELETE /api/history          │
-│  Rate Limiting · Helmet · Zod Validation                 │
-└──────────┬──────────────────────────┬───────────────────┘
-           │                          │
-┌──────────▼──────────┐  ┌────────────▼──────────────────┐
-│   Google Gemini API  │  │       MongoDB Atlas            │
-│   gemini-2.0-flash  │  │   generations collection       │
-│   SSE streaming     │  │   indexed by createdAt         │
-└─────────────────────┘  └───────────────────────────────┘
-```
-
----
-
-## 📁 Project Structure
-
-```
-textforge-ai/
-├── 📁 frontend/                  # Next.js 14 App Router
-│   ├── app/
-│   │   ├── layout.tsx            # Root layout + Navbar + Toaster
-│   │   ├── page.tsx              # Landing page
-│   │   ├── generate/page.tsx     # Main generator (PromptBuilder + OutputPanel)
-│   │   └── history/page.tsx      # Paginated generation history
-│   ├── components/
-│   │   ├── Navbar.tsx            # Top navigation bar
-│   │   ├── PromptBuilder.tsx     # Topic, tone, length controls + trigger
-│   │   ├── OutputPanel.tsx       # Live streaming output + copy/download
-│   │   └── HistoryCard.tsx       # Individual history entry card
-│   └── lib/
-│       ├── api.ts                # All backend API calls (SSE + REST)
-│       ├── store.ts              # Zustand global state
-│       └── utils.ts              # cn() Tailwind helper
-│
-├── 📁 backend/                   # Node.js + Express API
-│   └── src/
-│       ├── config/
-│       │   ├── index.ts          # Environment variable validation
-│       │   └── database.ts       # MongoDB Atlas connection
-│       ├── models/
-│       │   └── Generation.ts     # Mongoose schema + word count hook
-│       ├── services/
-│       │   ├── geminiService.ts  # Prompt engineering + SSE streaming
-│       │   └── historyService.ts # CRUD operations for generations
-│       ├── routes/
-│       │   ├── generate.ts       # POST /api/generate (Zod validated)
-│       │   └── history.ts        # GET / DELETE /api/history
-│       ├── middleware/
-│       │   ├── rateLimiter.ts    # express-rate-limit config
-│       │   └── errorHandler.ts   # Global error handler
-│       └── index.ts              # App entry point + server bootstrap
-│
-├── 📁 notebook/                  # Bonus: LSTM demo
-│   ├── lstm_text_generation.ipynb
-│   └── requirements.txt
-│
-├── 📁 docs/
-│   ├── API.md                    # Full API reference
-│   ├── SETUP.md                  # Dev environment setup guide
-│   └── ARCHITECTURE.md           # System design decisions
-│
-├── .gitignore
-└── README.md
+┌────────────────────▼─────────────────────────────────────┐
+│              BACKEND (Express + TypeScript)               │
+│  Internal:  /api/generate  /api/history  /api/share       │
+│             /api/stats     /api/keys                      │
+│  Public:    /v1/generate   (Bearer tf_live_xxx)           │
+│  Helmet · Zod · rate-limit · per-key + per-IP limits      │
+└──────────┬───────────────────────────────┬───────────────┘
+           │                               │
+┌──────────▼──────────┐         ┌──────────▼──────────────┐
+│  Google Gemini API  │         │     MongoDB Atlas        │
+│  gemini-2.5-flash   │         │  generations · apiKeys   │
+└─────────────────────┘         └──────────────────────────┘
 ```
 
 ---
@@ -115,122 +75,109 @@ textforge-ai/
 
 ### Prerequisites
 - Node.js 18+
-- A Google account (for free Gemini API key)
+- A Google account (free Gemini API key — no card)
 - MongoDB Atlas free account
 
 ### 1. Clone
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/textforge-ai.git
+git clone https://github.com/TUSHARTAMRAKAR/textforge-ai.git
 cd textforge-ai
 ```
 
-### 2. Get your free Gemini API key
-
-1. Go to [aistudio.google.com](https://aistudio.google.com)
-2. Click **Get API Key** → **Create API key**
-3. Copy the key — no card required ✅
-
-### 3. Backend setup
+### 2. Backend setup
 
 ```bash
 cd backend
 npm install
 cp .env.example .env
-```
-
-Edit `.env`:
-```env
-GEMINI_API_KEY=your_key_here
-MONGODB_URI=your_mongodb_atlas_uri_here
-PORT=5000
-CLIENT_URL=http://localhost:3000
-```
-
-```bash
+# Edit .env: add GEMINI_API_KEY and MONGODB_URI
 npm run dev
 # ✅ http://localhost:5000/health
 ```
 
-### 4. Frontend setup
+### 3. Frontend setup
 
 ```bash
 cd ../frontend
 npm install
 cp .env.local.example .env.local
-# NEXT_PUBLIC_API_URL=http://localhost:5000
 npm run dev
 # ✅ http://localhost:3000
 ```
 
-### 5. LSTM Notebook (optional)
+### 4. (Optional) Enable user authentication
 
-```bash
-cd ../notebook
-pip install -r requirements.txt
-jupyter notebook lstm_text_generation.ipynb
-```
+See [docs/AUTH.md](docs/AUTH.md) for the full Google + GitHub OAuth walkthrough.
+TL;DR — set `NEXT_PUBLIC_AUTH_ENABLED=true` and fill in `AUTH_GOOGLE_ID`/`SECRET` and/or `AUTH_GITHUB_ID`/`SECRET` plus `AUTH_SECRET` (generate via `openssl rand -base64 32`).
 
 ---
 
 ## 🔌 API Reference
 
+### Internal API (used by the web app)
+
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `POST` | `/api/generate` | Generate text (SSE stream) |
-| `GET` | `/api/generate/preview` | Preview prompt (no AI call) |
-| `GET` | `/api/history` | Get paginated history |
-| `GET` | `/api/history/:id` | Get single generation |
-| `DELETE` | `/api/history/:id` | Delete one generation |
-| `DELETE` | `/api/history` | Clear all history |
-| `GET` | `/health` | Health check |
+| `POST` | `/api/generate/refine` | Regenerate with refinement instruction |
+| `GET`  | `/api/generate/preview` | Preview engineered prompt (no AI call) |
+| `GET`  | `/api/history` | Paginated history with `?search`, `?tone`, `?language`, `?favouritesOnly` |
+| `GET`  | `/api/history/:id` | Get single generation |
+| `PATCH`| `/api/history/:id/favourite` | Toggle favourite |
+| `PATCH`| `/api/history/:id/share` | Toggle share status |
+| `DELETE`| `/api/history/:id` | Delete one |
+| `DELETE`| `/api/history` | Clear all |
+| `GET`  | `/api/share/:id` | Public read-only generation (powers `/s/:id`) |
+| `GET`  | `/api/stats` | Aggregated stats for the dashboard |
+| `GET`  | `/api/keys` | List user's API keys |
+| `POST` | `/api/keys` | Create a new API key (returned in plain text once) |
+| `DELETE`| `/api/keys/:id` | Revoke a key |
+| `GET`  | `/health` | Health check |
+
+### Public API (third-party access via API key)
+
+```bash
+curl -X POST http://localhost:5000/v1/generate \
+  -H "Authorization: Bearer tf_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "topic": "The future of renewable energy",
+    "tone": "academic",
+    "length": "medium",
+    "language": "en",
+    "keywords": ["solar", "wind", "grid"]
+  }'
+```
+
+Returns `{ success, data: { id, output, wordCount, model, createdAt } }`.
 
 See [docs/API.md](docs/API.md) for full request/response examples.
 
 ---
 
-## 🧠 How It Works
+## 🧪 Tech Stack
 
-### Prompt Engineering
-TextForge doesn't just pass the user's topic directly to Gemini. It builds a structured prompt:
-
-```
-You are TextForge AI, an expert writer...
-TOPIC: {user_topic}
-WRITING GUIDELINES:
-  - Tone: {tone_guidance}
-  - Length: {length_guidance}
-  - Structure: strong opening → development → conclusion
-```
-
-This produces far more coherent, structured output than a raw prompt.
-
-### Real-time Streaming (SSE)
-The backend uses `generateContentStream()` from the Gemini SDK and forwards each token chunk as a Server-Sent Event:
-```
-data: {"text": "Artificial ", "done": false}
-data: {"text": "intelligence ", "done": false}
-...
-data: {"text": "", "done": true}
-```
-
-The frontend reads this via the Fetch Streams API and appends each chunk to React state in real time.
+| Layer | Technology |
+|-------|------------|
+| Frontend framework | Next.js 14 (App Router) |
+| Styling | Tailwind CSS + CSS variables |
+| Charts | Recharts |
+| State | Zustand |
+| Auth (optional) | NextAuth v5 (Google + GitHub) |
+| Exports | jsPDF + docx |
+| Backend | Express + TypeScript |
+| AI | Google Gemini 2.5 Flash |
+| Database | MongoDB Atlas + Mongoose |
+| Validation | Zod |
+| Security | Helmet + express-rate-limit |
+| ML demo | PyTorch LSTM |
 
 ---
 
-## 🧪 Tech Stack
+## 🚢 Deploying
 
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| Frontend | Next.js 14 (App Router) | React framework + SSR |
-| Styling | Tailwind CSS | Utility-first CSS |
-| State | Zustand | Lightweight global state |
-| Backend | Express + TypeScript | REST API server |
-| AI | Google Gemini 2.0 Flash | Text generation |
-| Database | MongoDB Atlas + Mongoose | Generation history |
-| Validation | Zod | Runtime type safety |
-| Security | Helmet + express-rate-limit | API protection |
-| ML Demo | PyTorch LSTM | Academic baseline |
+See [docs/DEPLOY.md](docs/DEPLOY.md) for one-shot deployment to **Vercel (frontend) + Railway (backend)** — both on free tiers.
 
 ---
 

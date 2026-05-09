@@ -1,64 +1,90 @@
 # TextForge AI — API Reference
 
-Base URL: `http://localhost:5000`
+Base URL: `http://localhost:5000` (or your Railway URL when deployed)
+
+All endpoints return JSON unless they explicitly stream SSE.
+All `/api/*` endpoints honour an optional `x-user-id` header — when set, queries are scoped to that user.
+The `/v1/*` endpoint is authenticated via `Authorization: Bearer tf_live_xxx`.
 
 ---
 
-## POST `/api/generate`
+## Internal API
 
-Generates text using Claude AI. Streams the response via Server-Sent Events (SSE).
+### POST `/api/generate`
+Generates text using Gemini and streams the response via Server-Sent Events.
 
 **Request Body**
 ```json
 {
   "topic": "The impact of artificial intelligence on healthcare",
   "tone": "formal",
-  "length": "medium"
+  "length": "medium",
+  "language": "en",
+  "keywords": ["diagnostics", "patient outcomes"],
+  "templateId": "essay"
 }
 ```
 
-| Field  | Type   | Required | Values                                   |
-|--------|--------|----------|------------------------------------------|
-| topic  | string | ✅       | 3–500 characters                         |
-| tone   | string | ✅       | `formal` `casual` `creative` `academic`  |
-| length | string | ✅       | `short` `medium` `long`                  |
+| Field      | Type     | Required | Values                                   |
+|------------|----------|----------|------------------------------------------|
+| topic      | string   | ✅       | 3–500 characters                         |
+| tone       | string   |          | `formal` `casual` `creative` `academic`  |
+| length     | string   |          | `short` `medium` `long`                  |
+| language   | string   |          | `en` `hi` `es` `fr` `de` `ja` `ar` `zh`  |
+| keywords   | string[] |          | Up to 10 SEO keywords (≤ 40 chars each)  |
+| templateId | string   |          | Optional template tag for analytics      |
 
 **SSE Response Stream**
 ```
 data: {"text": "Artificial ", "done": false}
 data: {"text": "intelligence ", "done": false}
 ...
-data: {"text": "", "done": true}
+data: {"id": "667abc...", "done": true}
 ```
 
-**Error Response**
-```json
-{ "success": false, "message": "Topic must be at least 3 characters" }
-```
+The final event includes the saved generation `id` so clients can favourite or share it immediately.
 
 ---
 
-## GET `/api/generate/preview`
+### POST `/api/generate/refine`
+Regenerates an existing piece of text following a refinement instruction.
 
-Returns the prompt that would be sent to Claude — no API call made.
-
-**Query Params:** `topic`, `tone`, `length`
-
-**Response**
+**Request Body**
 ```json
 {
-  "success": true,
-  "prompt": "You are TextForge AI..."
+  "originalText": "<the previous output>",
+  "instruction": "Make this text noticeably shorter while keeping the key ideas.",
+  "topic": "<the original topic>",
+  "tone": "formal",
+  "length": "short",
+  "language": "en",
+  "refinementOf": "<previous generation _id, optional>"
 }
 ```
 
+Streams the refined text using the same SSE format as `/api/generate`.
+
 ---
 
-## GET `/api/history`
+### GET `/api/generate/preview`
+Returns the engineered prompt without calling Gemini — useful for debugging.
 
-Returns paginated list of past generations.
+**Query Params:** `topic`, `tone`, `length`, `language`, `keywords` (comma-separated)
 
-**Query Params:** `page` (default: 1), `limit` (default: 10, max: 50)
+---
+
+### GET `/api/history`
+Paginated, filterable list of past generations.
+
+**Query Params**
+| Param          | Default | Description                              |
+|----------------|---------|------------------------------------------|
+| page           | 1       |                                          |
+| limit          | 10      | max 50                                   |
+| tone           |         | filter by tone                           |
+| language       |         | filter by language                       |
+| search         |         | case-insensitive match on topic + output |
+| favouritesOnly | false   | only starred generations                 |
 
 **Response**
 ```json
@@ -70,8 +96,12 @@ Returns paginated list of past generations.
       "topic": "Quantum computing",
       "tone": "academic",
       "length": "long",
+      "language": "en",
+      "keywords": [],
       "output": "Quantum computing represents...",
       "wordCount": 342,
+      "isFavourite": true,
+      "isShared": true,
       "createdAt": "2025-06-10T12:00:00.000Z"
     }
   ],
@@ -81,30 +111,94 @@ Returns paginated list of past generations.
 
 ---
 
-## GET `/api/history/:id`
-
-Returns a single generation by ID.
-
----
-
-## DELETE `/api/history/:id`
-
-Deletes a single generation.
-
-**Response:** `{ "success": true, "message": "Generation deleted" }`
+### GET `/api/history/:id` · DELETE `/api/history/:id` · DELETE `/api/history`
+Get one, delete one, clear all (per-user when `x-user-id` is sent).
 
 ---
 
-## DELETE `/api/history`
+### PATCH `/api/history/:id/favourite`
+Toggles the `isFavourite` flag. Returns the updated generation.
 
-Clears ALL history.
+---
 
-**Response:** `{ "success": true, "message": "Cleared 42 generation(s)" }`
+### PATCH `/api/history/:id/share`
+Body: `{ "isShared": false }` — disables the public share link for that generation.
+
+---
+
+### GET `/api/share/:id`
+**Public, unauthenticated.** Returns a generation by id ONLY if `isShared: true`. Powers the `/s/:id` share page in the frontend.
+
+---
+
+### GET `/api/stats`
+Aggregations for the Stats Dashboard. Per-user when `x-user-id` is sent.
+
+**Response**
+```json
+{
+  "success": true,
+  "data": {
+    "totalGenerations": 142,
+    "totalWords": 38420,
+    "favouritesCount": 12,
+    "byTone":     [{ "_id": "formal",   "count": 70 }, ...],
+    "byLanguage": [{ "_id": "en",       "count": 110 }, ...],
+    "last30Days": [{ "_id": "2026-04-15", "count": 4, "words": 1200 }, ...]
+  }
+}
+```
+
+---
+
+### `/api/keys` (authenticated user)
+| Method | Endpoint           | Description                                  |
+|--------|--------------------|----------------------------------------------|
+| GET    | `/api/keys`        | List user's keys (key bodies are masked)     |
+| POST   | `/api/keys`        | Body `{ "name": "..." }` → returns full key  |
+| DELETE | `/api/keys/:id`    | Revoke a key (sets `isRevoked: true`)        |
+
+POST returns the full key value **once** — store it immediately.
+
+---
+
+## Public API
+
+### POST `/v1/generate`
+Synchronous (non-streaming) generation for third-party API consumers.
+
+```bash
+curl -X POST http://localhost:5000/v1/generate \
+  -H "Authorization: Bearer tf_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "topic": "The future of renewable energy",
+    "tone": "academic",
+    "length": "medium",
+    "language": "en",
+    "keywords": ["solar", "wind", "grid"]
+  }'
+```
+
+**Response**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "667abc...",
+    "output": "Renewable energy is poised to...",
+    "wordCount": 348,
+    "model": "gemini-2.5-flash",
+    "createdAt": "2026-04-15T10:32:11.000Z"
+  }
+}
+```
+
+**Rate limit:** 10 requests per minute per API key. Exceeding returns `429`.
 
 ---
 
 ## GET `/health`
+Health check.
 
-Health check endpoint.
-
-**Response:** `{ "status": "ok", "service": "TextForge AI Backend", "version": "1.0.0" }`
+**Response:** `{ "status": "ok", "service": "TextForge AI Backend", "version": "1.1.0", "timestamp": "..." }`
