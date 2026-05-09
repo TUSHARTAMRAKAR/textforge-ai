@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 const features = [
   { icon: Sparkles, title: "Gemini 2.5 Flash",    desc: "Google's latest free model — 1,500 req/day, zero cost." },
   { icon: Zap,      title: "Real-time Streaming", desc: "Watch text appear token-by-token with live SSE." },
-  { icon: Brain,    title: "Prompt Engineering",  desc: "Tone, length, and topic controls craft the perfect prompt." },
-  { icon: History,  title: "Sidebar History",     desc: "Every generation saved. Browse instantly from the sidebar." },
-  { icon: Shield,   title: "Rate Protected",      desc: "Smart per-IP limits protect your API quota." },
+  { icon: Brain,    title: "Prompt Engineering",  desc: "Templates, 8 languages, and SEO keywords for perfect output." },
+  { icon: History,  title: "Searchable History",  desc: "Filter, search, favourite, share — every generation saved." },
+  { icon: Shield,   title: "Public API Mode",     desc: "Mint API keys and call TextForge from your own apps." },
 ];
 
 const techStack = [

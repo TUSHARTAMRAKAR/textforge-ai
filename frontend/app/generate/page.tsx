@@ -23,7 +23,7 @@ export default function GeneratePage() {
 
   const fetchHistory = useCallback(async () => {
     try {
-      const res = await api.getHistory(1, 30);
+      const res = await api.getHistory({ page: 1, limit: 30 });
       setGenerations(res.data);
     } catch { /* silent */ }
     finally { setLoading(false); }
