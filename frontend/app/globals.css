@@ -1,0 +1,307 @@
+@import url('https://fonts.googleapis.com/css2?family=Styrene+A:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tiempos+Text:ital,wght@0,400;0,500;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&display=swap');
+
+/* Claude uses these exact system fonts — we match them precisely */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Neue+Haas+Grotesk+Display+Pro:wght@400;500;600&display=swap');
+
+/* Closest publicly available match to Claude's actual font stack */
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design Tokens ─────────────────────────────────────────── */
+:root {
+  /* Spiced Chai palette — dark mode */
+  --chai-cream:   #FDFBD4;
+  --chai-orange:  #D47E30;
+  --chai-brown:   #8D5A2B;
+  --chai-dark:    #825E34;
+
+  /* Surfaces — warm dark */
+  --bg-base:      #1A1208;
+  --bg-1:         #221A0F;
+  --bg-2:         #2C2014;
+  --bg-3:         #3A2C1C;
+  --bg-hover:     #432F18;
+
+  /* Borders */
+  --border:       rgba(212,126,48,0.18);
+  --border-hover: rgba(212,126,48,0.35);
+  --border-focus: rgba(212,126,48,0.6);
+
+  /* Text */
+  --text-1:       #FDFBD4;
+  --text-2:       #C4A882;
+  --text-3:       #7A6548;
+  --text-4:       #4A3C28;
+
+  /* Brand */
+  --brand:        #D47E30;
+  --brand-dim:    #8D5A2B;
+  --brand-glow:   rgba(212,126,48,0.15);
+  --brand-subtle: rgba(212,126,48,0.08);
+
+  /* Sidebar */
+  --sidebar-w:    280px;
+
+  /* Claude-style fonts */
+  --font-sans:    'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-serif:   'Lora', 'Georgia', ui-serif, serif;
+  --font-mono:    'JetBrains Mono', 'Menlo', monospace;
+}
+
+/* ── Light mode ─────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg-base:      #FFFDF5;
+  --bg-1:         #FDF8EC;
+  --bg-2:         #FAF2DC;
+  --bg-3:         #F5E8C8;
+  --bg-hover:     #EFE0B8;
+  --border:       rgba(141,90,43,0.15);
+  --border-hover: rgba(141,90,43,0.3);
+  --border-focus: rgba(212,126,48,0.5);
+  --text-1:       #2C1E0F;
+  --text-2:       #6B4E2A;
+  --text-3:       #9B7A50;
+  --text-4:       #C4A882;
+  --brand-subtle: rgba(212,126,48,0.1);
+}
+
+/* ── Base ───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-base);
+  color: var(--text-1);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Subtle warm grain texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+::selection { background: var(--brand); color: var(--bg-base); }
+
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: var(--bg-3); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand-dim); }
+
+/* ── Component Layer ─────────────────────────────────────────── */
+@layer components {
+
+  .card {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    position: relative;
+  }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    background: var(--brand);
+    color: var(--bg-base);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 15px;
+    padding: 13px 26px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    letter-spacing: 0.01em;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%);
+    pointer-events: none;
+  }
+  .btn-primary:hover {
+    background: #E08A35;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(212,126,48,0.4);
+  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  .btn-secondary {
+    background: var(--bg-2);
+    color: var(--text-2);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 14px;
+    padding: 10px 18px;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    transition: all 0.15s ease;
+  }
+  .btn-secondary:hover { background: var(--bg-3); color: var(--text-1); border-color: var(--border-hover); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-3);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+  }
+  .btn-ghost:hover { background: var(--bg-2); color: var(--text-1); }
+
+  /* ── Input ── */
+  .input-base {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    color: var(--text-1);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    border-radius: 10px;
+    padding: 13px 16px;
+    width: 100%;
+    outline: none;
+    resize: none;
+    transition: all 0.15s ease;
+  }
+  .input-base::placeholder { color: var(--text-4); }
+  .input-base:focus {
+    border-color: var(--border-focus);
+    background: var(--bg-1);
+    box-shadow: 0 0 0 3px var(--brand-glow);
+  }
+
+  /* ── Label — Claude style ── */
+  .label {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    display: block;
+    margin-bottom: 9px;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    width: var(--sidebar-w);
+    min-width: var(--sidebar-w);
+    background: var(--bg-1);
+    border-right: 1px solid var(--border);
+    height: calc(100vh - 64px);
+    position: sticky;
+    top: 64px;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: width 0.28s cubic-bezier(0.4,0,0.2,1),
+                min-width 0.28s cubic-bezier(0.4,0,0.2,1);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar.collapsed {
+    width: 52px;
+    min-width: 52px;
+  }
+
+  /* ── Generation output ── */
+  .generation-output {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--text-1);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* ── Animated tagline ── */
+  .tagline-text {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brand);
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .tagline-text span {
+    display: inline-block;
+    animation: char-reveal 0.06s ease both;
+  }
+}
+
+/* ── Keyframes ── */
+@keyframes char-reveal {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.4); opacity: 0.7; }
+}
+
+.animate-fade-up   { animation: fadeUp 0.5s ease both; }
+.delay-1 { animation-delay: 0.08s; }
+.delay-2 { animation-delay: 0.16s; }
+.delay-3 { animation-delay: 0.24s; }
+
+.streaming-cursor::after {
+  content: '▋';
+  color: var(--brand);
+  animation: blink 1s step-end infinite;
+  margin-left: 1px;
+}
+
+.spin { animation: spin 1s linear infinite; }
