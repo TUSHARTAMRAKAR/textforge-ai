@@ -3,7 +3,7 @@ import { PromptBuilder } from "@/components/PromptBuilder";
 import { OutputPanel } from "@/components/OutputPanel";
 import { useEffect, useState, useCallback } from "react";
 import { api, Generation } from "@/lib/api";
-import { PanelLeftClose, PanelLeftOpen, Trash2, Flame, Inbox, Loader2 } from "lucide-react";
+import { PanelLeftClose, PanelLeftOpen, Trash2, Flame, Inbox, Loader2, Star } from "lucide-react";
 import toast from "react-hot-toast";
 import { useGenerateStore } from "@/lib/store";
 import { formatDistanceToNow } from "date-fns";
@@ -19,17 +19,23 @@ export default function GeneratePage() {
   const [generations, setGenerations]   = useState<Generation[]>([]);
   const [loading, setLoading]           = useState(true);
   const [collapsed, setCollapsed]       = useState(false);
+  const [activeTab, setActiveTab]       = useState<"all" | "favourites">("all");
   const { isDone } = useGenerateStore();
 
   const fetchHistory = useCallback(async () => {
     try {
-      const res = await api.getHistory({ page: 1, limit: 30 });
+      const res = await api.getHistory({
+        page: 1,
+        limit: 30,
+        favouritesOnly: activeTab === "favourites",
+      });
       setGenerations(res.data);
     } catch { /* silent */ }
     finally { setLoading(false); }
-  }, []);
+  }, [activeTab]);
 
-  useEffect(() => { fetchHistory(); }, [isDone]);
+  // Refetch when a generation completes OR tab changes
+  useEffect(() => { fetchHistory(); }, [isDone, activeTab]);
 
   const handleDelete = async (id: string) => {
     try {
@@ -39,10 +45,25 @@ export default function GeneratePage() {
     } catch { toast.error("Failed"); }
   };
 
+  // Update local state after a star toggle
+  const handleFavouriteToggle = (id: string, isFavourite: boolean) => {
+    if (activeTab === "favourites" && !isFavourite) {
+      // Remove from list when unstarred in Favourites tab
+      setGenerations((p) => p.filter((g) => g._id !== id));
+    } else {
+      setGenerations((p) =>
+        p.map((g) => g._id === id ? { ...g, isFavourite } : g)
+      );
+    }
+  };
+
+  // Counts for tab badges
+  const favouriteCount = generations.filter((g) => g.isFavourite).length;
+
   return (
     <div style={{ display: "flex", height: "calc(100vh - 64px)", position: "relative", zIndex: 1, overflow: "hidden" }}>
 
-      {/* ══ COLLAPSIBLE SIDEBAR ══════════════════════════════════ */}
+      {/* ══ COLLAPSIBLE SIDEBAR ════════════════════════════════ */}
       <aside style={{
         width: collapsed ? "52px" : "280px",
         minWidth: collapsed ? "52px" : "280px",
@@ -54,10 +75,9 @@ export default function GeneratePage() {
         transition: "width 0.28s cubic-bezier(0.4,0,0.2,1), min-width 0.28s cubic-bezier(0.4,0,0.2,1)",
         display: "flex",
         flexDirection: "column",
-        position: "relative",
       }}>
 
-        {/* Sidebar header */}
+        {/* ── Sidebar header ── */}
         <div style={{
           height: "52px",
           display: "flex",
@@ -67,13 +87,11 @@ export default function GeneratePage() {
           borderBottom: "1px solid var(--border)",
           flexShrink: 0,
         }}>
-          {/* Brand mark in sidebar — visible when collapsed */}
           {collapsed ? (
             <button onClick={() => setCollapsed(false)} title="Expand sidebar" style={{
               background: "none", border: "none", cursor: "pointer",
               color: "var(--brand)", display: "flex", alignItems: "center", justifyContent: "center",
-              width: "36px", height: "36px", borderRadius: "8px",
-              transition: "background 0.15s",
+              width: "36px", height: "36px", borderRadius: "8px", transition: "background 0.15s",
             }}
               onMouseEnter={(e) => (e.currentTarget.style.background = "var(--bg-2)")}
               onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
@@ -82,7 +100,6 @@ export default function GeneratePage() {
             </button>
           ) : (
             <>
-              {/* TextForge brand in sidebar */}
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                 <div style={{
                   width: "26px", height: "26px", borderRadius: "7px",
@@ -101,20 +118,15 @@ export default function GeneratePage() {
                 </span>
                 {generations.length > 0 && (
                   <span style={{
-                    background: "var(--brand-subtle)",
-                    color: "var(--brand)",
+                    background: "var(--brand-subtle)", color: "var(--brand)",
                     border: "1px solid var(--border-hover)",
-                    borderRadius: "99px",
-                    padding: "1px 8px",
-                    fontSize: "11px",
-                    fontFamily: "var(--font-mono)",
+                    borderRadius: "99px", padding: "1px 8px",
+                    fontSize: "11px", fontFamily: "var(--font-mono)",
                   }}>
                     {generations.length}
                   </span>
                 )}
               </div>
-
-              {/* Collapse button */}
               <button onClick={() => setCollapsed(true)} title="Collapse sidebar" style={{
                 background: "none", border: "none", cursor: "pointer",
                 color: "var(--text-3)", padding: "6px", borderRadius: "7px",
@@ -129,7 +141,50 @@ export default function GeneratePage() {
           )}
         </div>
 
-        {/* Sidebar content — history list */}
+        {/* ── Tab switcher — All / Favourites ── */}
+        {!collapsed && (
+          <div style={{
+            display: "flex",
+            borderBottom: "1px solid var(--border)",
+            flexShrink: 0,
+          }}>
+            {([
+              { id: "all",        label: "All",        icon: null },
+              { id: "favourites", label: "Starred",    icon: <Star size={11} /> },
+            ] as const).map(({ id, label, icon }) => (
+              <button
+                key={id}
+                onClick={() => setActiveTab(id)}
+                style={{
+                  flex: 1,
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: "5px",
+                  padding: "9px 0",
+                  background: "transparent", border: "none",
+                  borderBottom: `2px solid ${activeTab === id ? "var(--brand)" : "transparent"}`,
+                  cursor: "pointer",
+                  color: activeTab === id ? "var(--brand)" : "var(--text-3)",
+                  fontFamily: "var(--font-sans)", fontSize: "12px", fontWeight: 600,
+                  transition: "all 0.15s ease",
+                }}
+              >
+                {icon}
+                {label}
+                {id === "favourites" && favouriteCount > 0 && activeTab === "all" && (
+                  <span style={{
+                    background: "rgba(212,126,48,0.15)",
+                    color: "var(--brand)",
+                    borderRadius: "99px", padding: "0px 5px",
+                    fontSize: "10px", fontFamily: "var(--font-mono)",
+                  }}>
+                    {favouriteCount}
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* ── Sidebar content ── */}
         {!collapsed && (
           <div style={{ flex: 1, overflowY: "auto", padding: "10px 10px" }}>
             {loading ? (
@@ -138,23 +193,33 @@ export default function GeneratePage() {
               </div>
             ) : generations.length === 0 ? (
               <div style={{ textAlign: "center", padding: "40px 16px" }}>
-                <Inbox size={28} color="var(--text-4)" style={{ margin: "0 auto 10px", display: "block" }} />
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: "13px", color: "var(--text-3)" }}>No generations yet</p>
+                {activeTab === "favourites"
+                  ? <Star size={28} color="var(--text-4)" style={{ margin: "0 auto 10px", display: "block" }} />
+                  : <Inbox size={28} color="var(--text-4)" style={{ margin: "0 auto 10px", display: "block" }} />
+                }
+                <p style={{ fontFamily: "var(--font-sans)", fontSize: "13px", color: "var(--text-3)" }}>
+                  {activeTab === "favourites" ? "No starred items yet" : "No generations yet"}
+                </p>
                 <p style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--text-4)", marginTop: "4px" }}>
-                  Generate something!
+                  {activeTab === "favourites" ? "Star any generation to pin it here" : "Generate something!"}
                 </p>
               </div>
             ) : (
               <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                 {generations.map((gen) => (
-                  <SidebarItem key={gen._id} generation={gen} onDelete={handleDelete} />
+                  <SidebarItem
+                    key={gen._id}
+                    generation={gen}
+                    onDelete={handleDelete}
+                    onFavouriteToggle={handleFavouriteToggle}
+                  />
                 ))}
               </div>
             )}
           </div>
         )}
 
-        {/* Collapsed: just show expand button in middle */}
+        {/* Collapsed state */}
         {collapsed && (
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "12px", gap: "6px" }}>
             <button onClick={() => setCollapsed(false)} title="Expand" style={{
@@ -167,12 +232,12 @@ export default function GeneratePage() {
             >
               <PanelLeftOpen size={17} />
             </button>
-            {/* Rotated history count */}
+            {/* Star icon when on favourites tab */}
+            {activeTab === "favourites" && (
+              <Star size={14} color="var(--brand)" fill="var(--brand)" />
+            )}
             {generations.length > 0 && (
-              <span style={{
-                fontFamily: "var(--font-mono)", fontSize: "10px",
-                color: "var(--text-4)", marginTop: "4px",
-              }}>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "var(--text-4)", marginTop: "4px" }}>
                 {generations.length}
               </span>
             )}
@@ -181,21 +246,11 @@ export default function GeneratePage() {
       </aside>
 
       {/* ══ MAIN CONTENT ════════════════════════════════════════ */}
-      <main style={{
-        flex: 1,
-        overflowY: "auto",
-        padding: "36px 40px",
-        minWidth: 0,
-      }}>
-        {/* Page title */}
+      <main style={{ flex: 1, overflowY: "auto", padding: "36px 40px", minWidth: 0 }}>
         <div style={{ marginBottom: "32px" }} className="animate-fade-up">
           <h1 style={{
-            fontFamily: "var(--font-sans)",
-            fontWeight: 700,
-            fontSize: "28px",
-            letterSpacing: "-0.025em",
-            color: "var(--text-1)",
-            marginBottom: "6px",
+            fontFamily: "var(--font-sans)", fontWeight: 700, fontSize: "28px",
+            letterSpacing: "-0.025em", color: "var(--text-1)", marginBottom: "6px",
           }}>
             Generate Text
           </h1>
@@ -204,25 +259,18 @@ export default function GeneratePage() {
           </p>
         </div>
 
-        {/* Two-col grid */}
         <div style={{
           display: "grid",
           gridTemplateColumns: "minmax(320px, 480px) 1fr",
           gap: "20px",
           alignItems: "start",
         }} className="animate-fade-up delay-1">
-
-          {/* Left: controls */}
           <div style={{
-            background: "var(--bg-1)",
-            border: "1px solid var(--border)",
-            borderRadius: "14px",
-            padding: "28px",
+            background: "var(--bg-1)", border: "1px solid var(--border)",
+            borderRadius: "14px", padding: "28px",
           }}>
             <PromptBuilder />
           </div>
-
-          {/* Right: output */}
           <OutputPanel />
         </div>
       </main>
@@ -230,11 +278,39 @@ export default function GeneratePage() {
   );
 }
 
-/* ── Compact sidebar history item ─────────────────────────── */
-function SidebarItem({ generation, onDelete }: { generation: Generation; onDelete: (id: string) => void }) {
-  const [hovered, setHovered] = useState(false);
-  const color = TONE_COLORS[generation.tone] || "var(--text-3)";
+/* ── Compact sidebar history item with star button ─────────── */
+function SidebarItem({
+  generation,
+  onDelete,
+  onFavouriteToggle,
+}: {
+  generation: Generation;
+  onDelete: (id: string) => void;
+  onFavouriteToggle: (id: string, isFavourite: boolean) => void;
+}) {
+  const [hovered, setHovered]       = useState(false);
+  const [favourited, setFavourited] = useState(!!generation.isFavourite);
+  const [starring, setStarring]     = useState(false);
+
+  const color   = TONE_COLORS[generation.tone] || "var(--text-3)";
   const timeAgo = formatDistanceToNow(new Date(generation.createdAt), { addSuffix: true });
+
+  const handleStar = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (starring) return;
+    setStarring(true);
+    try {
+      const updated = await api.toggleFavourite(generation._id);
+      const next = !!updated.isFavourite;
+      setFavourited(next);
+      onFavouriteToggle(generation._id, next);
+      toast.success(next ? "⭐ Starred!" : "Unstarred");
+    } catch {
+      toast.error("Failed to update");
+    } finally {
+      setStarring(false);
+    }
+  };
 
   return (
     <div
@@ -247,12 +323,13 @@ function SidebarItem({ generation, onDelete }: { generation: Generation; onDelet
         padding: "11px 13px",
         transition: "all 0.15s ease",
         cursor: "default",
+        position: "relative",
       }}
     >
+      {/* Topic row + action buttons */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "6px" }}>
         <p style={{
-          fontFamily: "var(--font-sans)",
-          fontWeight: 500, fontSize: "13px",
+          fontFamily: "var(--font-sans)", fontWeight: 500, fontSize: "13px",
           color: "var(--text-1)", lineHeight: 1.4,
           overflow: "hidden", display: "-webkit-box",
           WebkitLineClamp: 2, WebkitBoxOrient: "vertical",
@@ -260,31 +337,58 @@ function SidebarItem({ generation, onDelete }: { generation: Generation; onDelet
         }}>
           {generation.topic}
         </p>
-        {hovered && (
+
+        {/* Action buttons — shown on hover OR if starred */}
+        <div style={{
+          display: "flex", gap: "2px", flexShrink: 0,
+          opacity: hovered || favourited ? 1 : 0,
+          transition: "opacity 0.15s",
+        }}>
+          {/* Star button */}
           <button
-            onClick={() => onDelete(generation._id)}
+            onClick={handleStar}
+            title={favourited ? "Unstar" : "Star this generation"}
             style={{
-              background: "none", border: "none", cursor: "pointer",
-              color: "var(--text-4)", padding: "2px", flexShrink: 0,
-              borderRadius: "4px", transition: "color 0.15s",
-              display: "flex",
+              background: "none", border: "none", cursor: starring ? "wait" : "pointer",
+              color: favourited ? "var(--brand)" : "var(--text-3)",
+              padding: "3px", borderRadius: "4px",
+              display: "flex", transition: "all 0.15s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#E05050")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-4)")}
+            onMouseEnter={(e) => { (e.currentTarget).style.color = "var(--brand)"; }}
+            onMouseLeave={(e) => { (e.currentTarget).style.color = favourited ? "var(--brand)" : "var(--text-3)"; }}
           >
-            <Trash2 size={12} />
+            <Star
+              size={13}
+              fill={favourited ? "var(--brand)" : "none"}
+            />
           </button>
-        )}
+
+          {/* Delete button — only on hover */}
+          {hovered && (
+            <button
+              onClick={() => onDelete(generation._id)}
+              style={{
+                background: "none", border: "none", cursor: "pointer",
+                color: "var(--text-4)", padding: "3px", flexShrink: 0,
+                borderRadius: "4px", transition: "color 0.15s",
+                display: "flex",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#E05050")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-4)")}
+            >
+              <Trash2 size={13} />
+            </button>
+          )}
+        </div>
       </div>
 
+      {/* Meta row */}
       <div style={{ display: "flex", alignItems: "center", gap: "7px", marginTop: "7px" }}>
         <span style={{
           fontSize: "10px", fontFamily: "var(--font-mono)",
-          color: color,
-          background: `${color}18`,
+          color: color, background: `${color}18`,
           padding: "1px 7px", borderRadius: "99px",
-          border: `1px solid ${color}28`,
-          textTransform: "capitalize",
+          border: `1px solid ${color}28`, textTransform: "capitalize",
         }}>
           {generation.tone}
         </span>
