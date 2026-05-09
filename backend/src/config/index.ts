@@ -17,6 +17,13 @@ function requireEnv(key: string): string {
   return value;
 }
 
+function parseAllowedOrigins(): string[] {
+  // CLIENT_URL is a comma-separated list — keeps localhost and the
+  // Vercel deployment URL working in parallel.
+  const raw = process.env.CLIENT_URL || "http://localhost:3000";
+  return raw.split(",").map((s) => s.trim()).filter(Boolean);
+}
+
 export const config = {
   port: parseInt(process.env.PORT || "5000", 10),
   nodeEnv: process.env.NODE_ENV || "development",
@@ -24,7 +31,7 @@ export const config = {
 
   gemini: {
     apiKey: requireEnv("GEMINI_API_KEY"),
-    model: "gemini-2.5-flash",
+    model: process.env.GEMINI_MODEL || "gemini-2.5-flash",
     maxTokens: 2048,
   },
 
@@ -33,11 +40,12 @@ export const config = {
   },
 
   cors: {
-    clientUrl: process.env.CLIENT_URL || "http://localhost:3000",
+    allowedOrigins: parseAllowedOrigins(),
+    clientUrl: parseAllowedOrigins()[0],
   },
 
   rateLimit: {
-    windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || "900000", 10), // 15 min
+    windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || "900000", 10),
     max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || "50", 10),
   },
 };

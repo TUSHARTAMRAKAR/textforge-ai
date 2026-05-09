@@ -5,25 +5,32 @@ import { Schema, model, Document } from "mongoose";
 //
 //  Every time a user generates text, we save it here.
 //  This powers the History page on the frontend.
-//
-//  Schema fields:
-//    topic      — what the user asked to write about
-//    tone       — formal / casual / creative / academic
-//    length     — short / medium / long
-//    prompt     — the full prompt we sent to Claude
-//    output     — the full text Claude returned
-//    wordCount  — auto-calculated on save
-//    createdAt  — auto timestamp from mongoose
 // ─────────────────────────────────────────────────────────────
+
+export type Tone = "formal" | "casual" | "creative" | "academic";
+export type Length = "short" | "medium" | "long";
+export type Language = "en" | "hi" | "es" | "fr" | "ja" | "ar" | "de" | "zh";
 
 export interface IGeneration extends Document {
   topic: string;
-  tone: "formal" | "casual" | "creative" | "academic";
-  length: "short" | "medium" | "long";
+  tone: Tone;
+  length: Length;
+  language: Language;
+  keywords: string[];
   prompt: string;
   output: string;
   wordCount: number;
   model: string;
+
+  // User scoping (used when authentication is enabled)
+  userId?: string;
+
+  // Roadmap features
+  isFavourite: boolean;
+  isShared: boolean;
+  templateId?: string;
+  refinementOf?: string;
+
   createdAt: Date;
   updatedAt: Date;
 }
@@ -48,6 +55,19 @@ const GenerationSchema = new Schema<IGeneration>(
       required: [true, "Length is required"],
       default: "medium",
     },
+    language: {
+      type: String,
+      enum: ["en", "hi", "es", "fr", "ja", "ar", "de", "zh"],
+      default: "en",
+    },
+    keywords: {
+      type: [String],
+      default: [],
+      validate: {
+        validator: (arr: string[]) => arr.length <= 10,
+        message: "Cannot have more than 10 SEO keywords",
+      },
+    },
     prompt: {
       type: String,
       required: [true, "Prompt is required"],
@@ -62,21 +82,41 @@ const GenerationSchema = new Schema<IGeneration>(
     },
     model: {
       type: String,
-      default: "gemini-2.0-flash",
+      default: "gemini-2.5-flash",
+    },
+    userId: {
+      type: String,
+      index: true,
+    },
+    isFavourite: {
+      type: Boolean,
+      default: false,
+    },
+    isShared: {
+      type: Boolean,
+      default: true,
+    },
+    templateId: {
+      type: String,
+    },
+    refinementOf: {
+      type: Schema.Types.ObjectId,
+      ref: "Generation",
     },
   },
   {
-    timestamps: true, // auto adds createdAt + updatedAt
+    timestamps: true,
   }
 );
 
-// Auto-calculate word count before saving
 GenerationSchema.pre("save", function (next) {
   this.wordCount = this.output.split(/\s+/).filter(Boolean).length;
   next();
 });
 
-// Index for fast history queries (newest first)
 GenerationSchema.index({ createdAt: -1 });
+GenerationSchema.index({ isFavourite: 1, createdAt: -1 });
+GenerationSchema.index({ userId: 1, createdAt: -1 });
+GenerationSchema.index({ topic: "text", output: "text" });
 
 export const Generation = model<IGeneration>("Generation", GenerationSchema);

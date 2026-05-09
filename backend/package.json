@@ -1,6 +1,6 @@
 {
   "name": "textforge-ai-backend",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "TextForge AI — Generative Text Model API powered by Gemini",
   "main": "dist/index.js",
   "scripts": {
