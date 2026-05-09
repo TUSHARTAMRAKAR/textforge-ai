@@ -1,9 +1,11 @@
 "use client";
 import { useGenerateStore } from "@/lib/store";
 import { api } from "@/lib/api";
-import { Sparkles, Loader2, RotateCcw } from "lucide-react";
+import { Sparkles, Loader2, RotateCcw, ChevronDown, X, Plus } from "lucide-react";
 import toast from "react-hot-toast";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { LANGUAGES } from "@/lib/languages";
+import { TemplatePicker } from "./TemplatePicker";
 
 const TONES = [
   { value: "formal",   label: "Formal",   desc: "Professional & authoritative" },
@@ -28,13 +30,30 @@ const EXAMPLES = [
 
 export function PromptBuilder() {
   const {
-    topic, tone, length, isStreaming,
-    setTopic, setTone, setLength,
-    appendOutput, setIsStreaming, setIsDone, setError, resetOutput,
+    topic, tone, length, language, keywords, isStreaming,
+    setTopic, setTone, setLength, setLanguage, setKeywords,
+    appendOutput, setIsStreaming, setIsDone, setError, setSavedId, resetOutput,
   } = useGenerateStore();
 
   const [example, setExample] = useState(EXAMPLES[0]);
-  useEffect(() => { setExample(EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)]); }, []);
+  const [showLanguage, setShowLanguage] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setExample(EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)]);
+  }, []);
+
+  // Close the language dropdown on outside click
+  useEffect(() => {
+    if (!showLanguage) return;
+    const handler = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setShowLanguage(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [showLanguage]);
 
   const handleGenerate = async () => {
     if (!topic.trim()) { toast.error("Please enter a topic first"); return; }
@@ -42,10 +61,15 @@ export function PromptBuilder() {
     resetOutput(); setIsStreaming(true);
     try {
       await api.postGenerate(
-        { topic: topic.trim(), tone, length },
+        { topic: topic.trim(), tone, length, language, keywords },
         (text) => appendOutput(text),
-        ()     => { setIsStreaming(false); setIsDone(true); toast.success("Generation complete!"); },
-        (err)  => { setIsStreaming(false); setError(err); toast.error(err); }
+        (savedId) => {
+          setIsStreaming(false);
+          setIsDone(true);
+          if (savedId) setSavedId(savedId);
+          toast.success("Generation complete!");
+        },
+        (err) => { setIsStreaming(false); setError(err); toast.error(err); }
       );
     } catch (err: any) {
       setIsStreaming(false);
@@ -54,8 +78,13 @@ export function PromptBuilder() {
     }
   };
 
+  const selectedLang = LANGUAGES.find((l) => l.code === language) ?? LANGUAGES[0];
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+
+      {/* Templates */}
+      <TemplatePicker disabled={isStreaming} />
 
       {/* Topic */}
       <div>
@@ -105,29 +134,99 @@ export function PromptBuilder() {
         </div>
       </div>
 
-      {/* Length */}
-      <div>
-        <label className="label">Length</label>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
-          {LENGTHS.map(({ value, label, words }) => (
-            <button key={value} onClick={() => setLength(value)} disabled={isStreaming} style={{
-              padding: "14px 10px",
+      {/* Length + Language row */}
+      <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: "16px" }}>
+        <div>
+          <label className="label">Length</label>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "6px" }}>
+            {LENGTHS.map(({ value, label, words }) => (
+              <button key={value} onClick={() => setLength(value)} disabled={isStreaming} style={{
+                padding: "12px 6px",
+                borderRadius: "10px",
+                border: `1px solid ${length === value ? "var(--border-focus)" : "var(--border)"}`,
+                background: length === value ? "var(--brand-subtle)" : "var(--bg-2)",
+                cursor: "pointer", textAlign: "center",
+                transition: "all 0.15s ease",
+                boxShadow: length === value ? "0 0 0 3px var(--brand-glow)" : "none",
+              }}>
+                <div style={{
+                  fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: "13px",
+                  color: length === value ? "var(--brand)" : "var(--text-1)",
+                }}>{label}</div>
+                <div style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "var(--text-3)", marginTop: "2px" }}>{words}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div ref={langRef} style={{ position: "relative" }}>
+          <label className="label">Language</label>
+          <button
+            onClick={() => setShowLanguage((v) => !v)}
+            disabled={isStreaming}
+            style={{
+              width: "100%",
+              padding: "12px 12px",
               borderRadius: "10px",
-              border: `1px solid ${length === value ? "var(--border-focus)" : "var(--border)"}`,
-              background: length === value ? "var(--brand-subtle)" : "var(--bg-2)",
-              cursor: "pointer", textAlign: "center",
+              border: "1px solid var(--border)",
+              background: "var(--bg-2)",
+              color: "var(--text-1)",
+              cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "space-between",
+              fontFamily: "var(--font-sans)", fontSize: "13px", fontWeight: 500,
               transition: "all 0.15s ease",
-              boxShadow: length === value ? "0 0 0 3px var(--brand-glow)" : "none",
+            }}
+          >
+            <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <span style={{
+                fontFamily: "var(--font-mono)", fontSize: "10px",
+                background: "var(--brand-subtle)", color: "var(--brand)",
+                padding: "2px 6px", borderRadius: "4px",
+                border: "1px solid var(--border-hover)",
+              }}>{selectedLang.flag}</span>
+              {selectedLang.nativeName}
+            </span>
+            <ChevronDown size={14} style={{ opacity: 0.6 }} />
+          </button>
+          {showLanguage && (
+            <div style={{
+              position: "absolute", top: "calc(100% + 4px)", left: 0, right: 0, zIndex: 50,
+              background: "var(--bg-1)", border: "1px solid var(--border-hover)",
+              borderRadius: "10px", boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
+              padding: "4px", maxHeight: "260px", overflowY: "auto",
             }}>
-              <div style={{
-                fontFamily: "var(--font-sans)", fontWeight: 600, fontSize: "14px",
-                color: length === value ? "var(--brand)" : "var(--text-1)",
-              }}>{label}</div>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--text-3)", marginTop: "3px" }}>{words}</div>
-            </button>
-          ))}
+              {LANGUAGES.map((l) => (
+                <button
+                  key={l.code}
+                  onClick={() => { setLanguage(l.code); setShowLanguage(false); }}
+                  style={{
+                    width: "100%", textAlign: "left",
+                    padding: "8px 10px", borderRadius: "7px",
+                    background: l.code === language ? "var(--brand-subtle)" : "transparent",
+                    border: "none", cursor: "pointer",
+                    color: l.code === language ? "var(--brand)" : "var(--text-1)",
+                    fontFamily: "var(--font-sans)", fontSize: "13px", fontWeight: 500,
+                    display: "flex", alignItems: "center", gap: "10px",
+                  }}
+                  onMouseEnter={(e) => { if (l.code !== language) (e.currentTarget as HTMLElement).style.background = "var(--bg-2)"; }}
+                  onMouseLeave={(e) => { if (l.code !== language) (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+                >
+                  <span style={{
+                    fontFamily: "var(--font-mono)", fontSize: "10px",
+                    background: "var(--bg-3)", padding: "2px 5px",
+                    borderRadius: "4px", color: "var(--text-2)",
+                  }}>{l.flag}</span>
+                  <span>{l.nativeName}</span>
+                  <span style={{ marginLeft: "auto", fontSize: "11px", color: "var(--text-3)" }}>{l.name}</span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
+
+      {/* SEO Keywords */}
+      <KeywordsInput value={keywords} onChange={setKeywords} disabled={isStreaming} />
 
       {/* Actions */}
       <div style={{ display: "flex", gap: "10px", paddingTop: "4px" }}>
@@ -162,6 +261,95 @@ export function PromptBuilder() {
           <RotateCcw size={16} />
         </button>
       </div>
+    </div>
+  );
+}
+
+// ── Keyword chips input ─────────────────────────────────────
+function KeywordsInput({
+  value, onChange, disabled,
+}: { value: string[]; onChange: (v: string[]) => void; disabled?: boolean }) {
+  const [draft, setDraft] = useState("");
+
+  const addKeyword = () => {
+    const k = draft.trim().slice(0, 40);
+    if (!k) return;
+    if (value.includes(k)) { setDraft(""); return; }
+    if (value.length >= 10) { toast.error("Maximum 10 keywords"); return; }
+    onChange([...value, k]);
+    setDraft("");
+  };
+
+  const removeKeyword = (k: string) => onChange(value.filter((x) => x !== k));
+
+  return (
+    <div>
+      <label className="label" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        SEO Keywords
+        <span style={{
+          fontFamily: "var(--font-mono)", fontSize: "10px",
+          color: "var(--text-3)", textTransform: "none",
+          background: "var(--bg-2)", padding: "1px 6px", borderRadius: "4px",
+          border: "1px solid var(--border)", letterSpacing: "0",
+        }}>optional</span>
+      </label>
+      <div style={{
+        background: "var(--bg-2)",
+        border: "1px solid var(--border)",
+        borderRadius: "10px",
+        padding: "8px",
+        display: "flex", flexWrap: "wrap", gap: "6px", alignItems: "center",
+      }}>
+        {value.map((k) => (
+          <span key={k} style={{
+            display: "inline-flex", alignItems: "center", gap: "4px",
+            background: "var(--brand-subtle)", color: "var(--brand)",
+            border: "1px solid var(--border-hover)",
+            borderRadius: "6px", padding: "4px 6px 4px 9px",
+            fontFamily: "var(--font-sans)", fontSize: "12px", fontWeight: 500,
+          }}>
+            {k}
+            <button onClick={() => removeKeyword(k)} disabled={disabled} style={{
+              background: "none", border: "none", cursor: "pointer",
+              color: "inherit", display: "flex", padding: "1px",
+            }}>
+              <X size={11} />
+            </button>
+          </span>
+        ))}
+        <input
+          type="text"
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") { e.preventDefault(); addKeyword(); }
+            if (e.key === "Backspace" && !draft && value.length > 0) {
+              onChange(value.slice(0, -1));
+            }
+          }}
+          placeholder={value.length === 0 ? "Type a keyword and press Enter…" : "Add another…"}
+          disabled={disabled || value.length >= 10}
+          style={{
+            flex: 1, minWidth: "140px",
+            background: "transparent", border: "none", outline: "none",
+            color: "var(--text-1)", fontFamily: "var(--font-sans)", fontSize: "13px",
+            padding: "4px 6px",
+          }}
+        />
+        {draft && (
+          <button onClick={addKeyword} disabled={disabled} style={{
+            background: "var(--brand)", color: "var(--bg-base)",
+            border: "none", borderRadius: "5px", padding: "4px 8px",
+            cursor: "pointer", display: "flex", alignItems: "center", gap: "3px",
+            fontFamily: "var(--font-sans)", fontSize: "11px", fontWeight: 600,
+          }}>
+            <Plus size={11} /> Add
+          </button>
+        )}
+      </div>
+      <p style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "var(--text-4)", marginTop: "5px" }}>
+        Up to 10 terms — woven naturally into the output.
+      </p>
     </div>
   );
 }

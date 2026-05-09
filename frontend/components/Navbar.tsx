@@ -1,9 +1,11 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Flame, Sun, Moon } from "lucide-react";
+import { Flame, Sun, Moon, Sparkles, History, BarChart3, Key } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toggleTheme, getTheme } from "@/lib/theme";
+import { features } from "@/lib/features";
+import { AuthButtons } from "./AuthButtons";
 
 // Animated tagline — each character reveals with a staggered delay
 function AnimatedTagline() {
@@ -11,7 +13,6 @@ function AnimatedTagline() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Small delay so it fires after page paint
     const t = setTimeout(() => setVisible(true), 300);
     return () => clearTimeout(t);
   }, []);
@@ -44,6 +45,13 @@ function AnimatedTagline() {
   );
 }
 
+const NAV_ITEMS = [
+  { href: "/generate",  label: "Generate", Icon: Sparkles },
+  { href: "/history",   label: "History",  Icon: History },
+  { href: "/stats",     label: "Stats",    Icon: BarChart3 },
+  { href: "/api-keys",  label: "API Keys", Icon: Key, requiresApi: true },
+];
+
 export function Navbar() {
   const pathname = usePathname();
   const [theme, setThemeState] = useState<"dark" | "light">("dark");
@@ -57,16 +65,16 @@ export function Navbar() {
     setThemeState(next);
   };
 
-  const navLinkStyle = (active: boolean) => ({
+  const navLinkStyle = (active: boolean): React.CSSProperties => ({
     display: "flex",
     alignItems: "center",
-    gap: "7px",
+    gap: "6px",
     fontFamily: "var(--font-sans)",
     fontWeight: 500,
-    fontSize: "14px",
+    fontSize: "13px",
     color: active ? "var(--brand)" : "var(--text-2)",
     textDecoration: "none",
-    padding: "8px 14px",
+    padding: "7px 12px",
     borderRadius: "8px",
     background: active ? "var(--brand-subtle)" : "transparent",
     border: `1px solid ${active ? "var(--border-hover)" : "transparent"}`,
@@ -96,7 +104,6 @@ export function Navbar() {
 
         {/* ── Logo ── */}
         <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "12px" }}>
-          {/* Logo mark */}
           <div style={{
             width: "40px", height: "40px",
             borderRadius: "10px",
@@ -107,8 +114,6 @@ export function Navbar() {
           }}>
             <Flame size={20} color="#1A1208" strokeWidth={2.5} />
           </div>
-
-          {/* Brand + tagline */}
           <div style={{ display: "flex", flexDirection: "column", gap: "0px" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: "5px" }}>
               <span style={{
@@ -133,26 +138,23 @@ export function Navbar() {
           </div>
         </Link>
 
-        {/* ── Right side: nav + theme toggle ── */}
-        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <Link href="/generate"
-            style={navLinkStyle(pathname === "/generate")}
-            onMouseEnter={(e) => { if (pathname !== "/generate") { (e.currentTarget as HTMLElement).style.background = "var(--bg-2)"; (e.currentTarget as HTMLElement).style.color = "var(--text-1)"; }}}
-            onMouseLeave={(e) => { if (pathname !== "/generate") { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "var(--text-2)"; }}}
-          >
-            Generate
-          </Link>
+        {/* ── Right side ── */}
+        <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+          {NAV_ITEMS.filter((n) => !n.requiresApi || features.publicApiEnabled).map(({ href, label, Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              style={navLinkStyle(pathname === href)}
+              onMouseEnter={(e) => { if (pathname !== href) { (e.currentTarget as HTMLElement).style.background = "var(--bg-2)"; (e.currentTarget as HTMLElement).style.color = "var(--text-1)"; } }}
+              onMouseLeave={(e) => { if (pathname !== href) { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "var(--text-2)"; } }}
+            >
+              <Icon size={13} /> {label}
+            </Link>
+          ))}
 
-          <Link href="/history"
-            style={navLinkStyle(pathname === "/history")}
-            onMouseEnter={(e) => { if (pathname !== "/history") { (e.currentTarget as HTMLElement).style.background = "var(--bg-2)"; (e.currentTarget as HTMLElement).style.color = "var(--text-1)"; }}}
-            onMouseLeave={(e) => { if (pathname !== "/history") { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "var(--text-2)"; }}}
-          >
-            History
-          </Link>
+          <div style={{ width: "1px", height: "20px", background: "var(--border)", margin: "0 6px" }} />
 
-          {/* Divider */}
-          <div style={{ width: "1px", height: "20px", background: "var(--border)", margin: "0 4px" }} />
+          <AuthButtons />
 
           {/* Dark/Light toggle */}
           <button
@@ -167,14 +169,12 @@ export function Navbar() {
               display: "flex", alignItems: "center", justifyContent: "center",
               color: "var(--text-2)",
               transition: "all 0.15s ease",
+              marginLeft: "4px",
             }}
             onMouseEnter={(e) => { (e.currentTarget).style.background = "var(--bg-3)"; (e.currentTarget).style.color = "var(--brand)"; }}
             onMouseLeave={(e) => { (e.currentTarget).style.background = "var(--bg-2)"; (e.currentTarget).style.color = "var(--text-2)"; }}
           >
-            {theme === "dark"
-              ? <Sun size={16} />
-              : <Moon size={16} />
-            }
+            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
           </button>
         </div>
       </div>
