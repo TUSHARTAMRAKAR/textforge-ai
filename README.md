@@ -1497,11 +1497,8 @@ See [LICENSE](LICENSE) for the complete text.
 
 <br/>
 
-<!-- GitHub Stats -->
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=TUSHARTAMRAKAR&show_icons=true&theme=dark&bg_color=1A1208&title_color=D47E30&icon_color=D47E30&text_color=FDFBD4&border_color=D47E30&border_radius=10" alt="GitHub Stats" height="160"/>
   &nbsp;&nbsp;
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TUSHARTAMRAKAR&layout=compact&theme=dark&bg_color=1A1208&title_color=D47E30&text_color=FDFBD4&border_color=D47E30&border_radius=10" alt="Top Languages" height="160"/>
 </p>
 
 <br/>
@@ -1560,9 +1557,7 @@ See [LICENSE](LICENSE) for the complete text.
 
 <br/>
 
-<img src="https://github-readme-stats.vercel.app/api?username=TUSHARTAMRAKAR&show_icons=true&theme=dark&bg_color=1A1208&title_color=D47E30&icon_color=D47E30&text_color=FDFBD4&border_color=D47E30" alt="GitHub Stats" width="48%"/>
 &nbsp;
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TUSHARTAMRAKAR&layout=compact&theme=dark&bg_color=1A1208&title_color=D47E30&text_color=FDFBD4&border_color=D47E30" alt="Top Languages" width="42%"/>
 
 <br/>
 
