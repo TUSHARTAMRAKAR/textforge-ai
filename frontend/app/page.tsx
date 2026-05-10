@@ -1,4 +1,5 @@
 "use client";
+import { MadeBy } from "@/components/MadeBy";
 import Link from "next/link";
 import { ArrowRight, Sparkles, Zap, Brain, Shield, History } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -6,9 +7,9 @@ import { useEffect, useState } from "react";
 const features = [
   { icon: Sparkles, title: "Gemini 2.5 Flash",    desc: "Google's latest free model — 1,500 req/day, zero cost." },
   { icon: Zap,      title: "Real-time Streaming", desc: "Watch text appear token-by-token with live SSE." },
-  { icon: Brain,    title: "Prompt Engineering",  desc: "Tone, length, and topic controls craft the perfect prompt." },
-  { icon: History,  title: "Sidebar History",     desc: "Every generation saved. Browse instantly from the sidebar." },
-  { icon: Shield,   title: "Rate Protected",      desc: "Smart per-IP limits protect your API quota." },
+  { icon: Brain,    title: "Prompt Engineering",  desc: "Templates, 8 languages, and SEO keywords for perfect output." },
+  { icon: History,  title: "Searchable History",  desc: "Filter, search, favourite, share — every generation saved." },
+  { icon: Shield,   title: "Public API Mode",     desc: "Mint API keys and call TextForge from your own apps." },
 ];
 
 const techStack = [
@@ -141,7 +142,7 @@ export default function HomePage() {
         </p>
 
         <div className="animate-fade-up delay-3" style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
-          <Link href="/workspace" className="btn-primary" style={{ fontSize: "15px", padding: "14px 28px", textDecoration: "none" }}>
+          <Link href="/generate" className="btn-primary" style={{ fontSize: "15px", padding: "14px 28px", textDecoration: "none" }}>
             Start Generating <ArrowRight size={17} />
           </Link>
         </div>
@@ -258,9 +259,15 @@ export default function HomePage() {
             borderTop: "1px solid var(--border)", paddingTop: "24px",
             display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px",
           }}>
+            {/* Left: copyright */}
             <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--text-4)" }}>
-              © 2025 TextForge AI — MIT License
+              © 2026 TextForge AI — MIT License
             </span>
+
+            {/* Center: animated Made by */}
+            <MadeBy />
+
+            {/* Right: tagline */}
             <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--brand)", letterSpacing: "0.12em" }}>
               FORGE YOUR TEXT WITH AI ◈
             </span>
