@@ -1547,7 +1547,7 @@ See [LICENSE](LICENSE) for the complete text.
 
 **Made with ❤️ by [Tushar Tamrakar](https://github.com/TUSHARTAMRAKAR)**
 
-*B.Tech Student · Full-Stack Developer · AI Enthusiast*
+*Full-Stack Developer · AI Enthusiast*
 
 <br/>
 
