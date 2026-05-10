@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
+import { AuthProvider } from "@/components/AuthProvider";
 import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
@@ -12,7 +13,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
-        {/* Init theme before first paint — prevents flash */}
         <script dangerouslySetInnerHTML={{ __html: `
           (function(){
             var t = localStorage.getItem('tf-theme') || 'dark';
@@ -21,24 +21,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         `}} />
       </head>
       <body>
-        <Navbar />
-        <div style={{ paddingTop: "64px" }}>{children}</div>
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            style: {
-              background: "var(--bg-2)",
-              color: "var(--text-1)",
-              border: "1px solid var(--border)",
-              borderRadius: "10px",
-              fontFamily: "var(--font-sans)",
-              fontSize: "14px",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
-            },
-            success: { iconTheme: { primary: "#D47E30", secondary: "#1A1208" } },
-            error:   { iconTheme: { primary: "#E05050", secondary: "#1A1208" } },
-          }}
-        />
+        {/* AuthProvider wraps everything so useSession() works anywhere */}
+        <AuthProvider>
+          <Navbar />
+          <div style={{ paddingTop: "56px" }}>{children}</div>
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              style: {
+                background: "var(--bg-2)",
+                color: "var(--text-1)",
+                border: "1px solid var(--border)",
+                borderRadius: "10px",
+                fontFamily: "var(--font-sans)",
+                fontSize: "14px",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
+              },
+              success: { iconTheme: { primary: "#D47E30", secondary: "#1A1208" } },
+              error:   { iconTheme: { primary: "#E05050", secondary: "#1A1208" } },
+            }}
+          />
+        </AuthProvider>
       </body>
     </html>
   );

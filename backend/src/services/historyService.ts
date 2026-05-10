@@ -39,22 +39,51 @@ export async function saveGeneration(data: SaveGenerationDTO): Promise<IGenerati
 export async function getHistory(
   filters: ListFilters = {}
 ): Promise<{ items: IGeneration[]; total: number; pages: number; page: number; limit: number }> {
-  const page = Math.max(1, filters.page ?? 1);
+  const page  = Math.max(1, filters.page ?? 1);
   const limit = Math.min(50, Math.max(1, filters.limit ?? 10));
-  const skip = (page - 1) * limit;
+  const skip  = (page - 1) * limit;
 
   const query: Record<string, unknown> = {};
-  if (filters.userId) query.userId = filters.userId;
-  if (filters.tone) query.tone = filters.tone;
-  if (filters.language) query.language = filters.language;
+
+  if (filters.userId)        query.userId      = filters.userId;
+  if (filters.tone)          query.tone        = filters.tone;
   if (filters.favouritesOnly) query.isFavourite = true;
+
+  // ── Language filter ──────────────────────────────────────────
+  // Old generations saved before the language field was added have
+  // language = undefined/null in MongoDB. We treat those as English
+  // so filtering by "en" doesn't exclude them.
+  if (filters.language) {
+    if (filters.language === "en") {
+      query.language = { $in: ["en", null, undefined] };
+    } else {
+      query.language = filters.language;
+    }
+  }
+
+  // ── Search filter ─────────────────────────────────────────────
+  // Regex search on topic and output fields.
+  // Uses $or so results match either field.
+  // If a language filter is also active, we use $and to combine both.
   if (filters.search) {
     const safe = filters.search.trim();
     if (safe) {
-      query.$or = [
-        { topic: { $regex: safe, $options: "i" } },
-        { output: { $regex: safe, $options: "i" } },
-      ];
+      const searchOr = {
+        $or: [
+          { topic:  { $regex: safe, $options: "i" } },
+          { output: { $regex: safe, $options: "i" } },
+        ],
+      };
+      if (query.language) {
+        // Combine language + search with $and
+        query.$and = [
+          { language: query.language },
+          searchOr,
+        ] as any;
+        delete query.language;
+      } else {
+        Object.assign(query, searchOr);
+      }
     }
   }
 
@@ -104,18 +133,17 @@ export async function toggleFavourite(id: string, userId?: string): Promise<IGen
 export async function setShareStatus(id: string, isShared: boolean, userId?: string): Promise<IGeneration | null> {
   const query: Record<string, unknown> = { _id: id };
   if (userId) query.userId = userId;
-  const gen = await Generation.findOneAndUpdate(query, { isShared }, { new: true });
-  return gen;
+  return Generation.findOneAndUpdate(query, { isShared }, { new: true });
 }
 
 // ── Stats Aggregations ───────────────────────────────────────
 export interface StatsResult {
   totalGenerations: number;
-  totalWords: number;
-  favouritesCount: number;
-  byTone: { _id: string; count: number }[];
-  byLanguage: { _id: string; count: number }[];
-  last30Days: { _id: string; count: number; words: number }[];
+  totalWords:       number;
+  favouritesCount:  number;
+  byTone:           { _id: string; count: number }[];
+  byLanguage:       { _id: string; count: number }[];
+  last30Days:       { _id: string; count: number; words: number }[];
 }
 
 export async function getStats(userId?: string): Promise<StatsResult> {
@@ -125,42 +153,40 @@ export async function getStats(userId?: string): Promise<StatsResult> {
   const [totals, byTone, byLanguage, last30] = await Promise.all([
     Generation.aggregate([
       { $match: match },
-      {
-        $group: {
-          _id: null,
-          count: { $sum: 1 },
-          words: { $sum: "$wordCount" },
-          favs: { $sum: { $cond: ["$isFavourite", 1, 0] } },
-        },
-      },
+      { $group: {
+        _id:  null,
+        count: { $sum: 1 },
+        words: { $sum: "$wordCount" },
+        favs:  { $sum: { $cond: ["$isFavourite", 1, 0] } },
+      }},
     ]),
     Generation.aggregate([
       { $match: match },
-      { $group: { _id: "$tone", count: { $sum: 1 } } },
-      { $sort: { count: -1 } },
+      { $group: { _id: "$tone",     count: { $sum: 1 } } },
+      { $sort:  { count: -1 } },
     ]),
     Generation.aggregate([
       { $match: match },
-      { $group: { _id: "$language", count: { $sum: 1 } } },
-      { $sort: { count: -1 } },
+      // Normalise missing/null language to "en" in the aggregation
+      { $addFields: { lang: { $ifNull: ["$language", "en"] } } },
+      { $group: { _id: "$lang",     count: { $sum: 1 } } },
+      { $sort:  { count: -1 } },
     ]),
     Generation.aggregate([
       { $match: { ...match, createdAt: { $gte: since } } },
-      {
-        $group: {
-          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
-          count: { $sum: 1 },
-          words: { $sum: "$wordCount" },
-        },
-      },
+      { $group: {
+        _id:   { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+        count: { $sum: 1 },
+        words: { $sum: "$wordCount" },
+      }},
       { $sort: { _id: 1 } },
     ]),
   ]);
 
   return {
     totalGenerations: totals[0]?.count ?? 0,
-    totalWords: totals[0]?.words ?? 0,
-    favouritesCount: totals[0]?.favs ?? 0,
+    totalWords:       totals[0]?.words ?? 0,
+    favouritesCount:  totals[0]?.favs  ?? 0,
     byTone,
     byLanguage,
     last30Days: last30,
