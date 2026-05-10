@@ -40,7 +40,14 @@ export async function getHistory(filters: ListFilters = {}): Promise<{
   const skip  = (page - 1) * limit;
   const query: Record<string, any> = {};
 
-  if (filters.userId)         query.userId      = filters.userId;
+  // Always scope by userId — if no userId provided, return empty
+  // This prevents guests from seeing each other's anonymous generations
+  if (filters.userId) {
+    query.userId = filters.userId;
+  } else {
+    // No userId = guest mode = empty history
+    return { items: [], total: 0, pages: 0, page, limit };
+  }
   if (filters.tone)           query.tone        = filters.tone;
   if (filters.favouritesOnly) query.isFavourite = true;
 

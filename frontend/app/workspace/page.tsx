@@ -100,6 +100,14 @@ export default function WorkspacePage() {
   }, []);
 
   const fetchHistory = useCallback(async () => {
+    // Guests see empty sidebar — no shared anonymous history
+    // Only logged-in users see their own private history
+    if (status !== "loading" && !session?.user) {
+      setGenerations([]);
+      setLoading(false);
+      return;
+    }
+    if (status === "loading") return;
     try {
       const res = await api.getHistory({
         page: 1, limit: 50,
@@ -109,7 +117,7 @@ export default function WorkspacePage() {
       setGenerations(res.data);
     } catch { /* silent */ }
     finally { setLoading(false); }
-  }, [activeTab, search]);
+  }, [activeTab, search, session, status]);
 
   // Only fetch after auth status is known — prevents guest data showing briefly
   useEffect(() => {
