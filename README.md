@@ -59,6 +59,8 @@
 
 ---
 
+<img src="https://capsule-render.vercel.app/api?type=waving&color=D47E30&height=100&section=footer" width="100%"/>
+
 </div>
 
 <br/>
@@ -1541,7 +1543,7 @@ See [LICENSE](LICENSE) for the complete text.
 <br/>
 
 <a href="https://github.com/TUSHARTAMRAKAR">
-  <img src="https://avatars.githubusercontent.com/TUSHARTAMRAKAR" width="80" height="80" style="border-radius: 50%;" alt="Tushar Tamrakar"/>
+  <img src="https://github.com/TUSHARTAMRAKAR.png" width="80" height="80" alt="Tushar Tamrakar"/>
 </a>
 
 <br/>
@@ -1554,6 +1556,14 @@ See [LICENSE](LICENSE) for the complete text.
 <br/>
 
 [![GitHub](https://img.shields.io/badge/GitHub-TUSHARTAMRAKAR-181717?style=flat-square&logo=github)](https://github.com/TUSHARTAMRAKAR)
+&nbsp;
+[![Live Demo](https://img.shields.io/badge/Live-TextForge%20AI-D47E30?style=flat-square)](https://textforge-ai-sable.vercel.app)
+
+<br/>
+
+<img src="https://github-readme-stats.vercel.app/api?username=TUSHARTAMRAKAR&show_icons=true&theme=dark&bg_color=1A1208&title_color=D47E30&icon_color=D47E30&text_color=FDFBD4&border_color=D47E30" alt="GitHub Stats" width="48%"/>
+&nbsp;
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TUSHARTAMRAKAR&layout=compact&theme=dark&bg_color=1A1208&title_color=D47E30&text_color=FDFBD4&border_color=D47E30" alt="Top Languages" width="42%"/>
 
 <br/>
 
