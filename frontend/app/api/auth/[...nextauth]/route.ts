@@ -1,19 +1,12 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
-import type { NextAuthOptions } from "next-auth";
 
-// ─────────────────────────────────────────────────────────────
-//  NextAuth v4 — stable, production-ready
-//  Route: /api/auth/[...nextauth]
-//
-//  Handles all auth routes automatically:
-//  /api/auth/signin, /api/auth/signout,
-//  /api/auth/callback/google, /api/auth/callback/github
-//  /api/auth/session
-// ─────────────────────────────────────────────────────────────
+// ── NextAuth v4 route handler ────────────────────────────────
+// authOptions is NOT exported here — Vercel rejects unknown exports
+// from route files. Handler is the only export allowed.
 
-export const authOptions: NextAuthOptions = {
+const handler = NextAuth({
   providers: [
     GoogleProvider({
       clientId:     process.env.GOOGLE_CLIENT_ID!,
@@ -24,14 +17,11 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     }),
   ],
-
   session: { strategy: "jwt" },
-
   pages: {
     signIn: "/login",
     error:  "/login",
   },
-
   callbacks: {
     async jwt({ token, user, account }) {
       if (user)    token.id       = user.id;
@@ -46,9 +36,8 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-
   secret: process.env.NEXTAUTH_SECRET,
-};
+});
 
-const handler = NextAuth(authOptions);
+// Only GET and POST exported — no other exports allowed
 export { handler as GET, handler as POST };
