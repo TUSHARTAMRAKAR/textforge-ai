@@ -2,7 +2,7 @@
 
 <br/>
 
-<img width="100%" src="https://readme-typing-svg.demolab.com?font=Georgia&weight=700&size=55&duration=3000&pause=1000&color=D47E30&background=1A120800&center=true&vCenter=true&width=900&height=120&lines=🔥+TextForge+AI;Forge+Your+Text+With+AI;Built+by+Tushar+Tamrakar" alt="TextForge AI"/>
+[![TextForge AI](https://readme-typing-svg.demolab.com?font=Space+Grotesk&weight=700&size=48&pause=1000&color=D47E30&center=true&vCenter=true&width=700&height=90&lines=🔥+TextForge+AI;Forge+Your+Text+With+AI;Built+by+Tushar+Tamrakar)](https://textforge-ai-sable.vercel.app)
 
 <br/>
 <br/>
