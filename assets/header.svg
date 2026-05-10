@@ -1,0 +1,89 @@
+<svg width="900" height="200" viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fireGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#D47E30">
+        <animate attributeName="stop-color" values="#D47E30;#E8A050;#FDFBD4;#E8A050;#D47E30" dur="3s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="50%" style="stop-color:#E8A050">
+        <animate attributeName="stop-color" values="#E8A050;#FDFBD4;#D47E30;#FDFBD4;#E8A050" dur="3s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" style="stop-color:#FDFBD4">
+        <animate attributeName="stop-color" values="#FDFBD4;#D47E30;#E8A050;#D47E30;#FDFBD4" dur="3s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A1208"/>
+      <stop offset="100%" style="stop-color:#2C2014"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="200" rx="16" fill="url(#bgGrad)"/>
+
+  <!-- Animated border -->
+  <rect width="898" height="198" rx="15" fill="none" stroke="url(#fireGrad)" stroke-width="2" x="1" y="1"/>
+
+  <!-- Flame icon — animated scale pulse -->
+  <g transform="translate(60, 100)" filter="url(#glow)">
+    <animateTransform attributeName="transform" type="scale" values="1;1.15;1" dur="2s" repeatCount="indefinite" additive="sum" transformOrigin="60 100"/>
+    <!-- Flame shape -->
+    <path d="M0,-28 C8,-20 14,-10 10,0 C14,-4 16,-12 12,-20 C18,-12 20,0 14,12 C18,6 18,-2 16,-8 C22,4 18,18 8,24 C12,18 12,10 8,6 C6,14 2,20 -6,24 C-2,16 -2,8 -6,2 C-10,10 -8,18 -4,24 C-14,18 -18,6 -14,-4 C-18,0 -18,10 -14,18 C-20,8 -18,-6 -10,-16 C-6,-6 -2,2 0,10 C2,2 4,-10 0,-28Z" fill="url(#fireGrad)"/>
+  </g>
+
+  <!-- TextForge title — animated opacity entrance -->
+  <text x="120" y="85" font-family="Georgia, serif" font-size="52" font-weight="bold" fill="url(#fireGrad)" filter="url(#glow)" letter-spacing="-1">
+    TextForge
+    <animate attributeName="opacity" values="0;1" dur="1s" fill="freeze"/>
+  </text>
+  <text x="460" y="85" font-family="Georgia, serif" font-size="32" font-weight="300" fill="#C4A882">
+    AI
+    <animate attributeName="opacity" values="0;1" dur="1.5s" fill="freeze"/>
+  </text>
+
+  <!-- Tagline — typewriter simulation via opacity stagger -->
+  <text x="120" y="130" font-family="Courier New, monospace" font-size="14" fill="#D47E30" letter-spacing="3">
+    <animate attributeName="opacity" values="0;1" dur="2s" fill="freeze"/>
+    ◈ FORGE YOUR TEXT WITH AI ◈
+  </text>
+
+  <!-- Divider line — animated width -->
+  <line x1="120" y1="145" x2="120" y2="145" stroke="#D47E30" stroke-width="1" opacity="0.4">
+    <animate attributeName="x2" values="120;780" dur="2.5s" fill="freeze"/>
+  </line>
+
+  <!-- Made by line -->
+  <text x="120" y="172" font-family="Courier New, monospace" font-size="12" fill="#7A6548">
+    <animate attributeName="opacity" values="0;1" dur="3s" fill="freeze"/>
+    Made with ❤️ by Tushar Tamrakar
+  </text>
+
+  <!-- Stars twinkling in background -->
+  <circle cx="820" cy="30" r="1.5" fill="#D47E30" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.1;0.6" dur="2.1s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="850" cy="55" r="1" fill="#E8A050" opacity="0.4">
+    <animate attributeName="opacity" values="0.4;0.9;0.4" dur="1.7s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="800" cy="70" r="1.5" fill="#FDFBD4" opacity="0.3">
+    <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="870" cy="85" r="1" fill="#D47E30" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;0.1;0.5" dur="1.3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="830" cy="110" r="2" fill="#E8A050" opacity="0.4">
+    <animate attributeName="opacity" values="0.4;0.9;0.4" dur="1.9s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="860" cy="140" r="1.5" fill="#D47E30" opacity="0.3">
+    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2.3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="810" cy="160" r="1" fill="#FDFBD4" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;0.1;0.5" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+</svg>

@@ -1,19 +1,11 @@
 <div align="center">
 
 <br/>
+
+<!-- Animated Banner -->
+<img src="./assets/banner.svg" alt="TextForge AI" width="100%"/>
+
 <br/>
-
-```
-████████╗███████╗██╗  ██╗████████╗███████╗ ██████╗ ██████╗  ██████╗ ███████╗     █████╗ ██╗
-╚══██╔══╝██╔════╝╚██╗██╔╝╚══██╔══╝██╔════╝██╔═══██╗██╔══██╗██╔════╝ ██╔════╝    ██╔══██╗██║
-   ██║   █████╗   ╚███╔╝    ██║   █████╗  ██║   ██║██████╔╝██║  ███╗█████╗      ███████║██║
-   ██║   ██╔══╝   ██╔██╗    ██║   ██╔══╝  ██║   ██║██╔══██╗██║   ██║██╔══╝      ██╔══██║██║
-   ██║   ███████╗██╔╝ ██╗   ██║   ██║     ╚██████╔╝██║  ██║╚██████╔╝███████╗    ██║  ██║██║
-   ╚═╝   ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝      ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝    ╚═╝  ╚═╝╚═╝
-```
-
-### *"Forge Your Text With AI"*
-
 <br/>
 
 <p align="center">
@@ -1467,9 +1459,101 @@ See [LICENSE](LICENSE) for the complete text.
 [![Live Demo](https://img.shields.io/badge/Live-Demo-D47E30?style=flat-square)](https://textforge-ai-sable.vercel.app)
 
 <br/>
+
+---
+
+<br/>
+
+## 👨‍💻 About The Developer
+
+<br/>
+
+<div align="center">
+
+<img src="https://github.com/TUSHARTAMRAKAR.png" width="120" height="120" style="border-radius: 50%;" alt="Tushar Tamrakar"/>
+
+<br/>
+<br/>
+
+<!-- Animated name -->
+<img src="https://readme-typing-svg.demolab.com?font=Georgia&size=28&duration=3000&pause=1000&color=D47E30&center=true&vCenter=true&width=500&lines=Tushar+Tamrakar;Full-Stack+Developer;AI+%2F+ML+Enthusiast;Building+Real+Things" alt="Tushar Tamrakar"/>
+
+<br/>
+<br/>
+
+<p align="center">
+  <em>Computer Science Student · Full-Stack Developer · AI / ML Enthusiast</em><br/>
+  <em>Building production-grade applications from college assignments</em>
+</p>
+
+<br/>
+
+<p align="center">
+  <a href="https://github.com/TUSHARTAMRAKAR">
+    <img src="https://img.shields.io/badge/GitHub-TUSHARTAMRAKAR-181717?style=for-the-badge&logo=github&logoColor=white"/>
+  </a>
+</p>
+
+<br/>
+
+<!-- GitHub Stats -->
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=TUSHARTAMRAKAR&show_icons=true&theme=dark&bg_color=1A1208&title_color=D47E30&icon_color=D47E30&text_color=FDFBD4&border_color=D47E30&border_radius=10" alt="GitHub Stats" height="160"/>
+  &nbsp;&nbsp;
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TUSHARTAMRAKAR&layout=compact&theme=dark&bg_color=1A1208&title_color=D47E30&text_color=FDFBD4&border_color=D47E30&border_radius=10" alt="Top Languages" height="160"/>
+</p>
+
+<br/>
+
+</div>
+
+---
+
+<br/>
+
+<div align="center">
+
+<!-- Animated footer -->
+<img src="https://readme-typing-svg.demolab.com?font=Courier+New&size=14&duration=4000&pause=2000&color=D47E30&center=true&vCenter=true&width=600&lines=forge+your+text+with+ai+%E2%97%88;production-grade+%C2%B7+full-stack+%C2%B7+open-source;built+with+%F0%9F%94%A5+by+a+developer+who+refused+to+submit+just+a+notebook" alt="Footer tagline"/>
+
+<br/>
+<br/>
+
+**TextForge AI** — *Forge Your Text With AI*
+
+<br/>
+
+[![Star on GitHub](https://img.shields.io/github/stars/TUSHARTAMRAKAR/textforge-ai?style=social)](https://github.com/TUSHARTAMRAKAR/textforge-ai)
+&nbsp;&nbsp;
+[![Live Demo](https://img.shields.io/badge/Live-Demo-D47E30?style=flat-square)](https://textforge-ai-sable.vercel.app)
+
+<br/>
 <br/>
 
 *If this project helped you, consider giving it a ⭐ on GitHub*
+
+<br/>
+
+---
+
+### 👨‍💻 About The Developer
+
+<br/>
+
+<a href="https://github.com/TUSHARTAMRAKAR">
+  <img src="https://avatars.githubusercontent.com/TUSHARTAMRAKAR" width="80" height="80" style="border-radius: 50%;" alt="Tushar Tamrakar"/>
+</a>
+
+<br/>
+<br/>
+
+**Made with ❤️ by [Tushar Tamrakar](https://github.com/TUSHARTAMRAKAR)**
+
+*B.Tech Student · Full-Stack Developer · AI Enthusiast*
+
+<br/>
+
+[![GitHub](https://img.shields.io/badge/GitHub-TUSHARTAMRAKAR-181717?style=flat-square&logo=github)](https://github.com/TUSHARTAMRAKAR)
 
 <br/>
 
