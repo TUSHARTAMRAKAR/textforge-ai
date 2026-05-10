@@ -166,9 +166,12 @@ export interface DomainGenerateOptions {
 
 export function buildDomainPrompt(options: DomainGenerateOptions): string {
   switch (options.domain) {
-    case "legal":   return buildLegalPrompt(options);
-    case "medical": return buildMedicalPrompt(options);
-    case "startup": return buildStartupPrompt(options);
+    case "legal":    return buildLegalPrompt(options);
+    case "medical":  return buildMedicalPrompt(options);
+    case "startup":  return buildStartupPrompt(options);
+    case "research": return buildResearchPrompt(options);
+    case "grant":    return buildGrantPrompt(options);
+    case "hr":       return buildHRPrompt(options);
     default: throw new Error(`Unknown domain: ${options.domain}`);
   }
 }
@@ -297,6 +300,140 @@ WRITING STANDARDS:
 - Use instead: specific metrics, customer quotes, market data
 - Investor audience: sophisticated angel investors and early-stage VCs
 - Tone: confident but not arrogant, urgent but grounded
+
+Generate the complete document now:`;
+}
+
+function buildResearchPrompt({ outputType, fields }: DomainGenerateOptions): string {
+  const sectionGuide: Record<string, string> = {
+    abstract:          `a structured academic abstract (max ${fields.wordLimit || 250} words) with clearly labelled sections: Background, Objective, Methods, Results, Conclusion`,
+    literature_review: `a critical literature review (${fields.wordLimit || 800} words) that synthesises existing research, identifies gaps, and justifies the current study`,
+    methodology:       `a detailed methodology section (${fields.wordLimit || 800} words) covering research design, data collection, instruments, analysis approach, and ethical considerations`,
+    discussion:        `a discussion and analysis section (${fields.wordLimit || 1000} words) interpreting findings in context of existing literature, addressing limitations, and drawing implications`,
+    conclusion:        `a conclusion section (${fields.wordLimit || 500} words) summarising findings, stating contributions, acknowledging limitations, and suggesting future research directions`,
+  };
+
+  const citationGuides: Record<string, string> = {
+    apa7:     "APA 7th edition (Author, Year) in-text citations",
+    ieee:     "IEEE numbered citations [1], [2] in square brackets",
+    mla9:     "MLA 9th edition (Author page) citations",
+    chicago:  "Chicago author-date style",
+    harvard:  "Harvard (Author Year) referencing",
+    vancouver: "Vancouver numbered superscript citations",
+  };
+
+  return `You are a senior academic researcher and prolific author in the field of ${fields.researchField?.replace(/_/g, " ")} with 50+ peer-reviewed publications.
+
+Write ${sectionGuide[outputType] || "an academic section"} for the following research paper:
+
+PAPER TITLE: ${fields.researchTitle}
+RESEARCH QUESTION: ${fields.researchQuestion}
+${fields.hypothesis ? `HYPOTHESIS: ${fields.hypothesis}` : ""}
+METHODOLOGY: ${fields.methodology?.replace(/_/g, " ")}
+${fields.sampleSize ? `SAMPLE / DATASET: ${fields.sampleSize}` : ""}
+${fields.keyFindings ? `KEY FINDINGS: ${fields.keyFindings}` : ""}
+${fields.limitations ? `LIMITATIONS: ${fields.limitations}` : ""}
+TARGET: ${fields.targetJournal || "High-impact peer-reviewed journal"}
+CITATION STYLE: ${citationGuides[fields.citationStyle] || fields.citationStyle}
+
+ACADEMIC WRITING STANDARDS:
+- Write at the level expected by ${fields.targetJournal || "a Q1 journal"}
+- Use precise academic language — avoid vague terms like "many researchers"
+- Every claim must be attributable — use hedging language where evidence is limited ("suggests", "indicates", "preliminary evidence")
+- Use passive voice where appropriate for objectivity
+- Include transition sentences between paragraphs
+- For ${fields.citationStyle || "APA"} style: format in-text citations correctly with [Author, Year] placeholders
+- Word limit: approximately ${fields.wordLimit || 500} words
+
+Generate the complete section now:`;
+}
+
+function buildGrantPrompt({ outputType, fields }: DomainGenerateOptions): string {
+  const docGuide: Record<string, string> = {
+    project_proposal:     "a full project proposal narrative (600-800 words) covering: Problem statement, Proposed solution, Implementation approach, Expected impact, Organisation capacity, Sustainability plan",
+    impact_statement:     "a compelling impact statement (400-500 words) with specific, measurable outcomes, beneficiary numbers, and long-term systemic change",
+    budget_justification: "a detailed budget justification document explaining each cost category with rationale, value for money, and alignment to project objectives",
+    objectives:           "a SMART objectives and deliverables section with clear timelines, measurable targets, and success indicators",
+    executive_summary:    "a concise executive summary (300-400 words) covering: problem, solution, budget ask, expected outcomes, and organisation credentials",
+  };
+
+  return `You are a grant writing specialist who has successfully secured over ₹50 crores in funding for NGOs, research institutions, and social enterprises.
+
+Write ${docGuide[outputType] || "a grant document"} for the following funding application:
+
+ORGANISATION TYPE: ${fields.organisationType?.replace(/_/g, " ")}
+FUNDING BODY: ${fields.fundingBody}
+GRANT TYPE: ${fields.grantType?.replace(/_/g, " ")}
+PROJECT TITLE: ${fields.projectTitle}
+SECTOR: ${fields.sector?.replace(/_/g, " ")}
+AMOUNT REQUESTED: ${fields.amountRequested}
+PROJECT DURATION: ${fields.projectDuration?.replace(/_/g, " ")}
+TARGET BENEFICIARIES: ${fields.targetBeneficiaries}
+
+PROBLEM BEING ADDRESSED:
+${fields.problemStatement}
+
+EXPECTED OUTCOMES & DELIVERABLES:
+${fields.expectedOutcomes}
+
+GRANT WRITING STANDARDS:
+- Open with a compelling, data-backed problem statement
+- Use specific numbers — beneficiary counts, percentages, monetary values
+- Connect every activity to a measurable outcome
+- Use language the funder uses in their own mission statement
+- Demonstrate organisational capacity without being boastful
+- Avoid jargon — write for a non-specialist review committee
+- Show sustainability beyond the grant period
+- Use active, results-oriented language ("will deliver", "will train", "will measure")
+
+Generate the complete document now:`;
+}
+
+function buildHRPrompt({ outputType, fields }: DomainGenerateOptions): string {
+  const cultureVoice: Record<string, string> = {
+    corporate:    "professional and formal — clear hierarchy, structured environment, stability focus",
+    startup:      "energetic and direct — fast-paced, ownership mindset, impact-driven language",
+    collaborative:"warm and inclusive — team-first, cross-functional, psychological safety",
+    innovative:   "forward-thinking — cutting-edge tech, experimentation valued, growth mindset",
+    inclusive:    "belonging-focused — DEI-forward language, diverse perspectives valued",
+  };
+
+  const docGuide: Record<string, string> = {
+    job_description:    "a comprehensive job description with: Role overview, Key responsibilities (8-10 bullet points), Required qualifications, Nice-to-have skills, What we offer, About the company section",
+    performance_review: "a structured performance review template with: Overall rating, Key achievements, Areas of strength, Development areas, Goals for next period, Manager comments section",
+    offer_letter:       "a professional offer letter with: Position details, Start date placeholder, Compensation breakdown, Benefits summary, Conditions of employment, Acceptance instructions",
+    policy_document:    "an HR policy document with: Policy statement, Scope, Definitions, Procedures, Responsibilities, Non-compliance consequences, Review date",
+    interview_questions:"a structured interview question set with: 5 technical questions, 4 behavioural questions (STAR format), 3 cultural fit questions, 2 situational questions, evaluation criteria",
+  };
+
+  return `You are a Head of People & Culture with 15 years of experience scaling teams at high-growth companies.
+
+Write ${docGuide[outputType] || "an HR document"} for the following role:
+
+ROLE: ${fields.roleTitle}
+DEPARTMENT: ${fields.department?.replace(/_/g, " ")}
+SENIORITY: ${fields.seniorityLevel?.replace(/_/g, " ")}
+COMPANY TYPE: ${fields.companySize?.replace(/_/g, " ")}
+INDUSTRY: ${fields.industry?.replace(/_/g, " ")}
+WORK LOCATION: ${fields.workLocation?.replace(/_/g, " ")}
+${fields.salaryRange ? `COMPENSATION: ${fields.salaryRange}` : ""}
+
+REQUIRED SKILLS & EXPERIENCE:
+${fields.requiredSkills}
+
+COMPANY CULTURE TONE: ${cultureVoice[fields.cultureTone] || fields.cultureTone}
+
+${fields.additionalContext ? `ADDITIONAL CONTEXT:
+${fields.additionalContext}` : ""}
+
+HR WRITING STANDARDS:
+- Use ${cultureVoice[fields.cultureTone] || "professional"} voice throughout
+- Job descriptions: lead with impact, not just tasks ("You will build X" not "Responsible for X")
+- Avoid gendered language — use "they/them" or restructure sentences
+- Be specific about seniority expectations — avoid "x+ years" without context
+- Include BOTH technical hard skills AND soft skills/behaviours
+- Make the company sound like a place people want to work — sell the role
+- For interview questions: include what a GOOD answer looks like as guidance
 
 Generate the complete document now:`;
 }

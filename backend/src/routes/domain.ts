@@ -9,7 +9,7 @@ import { config } from "../config";
 const router = Router();
 
 const DomainGenerateSchema = z.object({
-  domain:     z.enum(["legal", "medical", "startup"]),
+  domain:     z.enum(["legal", "medical", "startup", "research", "grant", "hr"]),
   outputType: z.string().min(1).max(50),
   fields:     z.record(z.string(), z.string()),
 });

@@ -414,10 +414,345 @@ const startupDomain: DomainTemplate = {
 // ─────────────────────────────────────────────────────────────
 //  Export all domains
 // ─────────────────────────────────────────────────────────────
+
+// ─────────────────────────────────────────────────────────────
+//  DOMAIN 4: RESEARCH
+// ─────────────────────────────────────────────────────────────
+const researchDomain: DomainTemplate = {
+  id:          "research",
+  name:        "Research",
+  tagline:     "Academic Paper Writer",
+  description: "Generate journal-ready academic sections — abstracts, literature reviews, methodologies, and conclusions — structured to publication standards.",
+  icon:        "🔬",
+  color:       "#185FA5",
+  bgColor:     "#E6F1FB",
+  exampleUseCase: "A PhD student needs a structured abstract for their machine learning paper submission to IEEE.",
+  outputTypes: [
+    { id: "abstract",           label: "Research Abstract",      description: "250-word structured abstract",           icon: "📄" },
+    { id: "literature_review",  label: "Literature Review",      description: "Critical synthesis of existing work",    icon: "📚" },
+    { id: "methodology",        label: "Methodology Section",    description: "Research design and methods",            icon: "⚗️" },
+    { id: "discussion",         label: "Discussion & Analysis",  description: "Interpretation of findings",             icon: "💭" },
+    { id: "conclusion",         label: "Conclusion",             description: "Summary, implications, future work",     icon: "✅" },
+  ],
+  fields: [
+    {
+      id: "researchField", label: "Research Field / Discipline", type: "select", required: true,
+      options: [
+        { value: "computer_science",  label: "Computer Science / AI / ML" },
+        { value: "engineering",       label: "Engineering" },
+        { value: "medicine",          label: "Medicine / Health Sciences" },
+        { value: "social_sciences",   label: "Social Sciences" },
+        { value: "management",        label: "Management / Business" },
+        { value: "physics",           label: "Physics / Mathematics" },
+        { value: "chemistry",         label: "Chemistry / Biology" },
+        { value: "environmental",     label: "Environmental Sciences" },
+        { value: "education",         label: "Education / Pedagogy" },
+      ],
+    },
+    {
+      id: "paperSection", label: "Section to Generate", type: "select", required: true,
+      options: [
+        { value: "abstract",          label: "Abstract" },
+        { value: "literature_review", label: "Literature Review" },
+        { value: "methodology",       label: "Methodology" },
+        { value: "discussion",        label: "Discussion" },
+        { value: "conclusion",        label: "Conclusion" },
+      ],
+    },
+    {
+      id: "researchTitle", label: "Paper Title", type: "text",
+      placeholder: "e.g. Attention Mechanisms in Large Language Models: A Comparative Study",
+      required: true,
+    },
+    {
+      id: "researchQuestion", label: "Research Question / Objective", type: "textarea",
+      placeholder: "e.g. How do different attention mechanisms affect LLM performance on low-resource languages?",
+      required: true,
+    },
+    {
+      id: "hypothesis", label: "Hypothesis / Thesis Statement", type: "textarea",
+      placeholder: "e.g. Multi-head cross-attention with language-specific tokenization improves accuracy by 15-20% on Hindi NLP tasks.",
+      required: false,
+    },
+    {
+      id: "methodology", label: "Methodology / Research Design", type: "select", required: true,
+      options: [
+        { value: "experimental",    label: "Experimental / Quantitative" },
+        { value: "survey",          label: "Survey / Questionnaire" },
+        { value: "case_study",      label: "Case Study" },
+        { value: "systematic_review", label: "Systematic Literature Review" },
+        { value: "mixed_methods",   label: "Mixed Methods" },
+        { value: "computational",   label: "Computational / Simulation" },
+        { value: "qualitative",     label: "Qualitative / Ethnographic" },
+      ],
+    },
+    {
+      id: "keyFindings", label: "Key Findings / Results", type: "textarea",
+      placeholder: "e.g. Model achieved 94.2% accuracy on benchmark. 23% improvement over baseline. Statistical significance p<0.001.",
+      required: false,
+      helpText: "Leave blank for methodology/literature review sections",
+    },
+    {
+      id: "sampleSize", label: "Sample Size / Dataset", type: "text",
+      placeholder: "e.g. n=450 participants / 50,000 training samples / 3 case studies",
+      required: false,
+    },
+    {
+      id: "limitations", label: "Limitations", type: "text",
+      placeholder: "e.g. Small sample size, single institution, English-language sources only",
+      required: false,
+    },
+    {
+      id: "citationStyle", label: "Citation Style", type: "select", required: true,
+      options: [
+        { value: "apa7",    label: "APA 7th Edition" },
+        { value: "ieee",    label: "IEEE" },
+        { value: "mla9",    label: "MLA 9th Edition" },
+        { value: "chicago", label: "Chicago 17th" },
+        { value: "harvard", label: "Harvard" },
+        { value: "vancouver", label: "Vancouver (Medical)" },
+      ],
+    },
+    {
+      id: "targetJournal", label: "Target Journal / Conference", type: "text",
+      placeholder: "e.g. IEEE Transactions on Neural Networks / NeurIPS 2026 / Elsevier",
+      required: false,
+    },
+    {
+      id: "wordLimit", label: "Word Limit", type: "select", required: true,
+      options: [
+        { value: "250",  label: "250 words (Abstract)" },
+        { value: "500",  label: "500 words" },
+        { value: "800",  label: "800 words" },
+        { value: "1200", label: "1200 words" },
+        { value: "2000", label: "2000 words (Full section)" },
+      ],
+    },
+  ],
+};
+
+// ─────────────────────────────────────────────────────────────
+//  DOMAIN 5: GRANT
+// ─────────────────────────────────────────────────────────────
+const grantDomain: DomainTemplate = {
+  id:          "grant",
+  name:        "Grant",
+  tagline:     "Funding Proposal Generator",
+  description: "Generate compelling grant proposals, project narratives, impact statements, and budget justifications that funding bodies and government agencies expect.",
+  icon:        "💰",
+  color:       "#BA7517",
+  bgColor:     "#FAEEDA",
+  exampleUseCase: "An NGO needs a project proposal for a government social welfare grant of ₹50 lakhs.",
+  outputTypes: [
+    { id: "project_proposal",     label: "Project Proposal",       description: "Full funding proposal narrative",      icon: "📋" },
+    { id: "impact_statement",     label: "Impact Statement",       description: "Measurable outcomes and beneficiaries", icon: "🎯" },
+    { id: "budget_justification", label: "Budget Justification",   description: "Line-item budget with rationale",       icon: "💹" },
+    { id: "objectives",           label: "Goals & Objectives",     description: "SMART objectives and deliverables",     icon: "🏆" },
+    { id: "executive_summary",    label: "Executive Summary",      description: "2-page grant overview",                 icon: "📄" },
+  ],
+  fields: [
+    {
+      id: "grantType", label: "Grant Type", type: "select", required: true,
+      options: [
+        { value: "government",    label: "Government / Public funding" },
+        { value: "ngo",           label: "NGO / Non-profit grant" },
+        { value: "research",      label: "Academic / Research grant" },
+        { value: "startup",       label: "Startup / Innovation grant" },
+        { value: "social",        label: "Social welfare / CSR" },
+        { value: "international", label: "International / UN funding" },
+      ],
+    },
+    {
+      id: "fundingBody", label: "Funding Body / Agency", type: "text",
+      placeholder: "e.g. DST India / Gates Foundation / World Bank / BIRAC",
+      required: true,
+    },
+    {
+      id: "projectTitle", label: "Project Title", type: "text",
+      placeholder: "e.g. AI-powered Early Detection of Crop Disease in Rural Maharashtra",
+      required: true,
+    },
+    {
+      id: "sector", label: "Project Sector", type: "select", required: true,
+      options: [
+        { value: "education",    label: "Education" },
+        { value: "health",       label: "Healthcare / Public Health" },
+        { value: "agriculture",  label: "Agriculture / Rural Development" },
+        { value: "technology",   label: "Technology / Innovation" },
+        { value: "environment",  label: "Environment / Climate" },
+        { value: "women",        label: "Women & Child Welfare" },
+        { value: "skill_dev",    label: "Skill Development / Employment" },
+        { value: "infrastructure", label: "Infrastructure" },
+      ],
+    },
+    {
+      id: "amountRequested", label: "Amount Requested", type: "text",
+      placeholder: "e.g. ₹50,00,000 / $250,000 / €100,000",
+      required: true,
+    },
+    {
+      id: "projectDuration", label: "Project Duration", type: "select", required: true,
+      options: [
+        { value: "6_months",  label: "6 months" },
+        { value: "1_year",    label: "1 year" },
+        { value: "2_years",   label: "2 years" },
+        { value: "3_years",   label: "3 years" },
+        { value: "5_years",   label: "5 years" },
+      ],
+    },
+    {
+      id: "targetBeneficiaries", label: "Target Beneficiaries", type: "text",
+      placeholder: "e.g. 5,000 smallholder farmers in Vidarbha region / 200 underprivileged girls",
+      required: true,
+    },
+    {
+      id: "problemStatement", label: "Problem Being Addressed", type: "textarea",
+      placeholder: "e.g. 40% of crop yield loss in Maharashtra is due to late detection of fungal diseases. Farmers lack access to expert diagnosis.",
+      required: true,
+    },
+    {
+      id: "expectedOutcomes", label: "Expected Outcomes / Deliverables", type: "textarea",
+      placeholder: "e.g. Mobile app deployed to 5,000 farmers. 30% reduction in crop loss. Training of 50 local agricultural extension workers.",
+      required: true,
+    },
+    {
+      id: "organisationType", label: "Applicant Organisation Type", type: "select", required: true,
+      options: [
+        { value: "ngo",         label: "NGO / Trust / Society" },
+        { value: "university",  label: "University / Research Institute" },
+        { value: "startup",     label: "Registered Startup" },
+        { value: "government",  label: "Government Body / PSU" },
+        { value: "company",     label: "Private Company (CSR)" },
+      ],
+    },
+  ],
+};
+
+// ─────────────────────────────────────────────────────────────
+//  DOMAIN 6: HR
+// ─────────────────────────────────────────────────────────────
+const hrDomain: DomainTemplate = {
+  id:          "hr",
+  name:        "HR",
+  tagline:     "People & Talent Document Generator",
+  description: "Generate professional HR documents — job descriptions, performance reviews, offer letters, and policy documents — with the right tone for your company culture.",
+  icon:        "👥",
+  color:       "#D4537E",
+  bgColor:     "#FBEAF0",
+  exampleUseCase: "A startup needs a detailed job description for a Senior Full-Stack Engineer to post on LinkedIn.",
+  outputTypes: [
+    { id: "job_description",   label: "Job Description",        description: "Detailed JD for job boards",          icon: "📢" },
+    { id: "performance_review",label: "Performance Review",     description: "Structured annual/quarterly review",   icon: "⭐" },
+    { id: "offer_letter",      label: "Offer Letter",           description: "Professional employment offer",        icon: "✉️" },
+    { id: "policy_document",   label: "HR Policy Document",     description: "Company policy with guidelines",       icon: "📖" },
+    { id: "interview_questions", label: "Interview Question Set", description: "Role-specific interview questions",  icon: "❓" },
+  ],
+  fields: [
+    {
+      id: "documentType", label: "Document Type", type: "select", required: true,
+      options: [
+        { value: "job_description",    label: "Job Description" },
+        { value: "performance_review", label: "Performance Review" },
+        { value: "offer_letter",       label: "Offer Letter" },
+        { value: "policy_document",    label: "HR Policy Document" },
+        { value: "interview_questions", label: "Interview Question Set" },
+      ],
+    },
+    {
+      id: "roleTitle", label: "Role / Job Title", type: "text",
+      placeholder: "e.g. Senior Full-Stack Engineer / Product Manager / Data Scientist",
+      required: true,
+    },
+    {
+      id: "department", label: "Department", type: "select", required: true,
+      options: [
+        { value: "engineering",  label: "Engineering / Technology" },
+        { value: "product",      label: "Product Management" },
+        { value: "design",       label: "Design / UX" },
+        { value: "marketing",    label: "Marketing / Growth" },
+        { value: "sales",        label: "Sales / Business Development" },
+        { value: "finance",      label: "Finance / Accounts" },
+        { value: "hr",           label: "Human Resources" },
+        { value: "operations",   label: "Operations" },
+        { value: "data",         label: "Data / Analytics" },
+      ],
+    },
+    {
+      id: "seniorityLevel", label: "Seniority Level", type: "select", required: true,
+      options: [
+        { value: "intern",      label: "Intern / Trainee" },
+        { value: "junior",      label: "Junior (0-2 years)" },
+        { value: "mid",         label: "Mid-level (2-5 years)" },
+        { value: "senior",      label: "Senior (5-8 years)" },
+        { value: "lead",        label: "Lead / Principal (8+ years)" },
+        { value: "manager",     label: "Manager" },
+        { value: "director",    label: "Director / VP" },
+      ],
+    },
+    {
+      id: "companySize", label: "Company Type & Size", type: "select", required: true,
+      options: [
+        { value: "startup_small",  label: "Early-stage startup (1-20 people)" },
+        { value: "startup_mid",    label: "Growth-stage startup (20-200 people)" },
+        { value: "mid_market",     label: "Mid-market company (200-1000)" },
+        { value: "enterprise",     label: "Enterprise / MNC (1000+)" },
+      ],
+    },
+    {
+      id: "workLocation", label: "Work Location", type: "select", required: true,
+      options: [
+        { value: "onsite",  label: "On-site / Office" },
+        { value: "remote",  label: "Fully Remote" },
+        { value: "hybrid",  label: "Hybrid" },
+      ],
+    },
+    {
+      id: "salaryRange", label: "Salary / CTC Range", type: "text",
+      placeholder: "e.g. ₹15-22 LPA / $120k-$160k / Competitive + equity",
+      required: false,
+    },
+    {
+      id: "requiredSkills", label: "Required Skills & Technologies", type: "textarea",
+      placeholder: "e.g. React, Node.js, TypeScript, MongoDB, AWS, 3+ years production experience, system design knowledge",
+      required: true,
+    },
+    {
+      id: "cultureTone", label: "Company Culture Tone", type: "select", required: true,
+      options: [
+        { value: "corporate",    label: "Corporate / Formal" },
+        { value: "startup",      label: "Startup / Energetic" },
+        { value: "collaborative",label: "Collaborative / Team-first" },
+        { value: "innovative",   label: "Innovation-driven" },
+        { value: "inclusive",    label: "Diverse & Inclusive focus" },
+      ],
+    },
+    {
+      id: "industry", label: "Industry", type: "select", required: true,
+      options: [
+        { value: "tech",        label: "Technology / Software" },
+        { value: "fintech",     label: "Fintech" },
+        { value: "healthcare",  label: "Healthcare" },
+        { value: "ecommerce",   label: "E-commerce / Retail" },
+        { value: "edtech",      label: "EdTech" },
+        { value: "manufacturing", label: "Manufacturing" },
+        { value: "consulting",  label: "Consulting / Services" },
+      ],
+    },
+    {
+      id: "additionalContext", label: "Additional Context / Special Requirements", type: "textarea",
+      placeholder: "e.g. Must have experience with high-traffic systems (10M+ users). Equity offered. Reports to CTO.",
+      required: false,
+    },
+  ],
+};
+
 export const DOMAIN_TEMPLATES: DomainTemplate[] = [
   legalDomain,
   medicalDomain,
   startupDomain,
+  researchDomain,
+  grantDomain,
+  hrDomain,
 ];
 
 export const getDomainById = (id: string): DomainTemplate | undefined =>

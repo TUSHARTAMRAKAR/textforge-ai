@@ -107,7 +107,7 @@ export default function DomainPage() {
 
         {/* ── STEP 1: Pick a domain ── */}
         {step === "pick" && (
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "14px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px" }}>
             {DOMAIN_TEMPLATES.map((domain) => (
               <button key={domain.id} onClick={() => handleSelectDomain(domain)} style={{
                 background: "var(--bg-1)", border: "1px solid var(--border)",
