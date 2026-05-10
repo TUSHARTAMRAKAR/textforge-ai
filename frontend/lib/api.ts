@@ -157,6 +157,16 @@ export const api = {
     return streamSSE(`${BASE_URL}/api/generate/refine`, options, onChunk, onDone, onError);
   },
 
+  // Deep Domain Template generation
+  async postDomainGenerate(
+    options: { domain: string; outputType: string; fields: Record<string, string> },
+    onChunk: (text: string) => void,
+    onDone: (savedId?: string) => void,
+    onError: (err: string) => void
+  ): Promise<void> {
+    return streamSSE(`${BASE_URL}/api/domain/generate`, options, onChunk, onDone, onError);
+  },
+
   async getHistory(filters: HistoryFilters = {}): Promise<HistoryResponse> {
     const qs = new URLSearchParams();
     qs.set("page", String(filters.page ?? 1));
