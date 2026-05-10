@@ -12,13 +12,11 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "declaration": true,
-    "sourceMap": true,
+    "sourceMap": true
+  },
+  "ts-node": {
     "transpileOnly": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"],
-  "ts-node": {
-    "transpileOnly": true,
-    "files": true
-  }
+  "exclude": ["node_modules", "dist"]
 }

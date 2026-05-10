@@ -1,122 +1,64 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
 
-// ─────────────────────────────────────────────────────────────
-//  Generation.ts  —  Mongoose Model
-//
-//  Every time a user generates text, we save it here.
-//  This powers the History page on the frontend.
-// ─────────────────────────────────────────────────────────────
-
-export type Tone = "formal" | "casual" | "creative" | "academic";
-export type Length = "short" | "medium" | "long";
+export type Tone     = "formal" | "casual" | "creative" | "academic";
+export type Length   = "short"  | "medium" | "long";
 export type Language = "en" | "hi" | "es" | "fr" | "ja" | "ar" | "de" | "zh";
 
-export interface IGeneration extends Document {
-  topic: string;
-  tone: Tone;
-  length: Length;
-  language: Language;
-  keywords: string[];
-  prompt: string;
-  output: string;
-  wordCount: number;
-  model: string;
+// ─────────────────────────────────────────────────────────────
+//  Generation.ts — Mongoose Model
+//  Note: field renamed from "model" to "modelName" to avoid
+//  conflict with Mongoose's built-in Document.model() method.
+// ─────────────────────────────────────────────────────────────
 
-  // User scoping (used when authentication is enabled)
-  userId?: string;
-
-  // Roadmap features
-  isFavourite: boolean;
-  isShared: boolean;
-  templateId?: string;
+export interface IGeneration {
+  _id:          Types.ObjectId;
+  topic:        string;
+  tone:         Tone;
+  length:       Length;
+  language:     Language;
+  keywords:     string[];
+  prompt:       string;
+  output:       string;
+  wordCount:    number;
+  modelName:    string;
+  userId?:      string;
+  isFavourite:  boolean;
+  isShared:     boolean;
+  templateId?:  string;
   refinementOf?: string;
-
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt:    Date;
+  updatedAt:    Date;
 }
 
-const GenerationSchema = new Schema<IGeneration>(
+const GenerationSchema = new Schema(
   {
-    topic: {
-      type: String,
-      required: [true, "Topic is required"],
-      trim: true,
-      maxlength: [500, "Topic cannot exceed 500 characters"],
-    },
-    tone: {
-      type: String,
-      enum: ["formal", "casual", "creative", "academic"],
-      required: [true, "Tone is required"],
-      default: "formal",
-    },
-    length: {
-      type: String,
-      enum: ["short", "medium", "long"],
-      required: [true, "Length is required"],
-      default: "medium",
-    },
-    language: {
-      type: String,
-      enum: ["en", "hi", "es", "fr", "ja", "ar", "de", "zh"],
-      default: "en",
-    },
-    keywords: {
-      type: [String],
-      default: [],
-      validate: {
-        validator: (arr: string[]) => arr.length <= 10,
-        message: "Cannot have more than 10 SEO keywords",
-      },
-    },
-    prompt: {
-      type: String,
-      required: [true, "Prompt is required"],
-    },
-    output: {
-      type: String,
-      required: [true, "Output is required"],
-    },
-    wordCount: {
-      type: Number,
-      default: 0,
-    },
-    model: {
-      type: String,
-      default: "gemini-2.5-flash",
-    },
-    userId: {
-      type: String,
-      index: true,
-    },
-    isFavourite: {
-      type: Boolean,
-      default: false,
-    },
-    isShared: {
-      type: Boolean,
-      default: true,
-    },
-    templateId: {
-      type: String,
-    },
-    refinementOf: {
-      type: Schema.Types.ObjectId,
-      ref: "Generation",
-    },
+    topic:       { type: String, required: true, trim: true, maxlength: 500 },
+    tone:        { type: String, enum: ["formal","casual","creative","academic"], default: "formal" },
+    length:      { type: String, enum: ["short","medium","long"], default: "medium" },
+    language:    { type: String, default: "en" },
+    keywords:    { type: [String], default: [] },
+    prompt:      { type: String, required: true },
+    output:      { type: String, required: true },
+    wordCount:   { type: Number, default: 0 },
+    modelName:   { type: String, default: "gemini-2.5-flash" },
+    userId:      { type: String, index: true },
+    isFavourite: { type: Boolean, default: false, index: true },
+    isShared:    { type: Boolean, default: false },
+    templateId:  { type: String },
+    refinementOf:{ type: String },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
+// Auto word count
 GenerationSchema.pre("save", function (next) {
-  this.wordCount = this.output.split(/\s+/).filter(Boolean).length;
+  const doc = this as any;
+  doc.wordCount = (doc.output || "").split(/\s+/).filter(Boolean).length;
   next();
 });
 
 GenerationSchema.index({ createdAt: -1 });
 GenerationSchema.index({ isFavourite: 1, createdAt: -1 });
 GenerationSchema.index({ userId: 1, createdAt: -1 });
-GenerationSchema.index({ topic: "text", output: "text" });
 
-export const Generation = model<IGeneration>("Generation", GenerationSchema);
+export const Generation = model("Generation", GenerationSchema);

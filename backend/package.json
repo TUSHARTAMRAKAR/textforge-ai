@@ -2,12 +2,11 @@
   "name": "textforge-ai-backend",
   "version": "1.1.0",
   "description": "TextForge AI — Generative Text Model API powered by Gemini",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "build": "echo 'No build step required'",
-    "start": "node -r ts-node/register/transpile-only src/index.ts",
-    "lint": "eslint src --ext .ts",
+    "build": "tsc --skipLibCheck",
+    "start": "node dist/index.js",
     "test": "jest"
   },
   "dependencies": {
