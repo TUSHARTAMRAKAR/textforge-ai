@@ -78,11 +78,14 @@ export default function WorkspacePage() {
     setTopic, setTone, setLength, setLanguage,
   } = useGenerateStore();
 
-  // Inject userId into API calls
+  // Inject userId into API calls — MUST happen before any API call
   useEffect(() => {
     if (status === "loading") return;
     const id = session?.user ? ((session.user as any).id || session.user.email) : null;
     setApiUserId(id);
+    // Refetch history immediately after userId is set
+    // This ensures sidebar shows only the logged-in user's generations
+    fetchHistory();
   }, [session, status]);
 
   // Close popups on outside click
@@ -108,7 +111,11 @@ export default function WorkspacePage() {
     finally { setLoading(false); }
   }, [activeTab, search]);
 
-  useEffect(() => { fetchHistory(); }, [activeTab]);
+  // Only fetch after auth status is known — prevents guest data showing briefly
+  useEffect(() => {
+    if (status === "loading") return;
+    fetchHistory();
+  }, [activeTab, status]);
   useEffect(() => { const t = setTimeout(() => fetchHistory(), 300); return () => clearTimeout(t); }, [search]);
   useEffect(() => { if (searchOpen) setTimeout(() => searchRef.current?.focus(), 50); }, [searchOpen]);
 
