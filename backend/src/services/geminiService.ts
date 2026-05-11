@@ -477,3 +477,126 @@ ${text}
 
 REWRITTEN VERSION:`;
 }
+
+// ─────────────────────────────────────────────────────────────
+//  VERNACULAR / INDIA-FIRST PROMPT BUILDERS
+//
+//  WHY: Generic AI generates translated English, not native
+//  Indian language content. These prompts instruct Gemini to
+//  write as a native speaker would — with culturally appropriate
+//  idioms, references, and context.
+// ─────────────────────────────────────────────────────────────
+
+export interface VernacularOptions {
+  topic:      string;
+  language:   string;  // "hi" | "mr" | "ta" | "te" | "bn" | "gu"
+  tone:       string;
+  length:     string;
+  context:    string;  // "general" | "education" | "business" | "news" | "social"
+  region?:    string;  // specific region for localisation
+}
+
+const LANGUAGE_PROFILES: Record<string, {
+  name: string;
+  nativeName: string;
+  script: string;
+  culturalContext: string;
+  idiomInstruction: string;
+  referenceInstruction: string;
+}> = {
+  hi: {
+    name: "Hindi",
+    nativeName: "हिन्दी",
+    script: "Devanagari",
+    culturalContext: "North Indian culture, Hindu traditions, Bollywood references, cricket, festivals like Diwali and Holi, street food culture, joint family values",
+    idiomInstruction: "Use natural Hindi idioms like 'अपना हाथ जगन्नाथ', 'नाच न जाने आंगन टेढ़ा', common Hinglish expressions where appropriate for modern readers",
+    referenceInstruction: "Reference Indian icons, freedom fighters, classical literature, contemporary figures like scientists, cricketers, and Bollywood personalities when relevant",
+  },
+  mr: {
+    name: "Marathi",
+    nativeName: "मराठी",
+    script: "Devanagari",
+    culturalContext: "Maharashtra culture, Maratha pride, Shivaji Maharaj references, Ganesh Chaturthi, Varkari tradition, Mumbai urban culture, Pune intellectual culture, agriculture",
+    idiomInstruction: "Use natural Marathi proverbs like 'घरोघरी मातीच्या चुली', colloquial Marathi expressions, and Mumbaiya Marathi for urban contexts",
+    referenceInstruction: "Reference Marathi icons like Bal Gandharkar, Lata Mangeshkar, Sachin Tendulkar, Lokamanya Tilak, and contemporary Maharashtra figures",
+  },
+  ta: {
+    name: "Tamil",
+    nativeName: "தமிழ்",
+    script: "Tamil script",
+    culturalContext: "Dravidian culture, Sangam literature pride, classical Tamil traditions, Pongal festival, Tamil cinema (Kollywood), Chennai urban culture, agriculture, temple culture",
+    idiomInstruction: "Use classical Tamil expressions and modern colloquial Tamil naturally, drawing from Thirukkural wisdom where appropriate",
+    referenceInstruction: "Reference Tamil icons like Thiruvalluvar, A.R. Rahman, Rajinikanth, M.S. Subbulakshmi, and reference Sangam poetry traditions",
+  },
+  te: {
+    name: "Telugu",
+    nativeName: "తెలుగు",
+    script: "Telugu script",
+    culturalContext: "Andhra Pradesh and Telangana culture, Telugu literature, Ugadi festival, Tollywood film industry, Kuchipudi dance, rice farming, IT culture of Hyderabad",
+    idiomInstruction: "Use natural Telugu proverbs and idioms, colloquial Hyderabadi Telugu for urban content, formal Telugu for academic content",
+    referenceInstruction: "Reference Telugu icons like Sri Sri, Viswanatha Satyanarayana, NT Rama Rao, PV Narasimha Rao, and Hyderabad's tech culture",
+  },
+  bn: {
+    name: "Bengali",
+    nativeName: "বাংলা",
+    script: "Bengali script",
+    culturalContext: "Bengal culture, Rabindranath Tagore, Durga Puja, mishti doi culture, intellectual tradition, freedom movement history, fish-eating culture, art and literature",
+    idiomInstruction: "Use natural Bengali expressions, mix of formal Shadhubhasha and colloquial Choltibhasha appropriate to context",
+    referenceInstruction: "Reference Tagore, Subhash Chandra Bose, Satyajit Ray, Amartya Sen, and rich Bengali literary tradition",
+  },
+  gu: {
+    name: "Gujarati",
+    nativeName: "ગુજરાતી",
+    script: "Gujarati script",
+    culturalContext: "Gujarat culture, Navratri festival, business community values, Mahatma Gandhi, vegetarian food culture, textile industry, diaspora success stories",
+    idiomInstruction: "Use natural Gujarati proverbs and business-oriented expressions, Saurashtra dialect references for relevant contexts",
+    referenceInstruction: "Reference Mahatma Gandhi, Sardar Patel, Dhirubhai Ambani, and Gujarat's entrepreneurial culture",
+  },
+};
+
+const CONTEXT_INSTRUCTIONS: Record<string, string> = {
+  general:   "Write for a general educated Indian audience",
+  education: "Write for students and educators, use examples from Indian curriculum and education system",
+  business:  "Write for Indian business context — reference Indian market, companies like Tata, Infosys, Reliance, startup ecosystem",
+  news:      "Write in the style of Indian journalism — balanced, factual, references to Indian institutions like Supreme Court, Parliament, RBI",
+  social:    "Write for social media sharing — engaging, relatable to Indian millennials and Gen Z, culturally vibrant",
+};
+
+const LENGTH_WORDS: Record<string, string> = {
+  short:  "150-200 words",
+  medium: "350-400 words",
+  long:   "650-700 words",
+};
+
+export function buildVernacularPrompt(options: VernacularOptions): string {
+  const { topic, language, tone, length, context, region } = options;
+  const profile = LANGUAGE_PROFILES[language];
+  if (!profile) throw new Error(`Unsupported language: ${language}`);
+
+  const contextInstruction = CONTEXT_INSTRUCTIONS[context] || CONTEXT_INSTRUCTIONS.general;
+  const wordCount          = LENGTH_WORDS[length] || LENGTH_WORDS.medium;
+
+  return `You are a native ${profile.name} writer and content creator with deep roots in Indian culture.
+
+Write an engaging ${tone} piece about "${topic}" in ${profile.nativeName} (${profile.script} script).
+
+LENGTH: ${wordCount}
+
+CULTURAL AUTHENTICITY REQUIREMENTS:
+1. Write as a NATIVE speaker — not translated English
+2. Cultural context: ${profile.culturalContext}
+3. Idioms: ${profile.idiomInstruction}
+4. References: ${profile.referenceInstruction}
+${region ? `5. Regional focus: ${region}` : ""}
+
+AUDIENCE: ${contextInstruction}
+
+CRITICAL RULES:
+- Write ENTIRELY in ${profile.nativeName} — no English words unless they are common loanwords in everyday ${profile.name} usage
+- Use ${profile.script} script throughout
+- The content must feel like it was WRITTEN in ${profile.name} — not translated from English
+- Include at least one culturally specific reference, proverb, or idiom
+- Maintain ${tone} tone throughout
+
+Write the complete piece now:`;
+}

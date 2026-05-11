@@ -70,6 +70,20 @@ export function Navbar() {
 
           {/* Citations + Domain Docs — only on workspace page */}
           {isWorkspace && (
+            <Link href="/vernacular" style={{
+              fontFamily: "var(--font-sans)", fontWeight: 500, fontSize: "13px",
+              color: "var(--text-2)", textDecoration: "none",
+              padding: "7px 12px", borderRadius: "8px",
+              background: "transparent", border: "1px solid transparent",
+              transition: "all 0.15s", display: "flex", alignItems: "center", gap: "5px",
+            }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--brand-subtle)"; (e.currentTarget as HTMLElement).style.color = "var(--brand)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "var(--text-2)"; }}
+            >
+              🇮🇳 Bharat AI
+            </Link>
+          )}
+          {isWorkspace && (
             <Link href="/citations" style={{
               fontFamily: "var(--font-sans)", fontWeight: 500, fontSize: "13px",
               color: "var(--text-2)", textDecoration: "none",

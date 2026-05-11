@@ -14,7 +14,8 @@ import statsRouter from "./routes/stats";
 import apiKeysRouter from "./routes/apiKeys";
 import publicGenerateRouter from "./routes/publicGenerate";
 import domainRouter     from "./routes/domain";
-import citationsRouter from "./routes/citations";
+import citationsRouter  from "./routes/citations";
+import vernacularRouter from "./routes/vernacular";
 
 const app = express();
 
@@ -42,7 +43,8 @@ app.use("/api/share",      shareRouter);
 app.use("/api/stats",      statsRouter);
 app.use("/api/keys",       apiKeysRouter);
 app.use("/api/domain",     domainRouter);
-app.use("/api/citations",  citationsRouter);
+app.use("/api/citations",   citationsRouter);
+app.use("/api/vernacular",  vernacularRouter);
 
 app.use("/v1/generate", apiKeyAuth, publicGenerateRouter);
 
