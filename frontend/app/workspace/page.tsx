@@ -581,6 +581,9 @@ function MessageBubble({ message, index, totalCount }: { message: ChatMessage; i
         {totalCount > 1 && <div style={{ position: "absolute", top: "12px", right: "14px", fontFamily: "var(--font-mono)", fontSize: "10px", color: "var(--text-4)" }}>#{index + 1}</div>}
         <p className="generation-output">{message.output}</p>
       </div>
+
+      {/* AI Detection Panel */}
+      <AIDetectionPanel text={message.output} />
     </div>
   );
 }
