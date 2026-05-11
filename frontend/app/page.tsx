@@ -1,15 +1,18 @@
 "use client";
-import { MadeBy } from "@/components/MadeBy";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Zap, Brain, Shield, History } from "lucide-react";
+import { MadeBy } from "@/components/MadeBy";
+import { ArrowRight, Sparkles, Zap, Brain, Shield, BookOpen, Globe2, FileText, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const features = [
-  { icon: Sparkles, title: "Gemini 2.5 Flash",    desc: "Google's latest free model — 1,500 req/day, zero cost." },
-  { icon: Zap,      title: "Real-time Streaming", desc: "Watch text appear token-by-token with live SSE." },
-  { icon: Brain,    title: "Prompt Engineering",  desc: "Templates, 8 languages, and SEO keywords for perfect output." },
-  { icon: History,  title: "Searchable History",  desc: "Filter, search, favourite, share — every generation saved." },
-  { icon: Shield,   title: "Public API Mode",     desc: "Mint API keys and call TextForge from your own apps." },
+  { icon: Sparkles,  title: "Gemini 2.5 Flash",         desc: "Google's latest free model — 1,500 req/day, zero cost." },
+  { icon: Zap,       title: "Real-time SSE Streaming",   desc: "Watch text appear token-by-token — first token in under 200ms." },
+  { icon: Brain,     title: "Deep Domain Templates",     desc: "Legal, Medical, Startup, Research, Grant, HR — 70+ parameters." },
+  { icon: Shield,    title: "AI Detection + Humaniser",  desc: "5-dimension risk scoring — one click to rewrite and pass detectors." },
+  { icon: BookOpen,  title: "Academic Citations",        desc: "Real sources from 200M+ papers via Semantic Scholar and CrossRef." },
+  { icon: Globe2,    title: "Bharat AI — भारत AI",      desc: "Native generation in Hindi, Marathi, Tamil, Telugu, Bengali, Gujarati." },
+  { icon: Search,    title: "Searchable History",        desc: "Filter, search, favourite, share — every generation saved forever." },
+  { icon: FileText,  title: "Public API Mode",           desc: "Mint API keys and call TextForge from your own apps." },
 ];
 
 const techStack = [
@@ -137,20 +140,43 @@ export default function HomePage() {
           margin: "0 auto 44px", lineHeight: 1.75,
           fontWeight: 300,
         }}>
-          Generate coherent, high-quality paragraphs on any topic.
-          Choose tone, length, and subject.
+          Generate academic articles with real citations, domain-specific legal and medical documents,
+          AI-scored content with humanisation, and native Indian language writing — all in one platform.
         </p>
 
         <div className="animate-fade-up delay-3" style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
-          <Link href="/generate" className="btn-primary" style={{ fontSize: "15px", padding: "14px 28px", textDecoration: "none" }}>
+          <Link href="/workspace" style={{
+            fontSize: "15px", padding: "16px 36px", textDecoration: "none",
+            background: "linear-gradient(135deg, #D47E30, #E8A050, #D47E30)",
+            backgroundSize: "200% 200%",
+            color: "#1A1208", fontWeight: 700,
+            borderRadius: "12px",
+            display: "inline-flex", alignItems: "center", gap: "8px",
+            fontFamily: "var(--font-sans)",
+            boxShadow: "0 0 24px rgba(212,126,48,0.4), 0 4px 16px rgba(212,126,48,0.3)",
+            animation: "btnPulse 2s ease-in-out infinite, btnShimmer 3s linear infinite",
+            border: "1px solid rgba(212,126,48,0.5)",
+            letterSpacing: "0.02em",
+          }}>
             Start Generating <ArrowRight size={17} />
           </Link>
         </div>
+        <style>{`
+          @keyframes btnPulse {
+            0%, 100% { box-shadow: 0 0 24px rgba(212,126,48,0.4), 0 4px 16px rgba(212,126,48,0.3); transform: scale(1); }
+            50%       { box-shadow: 0 0 40px rgba(212,126,48,0.7), 0 8px 32px rgba(212,126,48,0.5); transform: scale(1.03); }
+          }
+          @keyframes btnShimmer {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+          }
+        `}</style>
       </section>
 
       {/* ── Features ── */}
       <section style={{ maxWidth: "960px", margin: "0 auto", padding: "0 40px 80px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: "12px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" }}>
           {features.map(({ icon: Icon, title, desc }, i) => (
             <div key={title} className={`card animate-fade-up delay-${(i % 3) + 1}`} style={{ padding: "22px 20px" }}>
               <div style={{
@@ -197,7 +223,7 @@ export default function HomePage() {
                 </span>
               </div>
               <p style={{ fontFamily: "var(--font-sans)", fontSize: "13px", color: "var(--text-3)", maxWidth: "240px", lineHeight: 1.65 }}>
-                A full-stack generative text model built with modern web tech and Google's free Gemini API.
+                A production-grade AI writing platform — citations, domain documents, AI detection, and vernacular generation for 1.4B Indians.
               </p>
             </div>
 
@@ -205,7 +231,7 @@ export default function HomePage() {
             <div>
               <p className="label">Navigate</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "9px" }}>
-                {[{ label: "Generate", href: "/generate" }, { label: "History", href: "/history" }].map(({ label, href }) => (
+                {[{ label: "Generate", href: "/workspace" }].map(({ label, href }) => (
                   <Link key={href} href={href} style={{
                     fontFamily: "var(--font-sans)", fontSize: "14px",
                     color: "var(--text-2)", textDecoration: "none",
@@ -259,15 +285,10 @@ export default function HomePage() {
             borderTop: "1px solid var(--border)", paddingTop: "24px",
             display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px",
           }}>
-            {/* Left: copyright */}
             <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--text-4)" }}>
               © 2026 TextForge AI — MIT License
             </span>
-
-            {/* Center: animated Made by */}
             <MadeBy />
-
-            {/* Right: tagline */}
             <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--brand)", letterSpacing: "0.12em" }}>
               FORGE YOUR TEXT WITH AI ◈
             </span>
