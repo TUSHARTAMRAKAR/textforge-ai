@@ -717,6 +717,11 @@ function SidebarItem({ generation, isActive, onClick, onDelete, onFavouriteToggl
             <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
               <span style={{ fontSize: "10px", fontFamily: "var(--font-mono)", color, background: `${color}18`, padding: "1px 6px", borderRadius: "99px", border: `1px solid ${color}28`, textTransform: "capitalize" }}>{generation.tone}</span>
               <span style={{ fontSize: "10px", color: "var(--text-4)", fontFamily: "var(--font-mono)" }}>{generation.wordCount}w</span>
+              {generation.citationCount && generation.citationCount > 0 ? (
+                <span style={{ fontSize: "10px", color: "#1D9E75", background: "#E1F5EE", fontFamily: "var(--font-mono)", padding: "1px 5px", borderRadius: "99px" }}>
+                  📚 {generation.citationCount}
+                </span>
+              ) : null}
             </div>
           </div>
           {(hovered || menuOpen) && (

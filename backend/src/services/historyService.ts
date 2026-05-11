@@ -10,8 +10,11 @@ export interface SaveGenerationDTO {
   output:       string;
   modelName?:   string;
   userId?:      string;
-  templateId?:  string;
+  templateId?:   string;
   refinementOf?: string;
+  citations?:    any[];
+  citationStyle?: string;
+  citationCount?: number;
 }
 
 export interface ListFilters {

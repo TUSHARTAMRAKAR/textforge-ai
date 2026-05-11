@@ -61,6 +61,8 @@ export interface Generation {
   isFavourite?: boolean;
   isShared?: boolean;
   createdAt: string;
+  citationCount?: number;   // Set for cited generations
+  citationStyle?: string;   // "apa" | "mla" | "ieee"
 }
 
 export interface HistoryFilters {

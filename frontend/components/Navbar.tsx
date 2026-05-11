@@ -68,7 +68,21 @@ export function Navbar() {
         {/* Right side */}
         <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
 
-          {/* Domain Docs — only on workspace page */}
+          {/* Citations + Domain Docs — only on workspace page */}
+          {isWorkspace && (
+            <Link href="/citations" style={{
+              fontFamily: "var(--font-sans)", fontWeight: 500, fontSize: "13px",
+              color: "var(--text-2)", textDecoration: "none",
+              padding: "7px 12px", borderRadius: "8px",
+              background: "transparent", border: "1px solid transparent",
+              transition: "all 0.15s", display: "flex", alignItems: "center", gap: "5px",
+            }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--brand-subtle)"; (e.currentTarget as HTMLElement).style.color = "var(--brand)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "var(--text-2)"; }}
+            >
+              📚 Citations
+            </Link>
+          )}
           {isWorkspace && (
             <Link href="/domain" style={{
               fontFamily: "var(--font-sans)", fontWeight: 500, fontSize: "13px",

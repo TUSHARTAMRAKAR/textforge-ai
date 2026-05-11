@@ -26,6 +26,9 @@ export interface IGeneration {
   isShared:     boolean;
   templateId?:  string;
   refinementOf?: string;
+  citations?:   any[];      // Stored citation metadata for cited generations
+  citationStyle?: string;   // "apa" | "mla" | "ieee"
+  citationCount?: number;   // How many citations were used
   createdAt:    Date;
   updatedAt:    Date;
 }
@@ -46,6 +49,9 @@ const GenerationSchema = new Schema(
     isShared:    { type: Boolean, default: false },
     templateId:  { type: String },
     refinementOf:{ type: String },
+    citations:   { type: [Object], default: undefined },
+    citationStyle: { type: String },
+    citationCount: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
