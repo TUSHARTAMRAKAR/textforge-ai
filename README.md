@@ -857,7 +857,7 @@ Rules:
 ### 🔮 v3.0 — Future Vision
 - **Mobile Application** — React Native iOS + Android
 - **Browser Extension** — One-click generation from any webpage
-- **Fine-tuned Domain Models** — Custom models trained on legal/medical corpora
+- **Fine-tuned Domain Models** — Custom models trained on legal/medical corporates
 
 <br/>
 
