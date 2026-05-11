@@ -47,7 +47,7 @@ async function fetchSemanticScholar(query: string, limit = 4): Promise<Citation[
     });
 
     if (!response.ok) return [];
-    const data = await response.json();
+    const data = await response.json() as any;
     if (!data.data) return [];
 
     return data.data
@@ -83,7 +83,7 @@ async function fetchCrossRef(query: string, limit = 3): Promise<Citation[]> {
     });
 
     if (!response.ok) return [];
-    const data = await response.json();
+    const data = await response.json() as any;
     if (!data.message?.items) return [];
 
     return data.message.items
