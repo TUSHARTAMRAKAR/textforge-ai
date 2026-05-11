@@ -91,7 +91,7 @@ export function Navbar() {
           {!isWorkspace && (
             <>
               {[
-                { href: "/workspace", label: "Generate" },
+                { href: "/workspace", label: "Workspace" },
                 { href: "/stats",     label: "Stats"    },
                 { href: "/api-keys",  label: "API Keys" },
               ].map(({ href, label }) => (

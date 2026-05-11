@@ -13,6 +13,7 @@ import shareRouter from "./routes/share";
 import statsRouter from "./routes/stats";
 import apiKeysRouter from "./routes/apiKeys";
 import publicGenerateRouter from "./routes/publicGenerate";
+import domainRouter from "./routes/domain";
 
 // ─────────────────────────────────────────────────────────────
 //  index.ts  —  TextForge AI Backend Entry Point
@@ -62,6 +63,7 @@ app.use("/api/history", historyRouter);
 app.use("/api/share", shareRouter);
 app.use("/api/stats", statsRouter);
 app.use("/api/keys", apiKeysRouter);
+app.use("/api/domain", domainRouter);
 
 // ── Public API (third-party API key access) ───────────────────
 app.use("/v1/generate", apiKeyAuth, publicGenerateRouter);
