@@ -849,10 +849,15 @@ Rules:
 - Landing page upgrade (8 feature cards)
 - LSTM notebook upgraded (13 cells, v2.0 docs)
 
-### 📋 v2.1 — Enhancement
-- Multi-model comparison (Gemini vs GPT vs Claude)
-- Writing Coach — improve YOUR writing, not replace it
-- Mobile application (React Native)
+### 📋 v2.1 — Coming Soon
+- **Multi-Model Comparison Engine** — One prompt → Gemini + GPT + Claude side-by-side. Community leaderboard of best model per use case and tone.
+- **Writing Coach** — The ANTI-ChatGPT. Analyses YOUR writing, gives specific feedback, tracks vocabulary growth and improvement over time. Gamified streaks.
+- **UI Internationalisation (i18n)** — Full interface translation via `next-intl`. Note: AI content in 8 languages already works — this covers UI strings.
+
+### 🔮 v3.0 — Future Vision
+- **Mobile Application** — React Native iOS + Android
+- **Browser Extension** — One-click generation from any webpage
+- **Fine-tuned Domain Models** — Custom models trained on legal/medical corpora
 
 <br/>
 
