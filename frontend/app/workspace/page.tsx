@@ -1,4 +1,5 @@
 "use client";
+import { AIDetectionPanel } from "@/components/AIDetectionPanel";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { api, Generation } from "@/lib/api";
 import { useGenerateStore } from "@/lib/store";

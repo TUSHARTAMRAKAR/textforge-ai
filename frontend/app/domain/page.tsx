@@ -1,4 +1,5 @@
 "use client";
+import { AIDetectionPanel } from "@/components/AIDetectionPanel";
 import { useState, useRef, useEffect } from "react";
 import { DOMAIN_TEMPLATES, DomainTemplate, getDomainById } from "@/lib/domainTemplates";
 import { useGenerateStore } from "@/lib/store";
