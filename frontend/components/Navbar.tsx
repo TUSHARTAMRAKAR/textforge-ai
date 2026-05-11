@@ -106,6 +106,7 @@ export function Navbar() {
             <>
               {[
                 { href: "/workspace", label: "Workspace" },
+                { href: "/demo",      label: "🎓 Demo"   },
                 { href: "/stats",     label: "Stats"    },
                 { href: "/api-keys",  label: "API Keys" },
               ].map(({ href, label }) => (
