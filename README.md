@@ -2,18 +2,15 @@
 
 <br/>
 
-[![TextForge AI](https://readme-typing-svg.demolab.com?font=Space+Grotesk&weight=700&size=48&pause=1000&color=D47E30&center=true&vCenter=true&width=700&height=90&lines=🔥+TextForge+AI;Forge+Your+Text+With+AI;Built+by+Tushar+Tamrakar)](https://textforge-ai-sable.vercel.app)
+[![TextForge AI](https://readme-typing-svg.demolab.com?font=Space+Grotesk&weight=700&size=52&pause=1000&color=D47E30&center=true&vCenter=true&width=800&height=100&lines=🔥+TextForge+AI;Forge+Your+Text+With+AI;6+Domains+·+70%2B+Parameters;AI+Detection+%2B+Humaniser;Real+Academic+Citations;🇮🇳+Bharat+AI+-+भारत+AI;Built+by+Tushar+Tamrakar)](https://textforge-ai-sable.vercel.app)
 
-<br/>
 <br/>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/STATUS-LIVE%20IN%20PRODUCTION-00D4AA?style=for-the-badge&labelColor=0A0A0A" alt="Live"/>
-  <img src="https://img.shields.io/badge/VERSION-1.1.0-D47E30?style=for-the-badge&labelColor=0A0A0A" alt="Version"/>
-  <img src="https://img.shields.io/badge/LICENSE-MIT-7C3AED?style=for-the-badge&labelColor=0A0A0A" alt="License"/>
+  <img src="https://img.shields.io/badge/STATUS-LIVE%20IN%20PRODUCTION-00D4AA?style=for-the-badge&labelColor=0A0A0A" />
+  <img src="https://img.shields.io/badge/VERSION-2.0.0-D47E30?style=for-the-badge&labelColor=0A0A0A" />
+  <img src="https://img.shields.io/badge/LICENSE-MIT-7C3AED?style=for-the-badge&labelColor=0A0A0A" />
 </p>
-
-<br/>
 
 <p align="center">
   <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-14.2-000000?style=flat-square&logo=next.js&logoColor=white"/></a>
@@ -30,35 +27,22 @@
 <br/>
 
 <p align="center">
-  <a href="https://textforge-ai-sable.vercel.app"><strong>🌐 Live Demo</strong></a> &nbsp;·&nbsp;
+  <a href="https://textforge-ai-sable.vercel.app"><strong>🌐 Live App</strong></a> &nbsp;·&nbsp;
+  <a href="https://textforge-ai-sable.vercel.app/demo"><strong>🎓 Professor Demo</strong></a> &nbsp;·&nbsp;
   <a href="#-system-architecture"><strong>🏗 Architecture</strong></a> &nbsp;·&nbsp;
   <a href="#-the-lstm-model--academic-deep-dive"><strong>🧠 LSTM Deep Dive</strong></a> &nbsp;·&nbsp;
-  <a href="#-real-time-streaming--sse-internals"><strong>⚡ SSE Internals</strong></a> &nbsp;·&nbsp;
   <a href="#-quick-start"><strong>🚀 Quick Start</strong></a>
 </p>
 
 <br/>
-<br/>
 
 ---
-
-<br/>
-
-> *"The measure of intelligence is the ability to change."*
-> — **Albert Einstein**
-
-> *"The best way to understand a system is to build one."*
-> — **Richard Feynman**
 
 > *"A notebook would have been sufficient to pass.*
 > *TextForge AI is what happens when a developer refuses to do the minimum."*
 > — **The Developer**
 
-<br/>
-
 ---
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=D47E30&height=100&section=footer" width="100%"/>
 
 </div>
 
@@ -71,1366 +55,833 @@
 | 1 | [The Origin Story](#-the-origin-story) |
 | 2 | [What Is TextForge AI?](#-what-is-textforge-ai) |
 | 3 | [Live Deployment](#-live-deployment) |
-| 4 | [Feature Matrix](#-feature-matrix) |
+| 4 | [Complete Feature Matrix — v2.0](#-complete-feature-matrix--v20) |
 | 5 | [System Architecture](#-system-architecture) |
-| 6 | [Technology Stack](#-technology-stack) |
-| 7 | [Project Structure](#-project-structure) |
-| 8 | [The AI Layer — Prompt Engineering](#-the-ai-layer--prompt-engineering) |
-| 9 | [Real-time Streaming — SSE Internals](#-real-time-streaming--sse-internals) |
-| 10 | [The LSTM Model — Academic Deep Dive](#-the-lstm-model--academic-deep-dive) |
-| 11 | [Authentication Architecture](#-authentication-architecture) |
-| 12 | [Database Schema & Design](#-database-schema--design) |
-| 13 | [Security Architecture](#-security-architecture) |
-| 14 | [API Reference](#-api-reference) |
-| 15 | [Design System](#-design-system) |
-| 16 | [Quick Start](#-quick-start) |
-| 17 | [Environment Variables](#-environment-variables) |
-| 18 | [Deployment Guide](#-deployment-guide) |
-| 19 | [Roadmap](#-roadmap) |
-| 20 | [Contributing](#-contributing) |
+| 6 | [Deep Domain Templates](#-deep-domain-templates) |
+| 7 | [AI Detection & Humaniser](#-ai-detection--humaniser) |
+| 8 | [Academic Citations Generator](#-academic-citations-generator) |
+| 9 | [Bharat AI — India-First Vernacular](#-bharat-ai--india-first-vernacular) |
+| 10 | [Real-time Streaming — SSE Internals](#-real-time-streaming--sse-internals) |
+| 11 | [The LSTM Model — Academic Deep Dive](#-the-lstm-model--academic-deep-dive) |
+| 12 | [Technology Stack](#-technology-stack) |
+| 13 | [Project Structure](#-project-structure) |
+| 14 | [Database Schema & Design](#-database-schema--design) |
+| 15 | [Security Architecture](#-security-architecture) |
+| 16 | [API Reference](#-api-reference) |
+| 17 | [Quick Start](#-quick-start) |
+| 18 | [Environment Variables](#-environment-variables) |
+| 19 | [Deployment Guide](#-deployment-guide) |
+| 20 | [Roadmap](#-roadmap) |
 
 <br/>
 
 ---
 
-<br/>
-
 ## 🔥 The Origin Story
 
-This project was born from a college assignment brief:
+This project was born from a single college assignment brief:
 
 ```
 ╔══════════════════════════════════════════════════════════════════════╗
 ║  ASSIGNMENT BRIEF                                                    ║
-║  ─────────────────────────────────────────────────────────────────  ║
 ║  "Create a text generation model using GPT or LSTM to generate      ║
 ║   coherent paragraphs on specific topics."                          ║
-║                                                                      ║
 ║  Deliverable: A notebook demonstrating generated text.              ║
 ╚══════════════════════════════════════════════════════════════════════╝
 ```
 
-A notebook would have satisfied the requirement. TextForge AI is what happens when a developer asks *"what if we built the real thing?"*
+A notebook would have satisfied the requirement. TextForge AI v2.0 is what happens when a developer asks *"what if we built the real thing?"*
 
 <br/>
 
-| Academic Requirement | Minimum Submission | **TextForge AI** |
+| Academic Requirement | Minimum | **TextForge AI v2.0** |
 |---|---|---|
-| Text generation model | ✅ Notebook only | ✅ Gemini 2.5 Flash + custom LSTM |
+| Text generation | ✅ Notebook | ✅ Gemini 2.5 Flash + PyTorch LSTM |
 | Coherent paragraphs | ✅ Basic | ✅ Prompt-engineered, structured output |
-| Topic-based generation | ✅ | ✅ + Tone · Length · Language · SEO Keywords |
-| Notebook deliverable | ✅ | ✅ 11-step PyTorch LSTM from scratch |
-| User interface | ❌ | ✅ Full Next.js 14 web application |
-| Real-time streaming | ❌ | ✅ Server-Sent Events token streaming |
-| User authentication | ❌ | ✅ Google + GitHub OAuth via NextAuth v4 |
-| Cloud database | ❌ | ✅ MongoDB Atlas with per-user isolation |
-| REST API backend | ❌ | ✅ Express + TypeScript + Zod |
-| Template system | ❌ | ✅ 8 professional writing templates |
-| Multi-language AI output | ❌ | ✅ 8 languages via Gemini prompt injection |
-| SEO keyword weaving | ❌ | ✅ Natural AI keyword integration |
-| Generation history | ❌ | ✅ Full CRUD sidebar with search + filter |
-| Favourites & bookmarks | ❌ | ✅ Per-user starred generations |
-| Shareable public links | ❌ | ✅ SSR share pages with OG metadata |
+| Topic-based generation | ✅ | ✅ Tone · Length · Language · SEO |
+| User interface | ❌ | ✅ Full Next.js 14 production app |
+| Real-time streaming | ❌ | ✅ Server-Sent Events, first token <200ms |
+| Authentication | ❌ | ✅ Google + GitHub OAuth via NextAuth v4 |
+| Cloud database | ❌ | ✅ MongoDB Atlas per-user isolation |
+| Domain expertise | ❌ | ✅ **6 domains · 70+ params · 25 output types** |
+| AI Detection | ❌ | ✅ **5-dimension linguistic scoring** |
+| Humaniser | ❌ | ✅ **One-click AI score reducer** |
+| Academic citations | ❌ | ✅ **200M+ real papers · APA/MLA/IEEE** |
+| Indian languages | ❌ | ✅ **6 languages · cultural idioms · native script** |
+| Professor demo mode | ❌ | ✅ **/demo — guided 6-step walkthrough** |
 | Export system | ❌ | ✅ PDF · DOCX · Markdown · TXT |
-| Analytics dashboard | ❌ | ✅ MongoDB aggregation pipelines + Recharts |
+| Analytics dashboard | ❌ | ✅ MongoDB aggregations + Recharts |
 | Public API | ❌ | ✅ API key management system |
-| Refine & regenerate | ❌ | ✅ Shorter · Longer · More formal · Simpler |
-| Dark / Light mode | ❌ | ✅ Anti-flash, persisted theme |
-| Security hardening | ❌ | ✅ Helmet · CORS · Rate limiting · Zod |
-| Live deployment | ❌ | ✅ Vercel (frontend) + Railway (backend) |
-| Documentation | ❌ | ✅ API docs · Architecture · Setup guide |
+| Live deployment | ❌ | ✅ Vercel + Railway production |
 
 <br/>
 
 ---
-
-<br/>
 
 ## 🌐 What Is TextForge AI?
 
-**TextForge AI** is a production-grade, full-stack web application that demonstrates end-to-end implementation of a generative text system — spanning neural network fundamentals, REST API design, real-time data streaming, OAuth authentication, and cloud deployment.
+**TextForge AI** is a production-grade, full-stack AI writing platform that goes far beyond generic text generation. It combines domain expertise, linguistic analysis, real academic sources, and cultural authenticity into one application.
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                     │
-│   User types a topic  ──►  Selects tone, length, language          │
-│         │                                                           │
-│         ▼                                                           │
-│   Prompt Engineering  ──►  Structured multi-instruction prompt     │
-│         │                                                           │
-│         ▼                                                           │
-│   Gemini 2.5 Flash    ──►  Streams tokens in real time             │
-│         │                                                           │
-│         ▼                                                           │
-│   Live UI Update      ──►  Word by word, like watching someone     │
-│         │                   type — no waiting                      │
-│         ▼                                                           │
-│   MongoDB Atlas       ──►  Saved to your private history           │
-│                             forever                                 │
-└─────────────────────────────────────────────────────────────────────┘
+╔═══════════════════════════════════════════════════════════════════╗
+║                    TEXTFORGE AI v2.0                              ║
+╠═══════════════════════════════════════════════════════════════════╣
+║                                                                   ║
+║  "Why use yours over ChatGPT?"                                    ║
+║                                                                   ║
+║  ✦ Mine asks 14 questions before writing a legal contract.        ║
+║  ✦ Mine scores your text for AI detection and rewrites            ║
+║    it to pass detectors in one click.                             ║
+║  ✦ Mine generates academic articles with REAL verifiable          ║
+║    citations from 200 million papers.                             ║
+║  ✦ Mine writes natively in Hindi, Marathi, Tamil, and             ║
+║    Telugu — not translation, but cultural expression.             ║
+║                                                                   ║
+║  ChatGPT does none of these things in one place.                  ║
+║  TextForge AI does all of them.                                   ║
+║                                                                   ║
+╚═══════════════════════════════════════════════════════════════════╝
 ```
-
-The application is built on a **three-tier architecture** — a Next.js 14 frontend, an Express + TypeScript backend, and MongoDB Atlas as the data layer — connected to Google's Gemini API for AI generation and NextAuth for OAuth-based identity management.
 
 <br/>
 
 ---
-
-<br/>
 
 ## 🚀 Live Deployment
 
 ```
-╔══════════════════════════════════════════════════════════════════╗
-║                     PRODUCTION URLS                              ║
-╠══════════════════════════════════════════════════════════════════╣
-║  🌐  Frontend   →  https://textforge-ai-sable.vercel.app        ║
-║  🔧  Backend    →  https://textforge-ai-production.up.railway.app║
-║  💊  Health     →  .../health                                    ║
-║  📓  Notebook   →  Open in Google Colab (free GPU)              ║
-╚══════════════════════════════════════════════════════════════════╝
+╔══════════════════════════════════════════════════════════════════════╗
+║                      PRODUCTION URLs                                ║
+╠══════════════════════════════════════════════════════════════════════╣
+║  🌐  App      →  https://textforge-ai-sable.vercel.app             ║
+║  🎓  Demo     →  https://textforge-ai-sable.vercel.app/demo        ║
+║  ⚖️  Domains  →  https://textforge-ai-sable.vercel.app/domain      ║
+║  📚  Citations →  https://textforge-ai-sable.vercel.app/citations  ║
+║  🇮🇳  Bharat AI →  https://textforge-ai-sable.vercel.app/vernacular ║
+║  🔧  Backend  →  https://textforge-ai-production.up.railway.app    ║
+╚══════════════════════════════════════════════════════════════════════╝
 
-  Frontend  ──  Vercel  (Next.js optimised CDN, global edge network)
-  Backend   ──  Railway (Node.js container, auto-deploys from GitHub)
-  Database  ──  MongoDB Atlas M0 (512MB free tier, cloud-hosted)
-  AI        ──  Google Gemini 2.5 Flash (1,500 req/day free tier)
+  Frontend  ──  Vercel   (Next.js CDN, global edge network)
+  Backend   ──  Railway  (Node.js container, auto-deploys from GitHub)
+  Database  ──  MongoDB Atlas M0 (512MB, cloud-hosted)
+  AI        ──  Google Gemini 2.5 Flash (free tier)
 ```
 
 <br/>
 
 ---
 
-<br/>
+## ✨ Complete Feature Matrix — v2.0
 
-## ✨ Feature Matrix
+### 🤖 Core Generation Engine
 
-### 🤖 Generation Engine
-
-```
-INPUT                          PIPELINE                        OUTPUT
-─────                          ────────                        ──────
-
-Topic (3-500 chars)    ──►    buildPrompt()              ──►  Streaming SSE
-Tone (4 options)              Structured prompt               Token by token
-Length (3 tiers)              engineering layer               Word by word
-Language (8 options)          ↓                               Live typing
-SEO Keywords (≤10)            Gemini 2.5 Flash                effect
-Template (8 options)          generateContentStream()
-                              ↓
-                              MongoDB Atlas
-                              saveGeneration()
-```
-
-| Feature | Implementation | Details |
+| Feature | Implementation | Detail |
 |---|---|---|
-| **SSE Streaming** | `model.generateContentStream()` | First token < 200ms |
-| **Prompt Engineering** | `buildPrompt()` in `geminiService.ts` | Tone · Length · Language · SEO |
+| **SSE Streaming** | `generateContentStream()` | First token < 200ms |
 | **8 Templates** | `lib/templates.ts` | Blog · Email · Essay · Cover Letter · Product · Social · Summary · Story |
-| **8 Languages** | Gemini prompt injection | EN · HI · ES · FR · DE · JA · AR · ZH |
-| **SEO Keywords** | Natural weaving instruction | Up to 10 terms, never forced |
-| **Refine System** | `buildRefinementPrompt()` | Shorter · Longer · More formal · Simpler |
+| **4 Tones** | Prompt injection | Formal · Casual · Creative · Academic |
+| **3 Lengths** | Word count targeting | Short ~150 · Medium ~350 · Long ~700 |
+| **8 Languages** | Gemini prompt | EN · HI · ES · FR · DE · JA · AR · ZH |
+| **SEO Keywords** | Natural weaving | Up to 10 terms |
+| **Refine System** | `buildRefinementPrompt()` | Shorter · Longer · Formal · Simpler |
 
-<br/>
+### ⚖️ Deep Domain Templates *(New in v2.0)*
 
-### 🔐 Authentication System
+| Domain | Parameters | Output Types |
+|---|---|---|
+| **Legal** | 14 | NDA · Service Agreement · Employment · Freelance · Partnership |
+| **Medical** | 12 | Case Study · SOAP Note · Research Abstract · Discharge Summary |
+| **Startup** | 13 | Executive Summary · Problem Statement · Value Prop · Pitch · Investor Email |
+| **Research** | 11 | Abstract · Literature Review · Methodology · Discussion · Conclusion |
+| **Grant** | 10 | Project Proposal · Impact Statement · Budget Justification · Objectives |
+| **HR** | 10 | Job Description · Performance Review · Offer Letter · Policy · Interview Qs |
+| **Total** | **70+** | **25 output types** |
 
-```
-User visits /login
-      │
-      ├──► "Continue with Google" ──► Google OAuth 2.0 ──► Callback ──► JWT
-      │
-      ├──► "Continue with GitHub" ──► GitHub OAuth    ──► Callback ──► JWT
-      │
-      └──► "Continue as Guest"   ──► No auth ──► Empty sidebar (isolated)
+### 🛡️ AI Detection & Humaniser *(New in v2.0)*
 
+| Dimension | Weight | What It Measures |
+|---|---|---|
+| **Burstiness** | 25% | Sentence length variance — humans write with more rhythm |
+| **AI Phrase Density** | 40% | 45+ known AI signature phrases detected |
+| **Vocabulary Diversity** | 15% | Sliding window type-token ratio |
+| **Sentence Openings** | 10% | Repetitive starts = AI pattern |
+| **Punctuation Pattern** | 10% | AI overuses commas and semicolons |
 
-JWT Token Structure:
-┌─────────────────────────────────────────┐
-│  {                                      │
-│    sub: "google-oauth-uid-123",         │
-│    id:  "google-oauth-uid-123",         │
-│    provider: "google",                  │
-│    email: "user@gmail.com",             │
-│    exp: 1234567890                      │
-│  }                                      │
-└─────────────────────────────────────────┘
+### 📚 Academic Citations Generator *(New in v2.0)*
 
-x-user-id header injected on every API call via axios interceptor
-Backend scopes ALL queries: db.find({ userId: req.header("x-user-id") })
-```
+| Feature | Detail |
+|---|---|
+| **Semantic Scholar** | 200M+ papers, free, no API key |
+| **CrossRef** | 130M+ works, DOI lookup |
+| **Citation Styles** | APA 7th · MLA 9th · IEEE |
+| **Quality Filter** | Sorted by citation count — most cited = most relevant |
+| **In-text highlighting** | `(Author, Year)` rendered in brand orange |
+| **References section** | Auto-generated, properly formatted |
+
+### 🇮🇳 Bharat AI — India-First Vernacular *(New in v2.0)*
+
+| Language | Script | Cultural Context |
+|---|---|---|
+| **Hindi** हिन्दी | Devanagari | North Indian culture, Bollywood, cricket, Diwali |
+| **Marathi** मराठी | Devanagari | Maharashtra, Shivaji, Ganesh Chaturthi, Mumbai |
+| **Tamil** தமிழ் | Tamil | Sangam literature, Kollywood, AR Rahman |
+| **Telugu** తెలుగు | Telugu | Tollywood, Hyderabad IT, Kuchipudi |
+| **Bengali** বাংলা | Bengali | Tagore, Durga Puja, intellectual tradition |
+| **Gujarati** ગુજરાતી | Gujarati | Navratri, Gandhi, entrepreneurial culture |
 
 <br/>
 
 ---
-
-<br/>
 
 ## 🏗 System Architecture
 
 ```
-╔═══════════════════════════════════════════════════════════════════════════════╗
-║                           TEXTFORGE AI — FULL STACK                          ║
-╠═══════════════════════════════════════════════════════════════════════════════╣
-║                                                                               ║
-║  ┌─────────────────────────────────────────────────────────────────────────┐ ║
-║  │                      PRESENTATION LAYER                                 │ ║
-║  │                   Next.js 14 — Vercel CDN                               │ ║
-║  │                                                                         │ ║
-║  │  /            /workspace          /login     /stats    /s/[id]          │ ║
-║  │  Landing      Main app            OAuth      Charts    Share page       │ ║
-║  │               + sidebar                      Recharts  SSR + OG meta    │ ║
-║  │               + chat bubbles                                            │ ║
-║  │               + bottom bar                                              │ ║
-║  │                                                                         │ ║
-║  │  Zustand · NextAuth SessionProvider · Tailwind · SSE ReadableStream    │ ║
-║  └─────────────────────────────┬───────────────────────────────────────────┘ ║
-║                                │                                              ║
-║                    HTTP/SSE  + x-user-id header                               ║
-║                    POST /api/generate → text/event-stream                     ║
-║                    GET|PATCH|DELETE /api/history                              ║
-║                                │                                              ║
-║  ┌─────────────────────────────▼───────────────────────────────────────────┐ ║
-║  │                     APPLICATION LAYER                                   │ ║
-║  │                  Express 4 + TypeScript — Railway                       │ ║
-║  │                                                                         │ ║
-║  │  Morgan → Helmet → CORS(regex) → apiLimiter → Routes → errorHandler    │ ║
-║  │                                                                         │ ║
-║  │  POST /api/generate ──── Zod ─── buildPrompt() ─── SSE stream          │ ║
-║  │  POST /api/generate/refine ───── buildRefinementPrompt() ─── SSE       │ ║
-║  │  GET|PATCH|DELETE /api/history ── userId scoped ── paginated           │ ║
-║  │  GET /api/share/:id ──────────── public, no auth                       │ ║
-║  │  GET /api/stats ──────────────── 4 aggregation pipelines               │ ║
-║  │  POST|GET|DELETE /api/keys ────── tf_live_ prefix ── apiKeyAuth        │ ║
-║  │  GET /health ─────────────────── uptime monitoring                     │ ║
-║  │                                                                         │ ║
-║  └──────────┬──────────────────────────────────────┬───────────────────────┘ ║
-║             │                                      │                          ║
-║    @google/generative-ai SDK              Mongoose ODM                        ║
-║    generateContentStream()                userId-scoped queries               ║
-║             │                                      │                          ║
-║  ┌──────────▼──────────────┐    ┌─────────────────▼──────────────────────┐   ║
-║  │  Google Gemini 2.5 Flash│    │          MongoDB Atlas M0              │   ║
-║  │                         │    │                                        │   ║
-║  │  SSE token streaming    │    │  collections:                          │   ║
-║  │  1,500 req/day free     │    │    generations  (3 compound indexes)   │   ║
-║  │  1M tokens/min          │    │    apikeys      (tf_live_ prefix)      │   ║
-║  │  No credit card         │    │                                        │   ║
-║  │  Gemini 2.5 Flash model │    │  Aggregation pipelines for stats       │   ║
-║  └─────────────────────────┘    └────────────────────────────────────────┘   ║
-║                                                                               ║
-╚═══════════════════════════════════════════════════════════════════════════════╝
-```
-
-<br/>
-
-### Complete Data Flow — One Generation Request (15 Steps)
-
-```
-Step  Description
-────  ──────────────────────────────────────────────────────────────────
- 1    User types topic → selects tone/length/language → clicks Generate
- 2    PromptBuilder reads Zustand store (topic, tone, length, language, keywords)
- 3    api.postGenerate() sends POST /api/generate + x-user-id header
- 4    Express: Morgan logs → Helmet validates → CORS checks regex origin
- 5    generateLimiter checks IP: max 5 req/min
- 6    Zod validates every field — rejects before touching AI or DB
- 7    geminiService.buildPrompt() constructs structured multi-part prompt
- 8    SSE headers set on response (Content-Type: text/event-stream)
- 9    model.generateContentStream(prompt) called on Gemini SDK
-10    For each token: res.write("data: {text, done:false}\n\n")
-11    Frontend ReadableStream.read() receives chunks + buffer pattern
-12    onChunk(text) → appendOutput(text) → Zustand state update
-13    React re-renders OutputPanel (live typing effect — no delay)
-14    Stream ends → onDone() → isDone=true → savedId returned
-15    Backend saves to MongoDB with userId → sidebar auto-refreshes
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                        TEXTFORGE AI v2.0 — FULL STACK                       ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║  ┌──────────────────────────────────────────────────────────────────────┐   ║
+║  │                      PRESENTATION LAYER                              │   ║
+║  │                   Next.js 14 — Vercel CDN                            │   ║
+║  │                                                                      │   ║
+║  │  /workspace  /domain  /citations  /vernacular  /demo  /stats        │   ║
+║  │                                                                      │   ║
+║  │  Zustand · NextAuth · Tailwind · SSE ReadableStream                 │   ║
+║  └──────────────────────────┬───────────────────────────────────────────┘   ║
+║                             │  HTTP/SSE + x-user-id header                  ║
+║  ┌──────────────────────────▼───────────────────────────────────────────┐   ║
+║  │                     APPLICATION LAYER                                │   ║
+║  │                  Express 4 + TypeScript — Railway                    │   ║
+║  │                                                                      │   ║
+║  │  /api/generate   → SSE streaming + refine + humanise                │   ║
+║  │  /api/domain     → 6 domains, 70+ parameters, expert prompts        │   ║
+║  │  /api/citations  → Semantic Scholar + CrossRef + Gemini             │   ║
+║  │  /api/vernacular → 6 Indian languages + cultural profiles           │   ║
+║  │  /api/history    → CRUD + paginated + userId scoped                 │   ║
+║  │  /api/stats      → 4 MongoDB aggregation pipelines                  │   ║
+║  │  /api/keys       → API key management (tf_live_ prefix)             │   ║
+║  └──────────┬───────────────────────────┬────────────────────────────────┘  ║
+║             │                           │                                    ║
+║  ┌──────────▼──────────┐   ┌────────────▼──────────────────────────────┐   ║
+║  │  Google Gemini      │   │          MongoDB Atlas                    │   ║
+║  │  2.5 Flash          │   │                                           │   ║
+║  │                     │   │  generations collection                   │   ║
+║  │  generateContent    │   │  ├─ topic, tone, length, language         │   ║
+║  │  Stream()           │   │  ├─ citations[], citationStyle            │   ║
+║  │                     │   │  ├─ templateId (domain tracking)         │   ║
+║  │  Semantic Scholar   │   │  └─ userId (per-user isolation)           │   ║
+║  │  CrossRef APIs      │   │                                           │   ║
+║  └─────────────────────┘   └───────────────────────────────────────────┘   ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
 <br/>
 
 ---
 
-<br/>
+## ⚖️ Deep Domain Templates
 
-## 🛠 Technology Stack
+The core insight: **ChatGPT asks 0 questions before writing a legal contract. TextForge AI asks 14.**
 
-### Frontend
+```
+User selects domain → Legal
+         │
+         ▼
+Dynamic form renders 14 fields:
+  Party 1 name + role · Party 2 name + role
+  Jurisdiction (India/US/UK/Singapore)
+  Duration · Contract value
+  Confidentiality level · Liability limit
+  Dispute resolution · IP ownership
+  Non-compete · Special clauses
+         │
+         ▼
+buildLegalPrompt() constructs expert-level prompt:
+  "You are a senior corporate lawyer with 20+ years experience...
+   PARTY 1: TextForge AI (Disclosing Party)
+   JURISDICTION: Indian Contract Act 1872
+   LIABILITY: Limited to contract value
+   DISPUTE: Arbitration under Arbitration Act 1996..."
+         │
+         ▼
+Gemini generates jurisdiction-specific, properly structured document
+         │
+         ▼
+Export as PDF · DOCX · with correct legal formatting
+```
 
-| Technology | Version | Role | Why This Choice |
-|---|---|---|---|
-| **Next.js** | 14.2 | React framework | App Router, SSR, file-based routing, Vercel-optimised |
-| **React** | 18.3 | UI component model | Concurrent features, Suspense, reactive state |
-| **TypeScript** | 5.4 | Type safety | Compile-time error catching across 40+ files |
-| **Tailwind CSS** | 3.4 | Styling | JIT compiler, utility-first, zero runtime CSS |
-| **NextAuth.js** | 4.24 | OAuth authentication | Google + GitHub providers, JWT strategy, stable v4 |
-| **Zustand** | 4.5 | Global state | Zero boilerplate vs Redux, perfect for streaming state |
-| **Recharts** | 2.x | Data visualisation | Line · Pie · Bar charts for stats dashboard |
-| **Lucide React** | 0.383 | Icon system | Tree-shakeable SVGs, consistent design language |
-| **jsPDF** | 2.x | PDF export | Client-side, no server needed, branded output |
-| **docx** | 8.x | Word export | Full DOCX spec, proper formatting |
-| **date-fns** | 3.6 | Date utilities | Immutable, tree-shakeable, dd/mm/yyyy formatting |
-
-### Backend
-
-| Technology | Version | Role | Why This Choice |
-|---|---|---|---|
-| **Node.js** | 18+ | Runtime | Non-blocking I/O, perfect for SSE streaming |
-| **Express** | 4.19 | HTTP framework | Industry standard, minimal, highly composable |
-| **TypeScript** | 5.4 | Type safety | End-to-end type coverage with `--skipLibCheck` |
-| **@google/generative-ai** | 0.15 | Gemini SDK | Official SDK with native streaming support |
-| **Mongoose** | 8.4 | MongoDB ODM | Schema validation, hooks, indexes, aggregations |
-| **Zod** | 3.23 | Input validation | Runtime schema + TypeScript inference in one |
-| **Helmet** | 7.1 | HTTP security | 11 security headers in one middleware |
-| **express-rate-limit** | 7.3 | Rate limiting | Per-IP sliding window, dual-layer protection |
-| **Morgan** | 1.10 | HTTP logging | Dev format locally, combined format in production |
-
-### AI / ML
-
-| Technology | Purpose | Academic Relevance |
-|---|---|---|
-| **Google Gemini 2.5 Flash** | Production generation | Transformer architecture (Vaswani et al., 2017) |
-| **PyTorch 2.0** | LSTM training | Automatic differentiation, dynamic computation graphs |
-| **NumPy** | Tensor operations | N-dimensional array computing |
-| **Matplotlib** | Loss visualisation | Training curve analysis |
-| **Jupyter Notebook** | Interactive ML demo | Reproducible research standard |
+**Why this is exceptional:** The depth of domain knowledge embedded in the prompts took weeks to build. Anyone can call the Gemini API. Nobody can copy the 70+ parameters of domain-specific prompt engineering without the same research.
 
 <br/>
 
 ---
 
-<br/>
+## 🛡️ AI Detection & Humaniser
 
-## 📁 Project Structure
-
-```
-textforge-ai/                              ← Monorepo root
-│
-├── 📄 README.md                           ← You are here
-├── 📄 .gitignore                          ← Protects .env, node_modules, dist
-├── 📄 LICENSE                             ← MIT open source
-│
-├── 📁 backend/                            ← Node.js + Express REST API
-│   ├── package.json                       ← typescript in dependencies (Railway)
-│   ├── tsconfig.json                      ← skipLibCheck: true (Mongoose compat)
-│   ├── .env.example
-│   └── src/
-│       ├── index.ts                       ← Server bootstrap + CORS regex pattern
-│       ├── config/
-│       │   ├── index.ts                   ← Env validation + CORS origin builder
-│       │   └── database.ts                ← MongoDB connection + retry
-│       ├── models/
-│       │   ├── Generation.ts              ← Schema (modelName not model — Mongoose)
-│       │   └── ApiKey.ts                  ← tf_live_ prefix API keys
-│       ├── services/
-│       │   ├── geminiService.ts           ← buildPrompt() + SSE streaming
-│       │   └── historyService.ts          ← All CRUD + aggregation pipelines
-│       ├── routes/
-│       │   ├── generate.ts                ← POST /generate + /refine
-│       │   ├── history.ts                 ← GET|PATCH|DELETE /history
-│       │   ├── share.ts                   ← GET /share/:id (public)
-│       │   ├── stats.ts                   ← GET /stats (aggregations)
-│       │   ├── apiKeys.ts                 ← Key management
-│       │   └── publicGenerate.ts          ← POST /v1/generate (API key auth)
-│       └── middleware/
-│           ├── rateLimiter.ts             ← Dual-layer sliding window
-│           ├── errorHandler.ts            ← Global boundary + AppError
-│           └── apiKeyAuth.ts              ← tf_live_ key validation
-│
-├── 📁 frontend/                           ← Next.js 14 Application
-│   ├── package.json
-│   ├── tsconfig.json
-│   ├── next.config.js                     ← ignoreBuildErrors: true (Vercel)
-│   ├── tailwind.config.js
-│   ├── auth.ts                            ← NextAuth v4 config (NO export of authOptions)
-│   ├── app/
-│   │   ├── globals.css                    ← Spiced Chai design system
-│   │   ├── layout.tsx                     ← AuthProvider + anti-flash theme script
-│   │   ├── page.tsx                       ← Landing + animated hero
-│   │   ├── login/page.tsx                 ← OAuth login page
-│   │   ├── workspace/page.tsx             ← Main app (sidebar + chat + input)
-│   │   ├── history/page.tsx               ← Full history with search + filter
-│   │   ├── stats/page.tsx                 ← Recharts analytics dashboard
-│   │   ├── api-keys/page.tsx              ← API key management
-│   │   ├── s/[id]/page.tsx                ← Public share (SSR + OG metadata)
-│   │   └── api/auth/[...nextauth]/        ← Only GET + POST exported (Vercel rule)
-│   ├── components/
-│   │   ├── Navbar.tsx                     ← Fixed nav + animated tagline
-│   │   ├── PromptBuilder.tsx              ← Full panel + compact bottom-bar mode
-│   │   ├── OutputPanel.tsx                ← SSE streaming + topbar portal
-│   │   ├── HistoryCard.tsx                ← History page card component
-│   │   ├── AuthProvider.tsx               ← "use client" SessionProvider wrapper
-│   │   └── UserMenu.tsx                   ← Avatar dropdown + setApiUserId()
-│   └── lib/
-│       ├── api.ts                         ← Axios client + x-user-id interceptor
-│       ├── store.ts                       ← Zustand (topic, output, streaming)
-│       ├── theme.ts                       ← Dark/light with localStorage
-│       ├── exporters.ts                   ← PDF · DOCX · Markdown generators
-│       ├── templates.ts                   ← 8 writing templates
-│       ├── languages.ts                   ← 8 AI output languages
-│       ├── features.ts                    ← Feature flags (auth, public API)
-│       └── utils.ts                       ← cn() Tailwind merger
-│
-├── 📁 notebook/                           ← Academic ML Deliverable
-│   ├── lstm_text_generation.ipynb         ← 11-step PyTorch LSTM from scratch
-│   └── requirements.txt                  ← torch numpy matplotlib tqdm
-│
-└── 📁 docs/
-    ├── API.md                             ← Full endpoint reference
-    ├── SETUP.md                           ← Development guide
-    ├── ARCHITECTURE.md                    ← Design decisions
-    └── GITHUB_DEPLOY.md                   ← Deployment guide
-```
-
-<br/>
-
----
-
-<br/>
-
-## 🧠 The AI Layer — Prompt Engineering
-
-> *"The quality of the output is determined entirely by the quality of the input."*
-> — **Prompt Engineering Principle**
-
-Prompt engineering is the practice of designing structured natural language instructions that reliably elicit high-quality, consistent responses from large language models. TextForge AI implements a dedicated prompt construction pipeline in `geminiService.ts`.
-
-### The `buildPrompt()` Architecture
-
-Rather than passing raw user input directly to Gemini, every generation passes through a **multi-layer prompt construction pipeline**:
+### The Algorithm
 
 ```typescript
-export function buildPrompt(options: GenerateOptions): string {
-  const { topic, tone, length, language, keywords } = options;
+// 5 dimensions, client-side — no external API needed
+export function detectAI(text: string): DetectionResult {
+  const burstiness    = measureBurstiness(sentences);      // 25% weight
+  const aiPhrases     = measureAIPhraseDensity(text);      // 40% weight
+  const vocabulary    = measureVocabularyDiversity(words); // 15% weight
+  const sentenceStarts = measureSentenceStartDiversity();  // 10% weight
+  const punctuation   = measurePunctuationPattern(text);   // 10% weight
 
-  // Layer 1: Role assignment — establishes model persona
-  // Layer 2: Task definition — clear, unambiguous objective
-  // Layer 3: Style instruction — tone-specific writing guide
-  // Layer 4: Length calibration — word count target
-  // Layer 5: Language directive — native-quality output
-  // Layer 6: Keyword injection — natural SEO integration
-  // Layer 7: Structural guidance — opening, development, conclusion
-  // Layer 8: Negative instruction — prevents unwanted preamble
-
-  return `You are TextForge AI, an expert writer...
-TOPIC: ${topic}
-WRITING GUIDELINES:
-- Tone: ${TONE_MAP[tone]}
-- Length: ${LENGTH_MAP[length].description}
-- Language: Write entirely in ${LANGUAGE_MAP[language]}
-${keywords.length ? `- Keywords: Weave naturally: ${keywords.join(", ")}` : ""}
-- Structure: Strong opening → development → meaningful conclusion
-- Output ONLY the generated text. No title, heading, or preamble.`;
+  const score = burstiness*0.25 + aiPhrases*0.40 + vocabulary*0.15
+              + sentenceStarts*0.10 + punctuation*0.10;
+  // → Risk level: low (<35) | medium (35-65) | high (>65)
 }
 ```
 
-### Why Prompt Engineering Matters — Empirical Evidence
+### The 45 AI Signature Phrases
 
-| Input Approach | Output Quality | Consistency | Controllability |
-|---|---|---|---|
-| Raw topic only | Variable, unfocused | Low | None |
-| Topic + tone | Improved | Medium | Partial |
-| Full engineered prompt | Publication-ready | High | Complete |
+Includes Gemini-specific patterns: *"remains a", "serves as", "shaping the", "landscape of", "a wide range of"* — plus universal markers: *"furthermore", "it is worth noting", "delve into", "tapestry", "nuanced", "multifaceted"*
 
-### Tone Instruction Mapping
+### The Humanisation Prompt
 
 ```
-"formal"   → "Use professional, authoritative language. Avoid contractions
-              and colloquialisms. Maintain objective, precise diction."
-
-"casual"   → "Use conversational, friendly language. Contractions and
-              informal phrasing are welcome. Write as if to a friend."
-
-"creative" → "Use vivid, imaginative language. Employ metaphors, varied
-              sentence structure, and expressive vocabulary."
-
-"academic" → "Use scholarly language with precise terminology. Maintain
-              an objective, evidence-based tone throughout."
+Specific instructions target exactly what the detector measures:
+1. VARY sentence lengths dramatically
+2. REMOVE all 45 AI signature phrases
+3. ADD natural rhetorical questions and asides
+4. VARY sentence openings
+5. USE contractions appropriately
+6. REPLACE generic adjectives with specific ones
+7. ADD one concrete analogy
+8. REDUCE comma density
 ```
 
-### The Refinement Pipeline
+**Result:** Score typically drops from 55-75% → 10-20% after one humanisation pass.
+
+<br/>
+
+---
+
+## 📚 Academic Citations Generator
+
+### Architecture
 
 ```
-Original Output
-     │
-     ▼
-buildRefinementPrompt(originalText, instruction)
-     │
-     ├── "Shorter"     → Remove redundancy, preserve core meaning
-     ├── "Longer"      → Expand with examples, supporting points
-     ├── "More formal" → Elevate register, remove contractions
-     └── "Simpler"     → Plain language, 12-year-old comprehension
-     │
-     ▼
-New refined output stacks BELOW original in chat bubble
-(original preserved, never destroyed — chain of thought)
+User enters topic: "Deep learning in medical imaging"
+         │
+         ▼
+Promise.all([
+  fetchSemanticScholar(topic, 4),  ← 200M+ papers
+  fetchCrossRef(topic, 3)          ← 130M+ works
+])
+         │
+         ▼
+Merge + deduplicate by title similarity
+Sort by citation count (most cited = most important)
+         │
+         ▼
+formatCitations(papers, style: "apa" | "mla" | "ieee")
+→ APA: (Litjens et al., 2017)
+→ MLA: (Litjens 2017)
+→ IEEE: [1]
+         │
+         ▼
+buildCitedPrompt() — instructs Gemini to weave citations naturally
+         │
+         ▼
+Generated text with (Author, Year) highlighted in orange
+Full References section auto-generated at bottom
+Saved to MongoDB with citationCount badge in history
+```
+
+### Real Example Output
+
+```
+Deep learning has fundamentally transformed medical image
+classification. A comprehensive survey by (Litjens et al., 2017)
+catalogued over 300 applications across imaging modalities...
+
+Landmark studies demonstrated human-competitive performance.
+(Esteva et al., 2017) achieved dermatologist-level accuracy...
+
+References:
+Litjens, G., et al. (2017). A survey on deep learning in medical
+  image analysis. Medical Image Analysis, 42, 60–88.
 ```
 
 <br/>
 
 ---
 
+## 🇮🇳 Bharat AI — India-First Vernacular
+
+### Why This Matters
+
+Every AI tool treats Indian language content as an afterthought — translated from English. Bharat AI generates content that was **written** in Hindi, not translated from English.
+
+```
+Generic AI approach:
+  English prompt → English output → Google Translate → Hindi
+  Result: Grammatically correct but culturally hollow
+
+Bharat AI approach:
+  Prompt engineering with:
+    ✦ Language profile (cultural context, idioms, references)
+    ✦ Regional specificity
+    ✦ Native sentence structure
+    ✦ Indian cultural references
+  Result: Content a native speaker would recognise as authentic
+```
+
+### Language Profiles
+
+Each language has a dedicated profile with:
+- Cultural context (festivals, icons, traditions)  
+- Idiom instructions (specific proverbs and expressions)
+- Reference instructions (historical figures, contemporary icons)
+- Regional variants (Mumbai Marathi vs Pune Marathi)
+
+### Market Context
+
+```
+Hindi speakers:   530M+   ← more than the entire EU population
+Tamil speakers:    80M+
+Telugu speakers:   85M+
+Bengali speakers: 230M+
+Marathi speakers:  95M+
+Gujarati speakers: 60M+
+─────────────────────────
+Total addressable: 1.08 BILLION people
+```
+
 <br/>
+
+---
 
 ## ⚡ Real-time Streaming — SSE Internals
 
-> *Server-Sent Events (SSE) is a server push technology enabling a client to receive automatic updates from a server via an HTTP connection.*
-> — **W3C Specification**
-
-### Why SSE Over WebSockets?
+### Why SSE Over WebSockets
 
 ```
-                    SSE                          WebSockets
-                    ───                          ──────────
-Direction:          Server → Client (unidirectional)  Bidirectional
-Protocol:           HTTP/1.1                     Custom WS protocol
-Reconnect:          Automatic                    Manual
-Use case:           Server push, streaming       Chat, gaming, real-time collab
-Our use case:       ✅ Perfect fit               ❌ Overkill
-Complexity:         Low                          High
+SSE: Server → Client (unidirectional, HTTP/1.1, auto-reconnect)
+WebSockets: Bidirectional (custom protocol, overkill for streaming)
+
+For text generation: data flows in ONE direction.
+SSE is the architecturally correct choice.
 ```
 
-For TextForge AI, data flows in exactly one direction — from Gemini to the user. SSE is the architecturally correct choice.
-
-### Backend — Token Streaming Pipeline
+### The Buffer Pattern (Critical)
 
 ```typescript
-export async function generateTextStream(
-  prompt: string,
-  res: Response
-): Promise<string> {
+// Without buffer — breaks on TCP packet splits:
+// Packet 1: "data: {"text":"Hello ","don"
+// Packet 2: "e":false}\n\n..."
+// JSON.parse("{"text":"Hello ","don") → ❌ SyntaxError
 
-  // ── Step 1: SSE headers BEFORE any async operation ──────────
-  // Critical: if Gemini throws after headers are set,
-  // we CANNOT send another response — double-response crash.
-  // All errors must be caught and written as SSE events.
-  res.setHeader("Content-Type",      "text/event-stream");
-  res.setHeader("Cache-Control",     "no-cache");
-  res.setHeader("Connection",        "keep-alive");
-  res.setHeader("X-Accel-Buffering", "no"); // disable nginx buffering
-
-  let fullText = "";
-
-  try {
-    const stream = await model.generateContentStream(prompt);
-
-    // ── Step 2: Stream each token as it arrives ───────────────
-    for await (const chunk of stream) {
-      const text = chunk.text();
-      if (text) {
-        fullText += text;
-        // SSE wire format: "data: {json}\n\n"
-        // Double newline = message boundary delimiter
-        res.write(`data: ${JSON.stringify({ text, done: false })}\n\n`);
-      }
-    }
-
-    return fullText; // for MongoDB persistence
-
-  } catch (error: any) {
-    // ── Step 3: Never throw after headers sent ────────────────
-    // Write error as SSE event — client handles gracefully
-    res.write(`data: ${JSON.stringify({ error: userMessage, done: true })}\n\n`);
-    res.end();
-    return "";
-  }
+// With buffer — production-correct:
+buffer += decoder.decode(value, { stream: true });
+const lines = buffer.split("\n\n");
+buffer = lines.pop() || "";  // ← retain incomplete message
+for (const line of lines) {
+  const payload = JSON.parse(line.slice(6));  // ✅ always complete
 }
 ```
-
-### Frontend — ReadableStream with Buffer Pattern
-
-```typescript
-const response = await fetch(url, { method: "POST", body: JSON.stringify(opts) });
-const reader   = response.body!.getReader();
-const decoder  = new TextDecoder();
-let   buffer   = "";  // ← Critical: handles TCP packet boundary splits
-
-while (true) {
-  const { done, value } = await reader.read();
-  if (done) break;
-
-  buffer += decoder.decode(value, { stream: true });
-
-  // Split on SSE message delimiter (\n\n)
-  const lines = buffer.split("\n\n");
-
-  // Last element may be incomplete — retain in buffer
-  // This handles the case where a TCP packet cuts an SSE message in half
-  buffer = lines.pop() || "";
-
-  for (const line of lines) {
-    if (!line.startsWith("data: ")) continue;
-    const payload = JSON.parse(line.slice(6));
-    if (payload.error) { onError(payload.error); return; }
-    if (payload.done)  { onDone(payload.id);      return; }
-    if (payload.text)  { onChunk(payload.text);           }
-  }
-}
-```
-
-### Why The Buffer Pattern Is Non-Negotiable
-
-```
-Without buffer (naive implementation):
-──────────────────────────────────────
-TCP Packet 1:  "data: {"text":"Hello ","don"
-TCP Packet 2:  "e":false}\n\ndata: {"text":"World"...
-
-JSON.parse("{"text":"Hello ","don") → ❌ SyntaxError
-
-With buffer (correct implementation):
-──────────────────────────────────────
-buffer = "data: {"text":"Hello ","don"
-buffer += "e":false}\n\n..."
-split("\n\n") → ["data: {"text":"Hello ","done":false}", ...]
-JSON.parse → ✅ {"text":"Hello ", "done": false}
-```
-
-The buffer accumulates partial TCP packets and only processes complete SSE messages. This is the critical edge case that separates a production-ready streaming implementation from a fragile one.
 
 <br/>
 
 ---
 
-<br/>
-
 ## 📓 The LSTM Model — Academic Deep Dive
-
-> *"Long Short-Term Memory networks are a special kind of RNN, capable of learning long-term dependencies."*
-> — **Hochreiter & Schmidhuber, 1997**
-
-The Jupyter notebook (`notebook/lstm_text_generation.ipynb`) is an 11-step, fully-annotated implementation of a character-level language model using PyTorch. It fulfils the original academic requirement while demonstrating mastery of foundational deep learning concepts.
 
 ### The Vanishing Gradient Problem
 
-Before LSTMs, vanilla RNNs suffered from the **vanishing gradient problem** — during backpropagation through time, gradients shrink exponentially as they propagate backwards through time steps:
+$$\frac{\partial L}{\partial W} = \frac{\partial L}{\partial h_T} \cdot \prod_{t=1}^{T} \frac{\partial h_t}{\partial h_{t-1}}$$
+
+If $\left|\frac{\partial h_t}{\partial h_{t-1}}\right| < 1$ for all $t$: gradients → 0 exponentially → model cannot learn long-range dependencies.
+
+### LSTM Gate Equations
 
 ```
-∂L/∂W = ∂L/∂h_T × ∂h_T/∂h_{T-1} × ... × ∂h_1/∂W
-
-If |∂h_t/∂h_{t-1}| < 1 for all t:
-└──► gradients → 0 exponentially
-└──► model cannot learn long-range dependencies
-└──► "climate change is caused by..." forgets "climate" by token 20
-```
-
-### The LSTM Solution — Gating Mechanism
-
-LSTMs introduce three learnable gates that selectively control information flow:
-
-```
-┌──────────────────────────────────────────────────────────────────┐
-│                    LSTM CELL INTERNALS                           │
-│                                                                  │
-│  Input: x_t (current token) + h_{t-1} (previous hidden state)   │
-│                                                                  │
-│  ┌─────────────────────────────────────────────────────────────┐ │
-│  │  FORGET GATE:  f_t = σ(W_f · [h_{t-1}, x_t] + b_f)        │ │
-│  │  "What fraction of cell state to erase?"                   │ │
-│  │  σ → [0,1]:  0 = forget completely, 1 = keep completely    │ │
-│  └─────────────────────────────────────────────────────────────┘ │
-│                           │                                      │
-│  ┌─────────────────────────▼───────────────────────────────────┐ │
-│  │  INPUT GATE:   i_t = σ(W_i · [h_{t-1}, x_t] + b_i)        │ │
-│  │  CANDIDATE:  C̃_t = tanh(W_C · [h_{t-1}, x_t] + b_C)      │ │
-│  │  "What new information to write to cell state?"            │ │
-│  └─────────────────────────────────────────────────────────────┘ │
-│                           │                                      │
-│  ┌─────────────────────────▼───────────────────────────────────┐ │
-│  │  CELL UPDATE:  C_t = f_t ⊙ C_{t-1} + i_t ⊙ C̃_t           │ │
-│  │  Element-wise: forget old + write new                      │ │
-│  └─────────────────────────────────────────────────────────────┘ │
-│                           │                                      │
-│  ┌─────────────────────────▼───────────────────────────────────┐ │
-│  │  OUTPUT GATE:  o_t = σ(W_o · [h_{t-1}, x_t] + b_o)        │ │
-│  │  HIDDEN:       h_t = o_t ⊙ tanh(C_t)                      │ │
-│  │  "What to expose as output?"                               │ │
-│  └─────────────────────────────────────────────────────────────┘ │
-│                                                                  │
-│  where: σ = sigmoid activation,  ⊙ = element-wise product      │
-└──────────────────────────────────────────────────────────────────┘
+Forget gate:  f_t = σ(W_f · [h_{t-1}, x_t] + b_f)
+Input gate:   i_t = σ(W_i · [h_{t-1}, x_t] + b_i)
+Candidate:   C̃_t = tanh(W_C · [h_{t-1}, x_t] + b_C)
+Cell update:  C_t = f_t ⊙ C_{t-1} + i_t ⊙ C̃_t
+Output gate:  o_t = σ(W_o · [h_{t-1}, x_t] + b_o)
+Hidden:       h_t = o_t ⊙ tanh(C_t)
 ```
 
 ### Model Architecture
 
 ```
-Input Character (one-hot or index)
-          │
-          ▼
-  ┌───────────────┐
-  │ Embedding     │  vocab_size → embed_dim=128
-  │ Layer         │  Learns dense vector representations
-  └───────┬───────┘  "a" → [0.23, -0.41, 0.87, ...]
-          │
-          ▼
-  ┌───────────────┐
-  │ LSTM Layer 1  │  embed_dim → hidden_dim=256
-  │               │  dropout=0.3 (regularisation)
-  └───────┬───────┘
-          │
-          ▼
-  ┌───────────────┐
-  │ LSTM Layer 2  │  hidden_dim → hidden_dim=256
-  │               │  Hierarchical feature extraction
-  └───────┬───────┘
-          │
-          ▼
-  ┌───────────────┐
-  │ Dropout       │  p=0.3 — prevents co-adaptation
-  └───────┬───────┘
-          │
-          ▼
-  ┌───────────────┐
-  │ Linear Layer  │  hidden_dim=256 → vocab_size
-  │               │  Maps to logit score per character
-  └───────┬───────┘
-          │
-          ▼
-  Temperature Sampling → Next Character
+Input Character
+      ↓
+Embedding Layer    (vocab_size → embed_dim=128)
+      ↓
+LSTM Layer 1       (128 → 256, dropout=0.3)
+      ↓
+LSTM Layer 2       (256 → 256)
+      ↓
+Dropout            (p=0.3)
+      ↓
+Linear             (256 → vocab_size)
+      ↓
+Temperature Sampling → Next Character
 
-  Total trainable parameters: ~500,000
+Total trainable parameters: ~500,000
 ```
 
-### Training Configuration & Rationale
+### Training Configuration
 
 | Hyperparameter | Value | Rationale |
 |---|---|---|
-| Sequence length | 80 chars | Captures medium-range syntactic dependencies |
-| Batch size | 32 | Balance: gradient quality vs. memory efficiency |
-| Epochs | 30 | Empirically: loss plateau reached at ~25 epochs |
-| Learning rate | 0.002 | Adam default; ×0.5 every 10 epochs (scheduler) |
-| Gradient clipping | 5.0 | **Critical for RNNs** — prevents exploding gradients |
-| Dropout | 0.3 | Srivastava et al. (2014) regularisation |
-| Hidden dimensions | 256 | Sufficient capacity for character-level patterns |
-| LSTM layers | 2 | Hierarchical: syntax (layer 1), semantics (layer 2) |
-| Optimiser | Adam | Adaptive per-parameter learning rates |
-| Loss function | CrossEntropyLoss | Standard for multi-class token prediction |
+| Sequence length | 80 chars | Medium-range syntactic dependencies |
+| Batch size | 32 | Gradient quality vs memory balance |
+| Epochs | 30 | Loss plateau at ~25 epochs |
+| Learning rate | 0.002 | Adam default, ×0.5 every 10 epochs |
+| **Gradient clipping** | **5.0** | **Critical for RNNs — prevents explosion** |
+| Dropout | 0.3 | Srivastava et al. (2014) |
+| Hidden dims | 256 | Sufficient character-level capacity |
+| LSTM layers | 2 | Syntax (L1) + semantics (L2) |
 
-### Temperature Sampling — Creativity vs. Coherence Trade-off
+### LSTM vs Transformer
 
-```python
-def generate(model, seed, temperature=0.7):
-    logits = model(seed)[:, -1, :]    # Get last token's predictions
-
-    # Temperature scaling modifies the probability distribution
-    logits = logits / temperature      # Divide by temperature
-
-    # Low temperature  (0.1-0.5): Sharp distribution → conservative
-    #   P("the") = 0.89, P("a") = 0.08, P("an") = 0.02, ...
-    #   Predictable, coherent, less creative
-
-    # High temperature (1.0-2.0): Flat distribution → creative
-    #   P("the") = 0.31, P("a") = 0.28, P("flying") = 0.19, ...
-    #   Surprising, potentially incoherent
-
-    probs    = torch.softmax(logits, dim=-1)
-    next_idx = torch.multinomial(probs, num_samples=1)
-    return next_idx
-```
-
-### LSTM vs. Transformer — Academic Comparison
-
-| Dimension | LSTM (Our Notebook) | Transformer (Gemini) |
+| Dimension | LSTM (Notebook) | Transformer (Gemini) |
 |---|---|---|
-| **Architecture** | Recurrent (sequential) | Self-attention (parallel) |
-| **Complexity** | O(n) sequence length | O(n²) attention — quadratic |
-| **Long-range deps** | Cell state gating | Direct attention to any token |
-| **Parallelisation** | Sequential — slow training | Fully parallel — fast training |
-| **Parameters** | ~500K | Billions |
-| **Training data** | 30 curated sentences | Trillions of tokens |
-| **Seminal paper** | Hochreiter & Schmidhuber (1997) | Vaswani et al. "Attention Is All You Need" (2017) |
-| **Output quality** | Basic pattern learning | Human-level coherence |
-| **Use case** | Teaching fundamentals | Production systems |
-
-> **Academic Insight:** The LSTM notebook demonstrates *why* Transformers were necessary — the sequential bottleneck of RNNs fundamentally limits their ability to capture very long-range dependencies. Understanding LSTMs makes the Transformer's attention mechanism intuitive.
+| Architecture | Recurrent (sequential) | Self-attention (parallel) |
+| Complexity | O(n) | O(n²) attention |
+| Long-range deps | Cell state gating | Direct attention |
+| Parallelisation | Sequential — slow | Fully parallel — fast |
+| Parameters | ~500K | Billions |
+| Seminal paper | Hochreiter & Schmidhuber (1997) | Vaswani et al. (2017) |
 
 <br/>
 
 ---
 
-<br/>
+## 🛠 Technology Stack
 
-## 🔐 Authentication Architecture
+### Frontend
 
-### OAuth 2.0 Flow — Step by Step
+| Technology | Version | Role |
+|---|---|---|
+| **Next.js** | 14.2 | React framework, App Router, SSR |
+| **TypeScript** | 5.4 | End-to-end type safety |
+| **Tailwind CSS** | 3.4 | JIT utility-first styling |
+| **NextAuth.js** | 4.24 | Google + GitHub OAuth |
+| **Zustand** | 4.5 | Zero-boilerplate global state |
+| **Recharts** | 2.x | Analytics dashboard charts |
+| **Lucide React** | 0.383 | Tree-shakeable icon system |
+| **jsPDF** | 2.x | Client-side PDF export |
+| **docx** | 8.x | DOCX generation |
 
-```
-Browser                    TextForge                Google/GitHub
-───────                    ─────────                ─────────────
-  │                            │                         │
-  │── Click "Sign in" ────────►│                         │
-  │                            │── Redirect to provider ►│
-  │◄─────────────── Redirect ──│                         │
-  │                            │                         │
-  │── User approves ──────────────────────────────────► │
-  │                            │                         │
-  │◄────────── Callback with authorization code ────────│
-  │                            │                         │
-  │── POST callback ──────────►│                         │
-  │                            │── Exchange code ───────►│
-  │                            │◄── Access token ────────│
-  │                            │                         │
-  │                            │   Create JWT session    │
-  │                            │   { id, email, provider}│
-  │◄── Set session cookie ─────│                         │
-  │                            │                         │
-  │── All API calls ──────────►│ x-user-id: "google-uid" │
-  │                            │                         │
-```
+### Backend
 
-### Per-User Data Isolation
+| Technology | Version | Role |
+|---|---|---|
+| **Node.js** | 18+ | Non-blocking I/O runtime |
+| **Express** | 4.19 | REST API framework |
+| **TypeScript** | 5.4 | Type safety across 15+ route files |
+| **@google/generative-ai** | 0.15 | Gemini SDK with streaming |
+| **Mongoose** | 8.4 | MongoDB ODM + aggregations |
+| **Zod** | 3.23 | Runtime validation + TypeScript inference |
+| **Helmet** | 7.1 | 11 HTTP security headers |
+| **express-rate-limit** | 7.3 | Per-IP sliding window protection |
 
-```typescript
-// Frontend: axios interceptor injects userId on every request
-client.interceptors.request.use((cfg) => {
-  if (currentUserId) cfg.headers["x-user-id"] = currentUserId;
-  return cfg;
-});
+### External Services
 
-// Backend: every query scoped by userId
-const query = { userId: req.header("x-user-id") };
-await Generation.find(query).sort({ createdAt: -1 });
-
-// Guest protection: no userId = empty response
-if (!filters.userId) {
-  return { items: [], total: 0, pages: 0, page, limit };
-}
-```
+| Service | Purpose | Cost |
+|---|---|---|
+| **Google Gemini 2.5 Flash** | AI generation | Free (1,500 req/day) |
+| **Semantic Scholar API** | Academic citations | Free, no key needed |
+| **CrossRef API** | Academic citations | Free, no key needed |
+| **MongoDB Atlas** | Database | Free (M0 512MB) |
+| **Vercel** | Frontend hosting | Free (hobby tier) |
+| **Railway** | Backend hosting | Free tier |
 
 <br/>
 
 ---
 
+## 📁 Project Structure
+
+```
+textforge-ai/
+│
+├── 📄 README.md
+├── 📄 LICENSE
+│
+├── 📁 backend/
+│   └── src/
+│       ├── index.ts                    ← Express server + all route registration
+│       ├── config/index.ts             ← Env validation, CORS regex, model config
+│       ├── models/
+│       │   ├── Generation.ts           ← Schema (citations, citationStyle, templateId)
+│       │   └── ApiKey.ts
+│       ├── services/
+│       │   ├── geminiService.ts        ← All prompt builders (domain, vernacular, humanise)
+│       │   ├── citationService.ts      ← Semantic Scholar + CrossRef + formatters
+│       │   └── historyService.ts       ← CRUD + 4 aggregation pipelines
+│       ├── routes/
+│       │   ├── generate.ts             ← /generate + /refine + /humanise
+│       │   ├── domain.ts               ← 6 domain templates
+│       │   ├── citations.ts            ← Academic citations with real APIs
+│       │   ├── vernacular.ts           ← 6 Indian language generation
+│       │   ├── history.ts              ← Paginated history
+│       │   ├── share.ts                ← Public share links
+│       │   ├── stats.ts                ← Analytics aggregations
+│       │   └── apiKeys.ts              ← Key management
+│       └── middleware/
+│           ├── rateLimiter.ts          ← Dual-layer sliding window
+│           ├── errorHandler.ts         ← Global boundary + AppError
+│           └── apiKeyAuth.ts           ← tf_live_ prefix validation
+│
+├── 📁 frontend/
+│   └── app/
+│       ├── page.tsx                    ← Landing page (animated hero, 8 feature cards)
+│       ├── workspace/page.tsx          ← Main app (sidebar + chat + refine + detection)
+│       ├── domain/
+│       │   ├── page.tsx                ← 3-step domain flow
+│       │   └── showcase/page.tsx       ← Pre-generated sample outputs
+│       ├── citations/page.tsx          ← Citations generator with highlighted output
+│       ├── vernacular/page.tsx         ← Bharat AI — 6 Indian languages
+│       ├── demo/page.tsx               ← Professor demo mode (6 steps, auto-play)
+│       ├── stats/page.tsx              ← Recharts analytics dashboard
+│       ├── history/page.tsx            ← Full history with search + filter
+│       └── api-keys/page.tsx           ← API key management
+│   └── components/
+│       ├── AIDetectionPanel.tsx        ← Risk score + dimension bars + humanise button
+│       ├── MadeBy.tsx                  ← Animated "Made with ❤️ by Tushar Tamrakar"
+│       ├── Navbar.tsx                  ← Context-aware navigation
+│       ├── PromptBuilder.tsx           ← Full panel + compact bottom-bar mode
+│       └── UserMenu.tsx                ← Avatar dropdown + userId injection
+│   └── lib/
+│       ├── aiDetector.ts               ← 5-dimension AI detection algorithm
+│       ├── domainTemplates.ts          ← 6 domain definitions (759 lines)
+│       ├── citationService.ts          ← Citation fetching + formatting
+│       ├── api.ts                      ← Axios client + x-user-id interceptor
+│       └── store.ts                    ← Zustand state management
+│
+└── 📁 notebook/
+    └── lstm_text_generation.ipynb      ← 13-cell PyTorch LSTM (upgraded v2.0)
+```
+
 <br/>
+
+---
 
 ## 🗄 Database Schema & Design
 
-### Generation Document
-
 ```typescript
 interface IGeneration {
-  // Identity
-  _id:          ObjectId;      // MongoDB auto-generated (BSON, 12 bytes)
-  userId?:      string;        // OAuth provider user ID — scopes all queries
-
-  // Content
-  topic:        string;        // 3–500 chars, trimmed, validated by Zod
-  tone:         Tone;          // "formal" | "casual" | "creative" | "academic"
-  length:       Length;        // "short" | "medium" | "long"
-  language:     string;        // "en" | "hi" | "es" | "fr" | "de" | "ja" | "ar" | "zh"
-  keywords:     string[];      // Up to 10 SEO terms
-  prompt:       string;        // Full engineered prompt (stored for transparency)
-  output:       string;        // Complete AI-generated text
-  wordCount:    number;        // Auto-calculated in pre-save Mongoose hook
-
-  // Metadata
-  modelName:    string;        // "gemini-2.5-flash" (allows future model comparison)
-  templateId?:  string;        // Which template was used
-  refinementOf?: string;       // Parent generation _id (refinement chain)
-
-  // Social
-  isFavourite:  boolean;       // User bookmark — default false, indexed
-  isShared:     boolean;       // Public share toggle
-
-  // Timestamps (Mongoose automatic)
-  createdAt:    Date;
-  updatedAt:    Date;
+  userId?:        string;    // OAuth provider UID — scopes ALL queries
+  topic:          string;    // 3-500 chars
+  tone:           Tone;      // formal | casual | creative | academic
+  length:         Length;    // short | medium | long
+  language:       string;    // en | hi | es | fr...
+  output:         string;    // Generated text
+  wordCount:      number;    // Pre-calculated in Mongoose hook
+  modelName:      string;    // gemini-2.5-flash (not "model" — Mongoose conflict)
+  templateId?:    string;    // domain_legal_nda | vernacular_hi | citation_apa
+  citations?:     any[];     // Full citation objects for cited generations
+  citationStyle?: string;    // apa | mla | ieee
+  citationCount?: number;    // Badge display in sidebar
+  isFavourite:    boolean;
+  isShared:       boolean;
+  createdAt:      Date;
 }
-```
 
-### Index Strategy
-
-```javascript
-// Index 1: Fast history queries (most common operation)
+// 3 compound indexes for common query patterns
 GenerationSchema.index({ createdAt: -1 });
-
-// Index 2: Per-user history (all authenticated queries)
 GenerationSchema.index({ userId: 1, createdAt: -1 });
-
-// Index 3: Starred filter (Favourites tab)
 GenerationSchema.index({ isFavourite: 1, createdAt: -1 });
-```
-
-### MongoDB Aggregation Pipelines — Stats Dashboard
-
-```javascript
-// 4 parallel aggregations — all run simultaneously via Promise.all()
-
-// Pipeline 1: Total counts
-db.generations.aggregate([
-  { $match: { userId } },
-  { $group: { _id: null,
-    count: { $sum: 1 },
-    words: { $sum: "$wordCount" },
-    favs:  { $sum: { $cond: ["$isFavourite", 1, 0] } }
-  }}
-]);
-
-// Pipeline 2: Tone breakdown (Pie chart)
-db.generations.aggregate([
-  { $match: { userId } },
-  { $group: { _id: "$tone", count: { $sum: 1 } } },
-  { $sort: { count: -1 } }
-]);
-
-// Pipeline 3: Language breakdown (Bar chart)
-db.generations.aggregate([
-  { $match: { userId } },
-  { $addFields: { lang: { $ifNull: ["$language", "en"] } } },
-  { $group: { _id: "$lang", count: { $sum: 1 } } }
-]);
-
-// Pipeline 4: 30-day activity (Line chart)
-db.generations.aggregate([
-  { $match: { userId, createdAt: { $gte: thirtyDaysAgo } } },
-  { $group: {
-    _id:   { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
-    count: { $sum: 1 },
-    words: { $sum: "$wordCount" }
-  }},
-  { $sort: { _id: 1 } }
-]);
 ```
 
 <br/>
 
 ---
 
-<br/>
-
 ## 🔐 Security Architecture
-
-### 7-Layer Defence in Depth
 
 ```
 Request arrives
      │
-     ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  Layer 1: Helmet.js                                             │
-│  X-Frame-Options: DENY (clickjacking)                          │
-│  X-Content-Type-Options: nosniff (MIME sniffing)               │
-│  Referrer-Policy: no-referrer                                  │
-│  Hides X-Powered-By: Express (fingerprinting)                  │
-└──────────────────────────────┬──────────────────────────────────┘
-                               │
-                               ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  Layer 2: CORS — Regex Pattern Matching                         │
-│  Allowed: /^https:\/\/textforge-.*\.vercel\.app$/              │
-│  Allowed: /^http:\/\/localhost:\d+$/                           │
-│  All other origins: 403 at preflight — never reaches routes    │
-└──────────────────────────────┬──────────────────────────────────┘
-                               │
-                               ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  Layer 3: Rate Limiting (express-rate-limit)                    │
-│  Global:   50 requests per 15 minutes per IP                   │
-│  Generate: 5 requests per 60 seconds per IP (AI protection)    │
-│  Response: 429 Too Many Requests with retryAfter header        │
-└──────────────────────────────┬──────────────────────────────────┘
-                               │
-                               ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  Layer 4: Zod Runtime Validation                                │
-│  topic: z.string().min(3).max(500).trim()                      │
-│  tone: z.enum(["formal","casual","creative","academic"])        │
-│  length: z.enum(["short","medium","long"])                     │
-│  Rejects malformed requests BEFORE touching AI or database     │
-└──────────────────────────────┬──────────────────────────────────┘
-                               │
-                               ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  Layer 5: Body Size Limiting                                    │
-│  express.json({ limit: "10kb" })                               │
-│  Mitigates memory exhaustion DoS attacks                       │
-└──────────────────────────────┬──────────────────────────────────┘
-                               │
-                               ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  Layer 6: Secret Management                                     │
-│  .env files — never in source control                          │
-│  .gitignore — GEMINI_API_KEY, MONGODB_URI, NEXTAUTH_SECRET     │
-│  .env.example — structure without values                       │
-└──────────────────────────────┬──────────────────────────────────┘
-                               │
-                               ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  Layer 7: Error Handler — Environment-aware responses          │
-│  Development: full stack trace in response body                │
-│  Production:  clean message only — internals never exposed     │
-└─────────────────────────────────────────────────────────────────┘
+     ▼  Helmet.js — 11 security headers (X-Frame, MIME sniff, fingerprint)
+     ▼  CORS — regex /^https:\/\/textforge-.*\.vercel\.app$/
+     ▼  Rate Limiting — 50/15min global · 5/min on AI endpoints
+     ▼  Zod Validation — rejects bad data before AI or database
+     ▼  Body Size — express.json({ limit: "10kb" })
+     ▼  Error Handler — stack traces only in development
+     ↓
+  Route Handler
 ```
 
 <br/>
 
 ---
-
-<br/>
 
 ## 📡 API Reference
 
 **Base URL:** `https://textforge-ai-production.up.railway.app`
 
-### Endpoints
-
-| Method | Endpoint | Auth | Rate Limit | Description |
-|---|---|---|---|---|
-| `POST` | `/api/generate` | Optional | 5/min | Stream text via SSE |
-| `POST` | `/api/generate/refine` | Optional | 5/min | Refine existing output |
-| `GET` | `/api/generate/preview` | — | — | Preview prompt only |
-| `GET` | `/api/history` | Required | 50/15min | Paginated history |
-| `GET` | `/api/history/:id` | Required | — | Single generation |
-| `DELETE` | `/api/history/:id` | Required | — | Delete generation |
-| `DELETE` | `/api/history` | Required | — | Clear all history |
-| `PATCH` | `/api/history/:id/favourite` | Required | — | Toggle star |
-| `PATCH` | `/api/history/:id/share` | Required | — | Toggle public share |
-| `GET` | `/api/share/:id` | Public | — | Read shared generation |
-| `GET` | `/api/stats` | Required | — | Analytics aggregations |
-| `GET` | `/api/keys` | API Key | — | List API keys |
-| `POST` | `/api/keys` | API Key | — | Create API key |
-| `DELETE` | `/api/keys/:id` | API Key | — | Revoke key |
-| `POST` | `/v1/generate` | API Key | 10/min | Public API generation |
-| `GET` | `/health` | — | — | Health check |
-
-### SSE Response Format
-
-```
-POST /api/generate
-Content-Type: application/json
-x-user-id: google-oauth-uid-123
-
-{
-  "topic": "The future of quantum computing",
-  "tone": "academic",
-  "length": "medium",
-  "language": "en",
-  "keywords": ["qubit", "superposition", "decoherence"]
-}
-
-── Response (text/event-stream) ──────────────────────────────
-data: {"text": "Quantum computing ", "done": false}
-data: {"text": "represents a paradigm ", "done": false}
-data: {"text": "shift in computational ", "done": false}
-...
-data: {"text": "", "done": true, "id": "667abc123def456789"}
-```
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/generate` | Stream text via SSE |
+| `POST` | `/api/generate/refine` | Refine existing output |
+| `POST` | `/api/generate/humanise` | Reduce AI detection score |
+| `POST` | `/api/domain/generate` | Domain template generation |
+| `POST` | `/api/citations/generate` | Generate with real citations |
+| `GET` | `/api/citations/search` | Search academic papers |
+| `POST` | `/api/vernacular/generate` | Indian language generation |
+| `GET` | `/api/history` | Paginated generation history |
+| `PATCH` | `/api/history/:id/favourite` | Toggle star |
+| `PATCH` | `/api/history/:id/share` | Toggle public share |
+| `GET` | `/api/share/:id` | Public share (no auth) |
+| `GET` | `/api/stats` | Analytics aggregations |
+| `POST` | `/v1/generate` | Public API (API key auth) |
+| `GET` | `/health` | Health check |
 
 <br/>
 
 ---
-
-<br/>
-
-## 🎨 Design System
-
-### Spiced Chai — Color Palette
-
-```
-Dark Mode                          Light Mode
-──────────────────────────────     ──────────────────────────────
---bg-base:  #1A1208  (deepest)     --bg-base:  #FFFDF5
---bg-1:     #221A0F  (cards)       --bg-1:     #FDF8EC
---bg-2:     #2C2014  (inputs)      --bg-2:     #FAF2DC
---bg-3:     #3A2C1C  (hover)       --bg-3:     #F5E8C8
---brand:    #D47E30  (accent)      --brand:    #D47E30  (same)
---text-1:   #FDFBD4  (primary)     --text-1:   #2C1E0F
---text-2:   #C4A882  (secondary)   --text-2:   #6B4E2A
---text-3:   #7A6548  (muted)       --text-3:   #9B7A50
---border:   rgba(212,126,48,0.18)  --border:   rgba(141,90,43,0.15)
-```
-
-### Typography Hierarchy
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Plus Jakarta Sans  →  All UI chrome                        │
-│  (weights: 300, 400, 500, 600, 700)                        │
-│  Navigation · Buttons · Labels · Body text                  │
-├─────────────────────────────────────────────────────────────┤
-│  Lora Serif  →  Generated output text                       │
-│  (400 regular, 400 italic)                                  │
-│  The AI-generated content — editorial, considered feel      │
-├─────────────────────────────────────────────────────────────┤
-│  JetBrains Mono  →  Code & labels                           │
-│  (400, 500)                                                 │
-│  Timestamps · Word counts · API labels · Tagline            │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Anti-Flash Theme Initialisation
-
-```html
-<!-- In layout.tsx — runs BEFORE React hydration -->
-<!-- Prevents white flash on dark mode preference -->
-<script dangerouslySetInnerHTML={{ __html: `
-  (function(){
-    var t = localStorage.getItem('tf-theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', t);
-  })();
-`}} />
-```
-
-<br/>
-
----
-
-<br/>
 
 ## 🚀 Quick Start
 
-### Prerequisites
-
 ```bash
-node --version   # >= 18.0.0
-npm --version    # >= 9.0.0
-git --version    # any
-```
-
-### 1. Clone
-
-```bash
+# 1. Clone
 git clone https://github.com/TUSHARTAMRAKAR/textforge-ai.git
 cd textforge-ai
-```
 
-### 2. Backend Setup
-
-```bash
-cd backend
-npm install
+# 2. Backend
+cd backend && npm install
 cp .env.example .env
+# Fill: GEMINI_API_KEY, MONGODB_URI
+npm run dev  # http://localhost:5000/health
 
-# Edit .env — fill in:
-# GEMINI_API_KEY  →  aistudio.google.com (free, no card)
-# MONGODB_URI     →  mongodb.com/atlas (free M0 tier)
-
-npm run dev
-# ✅ http://localhost:5000/health
-```
-
-### 3. Frontend Setup
-
-```bash
-# New terminal
-cd frontend
-npm install
+# 3. Frontend (new terminal)
+cd frontend && npm install
 cp .env.local.example .env.local
+# Fill: OAuth credentials, NEXTAUTH_SECRET
+npm run dev  # http://localhost:3000
 
-# Edit .env.local — fill in OAuth credentials
-# See Environment Variables section below
-
-npm run dev
-# ✅ http://localhost:3000
-```
-
-### 4. LSTM Notebook (Optional)
-
-```bash
+# 4. LSTM Notebook (optional)
 cd notebook
-pip install -r requirements.txt
+pip install torch numpy matplotlib tqdm
 jupyter notebook lstm_text_generation.ipynb
-
-# Or upload to Google Colab for free GPU acceleration
-# Runtime → Change runtime type → T4 GPU
+# Or open in Google Colab (free T4 GPU)
 ```
 
 <br/>
 
 ---
-
-<br/>
 
 ## 🔧 Environment Variables
 
-### Backend — `backend/.env`
+### Backend `.env`
 
 ```env
-# ── Server ──────────────────────────────────────────────────
 PORT=5000
 NODE_ENV=development
-
-# ── Google Gemini ────────────────────────────────────────────
-# Get free at: aistudio.google.com/app/apikey
-# Free tier: 1,500 req/day · 1M tokens/min · No credit card
-GEMINI_API_KEY=your_gemini_api_key_here
-
-# ── MongoDB Atlas ────────────────────────────────────────────
-# Get free at: mongodb.com/atlas (M0 tier — 512MB forever free)
-# Format: mongodb+srv://user:password@cluster.host/dbname?options
-MONGODB_URI=mongodb+srv://username:password@cluster.host/textforge?retryWrites=true&w=majority
-
-# ── CORS ─────────────────────────────────────────────────────
-# Comma-separated — supports multiple origins
+GEMINI_API_KEY=your_gemini_key        # aistudio.google.com — free
+MONGODB_URI=mongodb+srv://...         # mongodb.com/atlas — free M0
 CLIENT_URL=http://localhost:3000
-
-# ── Rate Limiting ────────────────────────────────────────────
-RATE_LIMIT_WINDOW_MS=900000      # 15 minutes
-RATE_LIMIT_MAX_REQUESTS=50       # per window per IP
+GEMINI_MODEL=gemini-1.5-flash         # 1,500 req/day free
 ```
 
-### Frontend — `frontend/.env.local`
+### Frontend `.env.local`
 
 ```env
-# ── API ──────────────────────────────────────────────────────
 NEXT_PUBLIC_API_URL=http://localhost:5000
-
-# ── NextAuth ─────────────────────────────────────────────────
-# Generate secret: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
-NEXTAUTH_SECRET=your_32_byte_random_hex_secret
+NEXTAUTH_SECRET=your_32_byte_hex_secret
 NEXTAUTH_URL=http://localhost:3000
-
-# ── Google OAuth ─────────────────────────────────────────────
-# console.cloud.google.com → APIs & Services → Credentials
-# Authorised redirect URI: http://localhost:3000/api/auth/callback/google
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-
-# ── GitHub OAuth ─────────────────────────────────────────────
-# github.com/settings/developers → OAuth Apps → New OAuth App
-# Callback URL: http://localhost:3000/api/auth/callback/github
-GITHUB_CLIENT_ID=your_github_client_id
-GITHUB_CLIENT_SECRET=your_github_client_secret
-
-# ── Feature Flags ────────────────────────────────────────────
-NEXT_PUBLIC_AUTH_ENABLED=true
-NEXT_PUBLIC_PUBLIC_API_ENABLED=true
+GOOGLE_CLIENT_ID=...                  # console.cloud.google.com
+GOOGLE_CLIENT_SECRET=...
+GITHUB_CLIENT_ID=...                  # github.com/settings/developers
+GITHUB_CLIENT_SECRET=...
 ```
 
 <br/>
 
 ---
-
-<br/>
 
 ## ☁️ Deployment Guide
 
 ### Frontend → Vercel
-
 ```
-1. vercel.com → Import Git Repository → textforge-ai
-2. Root Directory: frontend
-3. Framework: Next.js (auto-detected)
-4. Add all environment variables (use production URLs)
-5. Deploy
+1. Import repo → Root: frontend → Framework: Next.js
+2. Add all env vars (production URLs)
+3. Deploy
 
-Important rules for Vercel:
-  ✅ next.config.js must have typescript: { ignoreBuildErrors: true }
-  ✅ Route handlers export ONLY { GET, POST } — no other named exports
-  ✅ NEXTAUTH_URL must match the exact domain users visit
+Rules:
+✅ next.config.js: typescript.ignoreBuildErrors: true
+✅ Route handlers export ONLY { GET, POST }
+✅ NEXTAUTH_URL must match exact domain
 ```
 
 ### Backend → Railway
-
 ```
-1. railway.app → Deploy from GitHub → textforge-ai
-2. Root Directory: /backend
-3. Custom Build Command: npm run build   (uses tsc --skipLibCheck)
-4. Custom Start Command: npm start       (runs node dist/index.js)
-5. Healthcheck Path: /health
-6. Add all 7 environment variables
-7. Generate Domain in Networking settings
+1. Deploy from GitHub → Root: /backend
+2. Build: npm run build  (tsc --skipLibCheck)
+3. Start: npm start      (node dist/index.js)
+4. Health: /health
 
-Important rules for Railway:
-  ✅ typescript must be in dependencies (not devDependencies)
-  ✅ tsconfig must have skipLibCheck: true
-  ✅ No field named "model" in Mongoose schema (conflicts with Document.model())
-  ✅ CLIENT_URL supports regex — all *.vercel.app origins allowed
+Rules:
+✅ typescript in dependencies (not devDependencies)
+✅ tsconfig: skipLibCheck: true
+✅ No "model" field in Mongoose schema (conflicts with Document.model())
+✅ CORS regex allows all *.vercel.app preview URLs
 ```
 
 <br/>
 
 ---
-
-<br/>
 
 ## 🗺 Roadmap
 
-### ✅ Version 1.0 — Foundation
-- [x] Next.js 14 frontend with App Router
-- [x] Express + TypeScript backend
-- [x] MongoDB Atlas integration
-- [x] Gemini 2.5 Flash SSE streaming
-- [x] PyTorch LSTM notebook
+### ✅ v1.0 — Foundation
+- Next.js 14 frontend · Express backend · MongoDB Atlas
+- Gemini SSE streaming · PyTorch LSTM notebook
+- OAuth · History · Export · Stats · Public API
 
-### ✅ Version 1.1 — Production Release
-- [x] Google + GitHub OAuth (NextAuth v4)
-- [x] Per-user data isolation
-- [x] Claude-style workspace UI
-- [x] 8 templates · 8 languages · SEO keywords
-- [x] Favourites · Search · Filter · Share · Export
-- [x] Stats dashboard (Recharts)
-- [x] Public API with key management
-- [x] Vercel + Railway deployment
-- [x] CORS regex for all Vercel preview URLs
+### ✅ v2.0 — Production Platform *(Current)*
+- Deep Domain Templates (6 domains · 70+ params)
+- AI Detection + Humaniser (5-dimension algorithm)
+- Academic Citations (Semantic Scholar + CrossRef)
+- Bharat AI (6 Indian languages + cultural profiles)
+- Professor Demo Mode (/demo auto-play)
+- Landing page upgrade (8 feature cards)
+- LSTM notebook upgraded (13 cells, v2.0 docs)
 
-### 🔄 Version 1.2 — Enhancement
-- [ ] Refinement chain UI (version history per topic)
-- [ ] Bulk generation mode
-- [ ] Collaborative share with edit permissions
-
-### 📋 Version 1.3 — Future
-- [ ] **UI Internationalisation (i18n)** — Full interface translation via `next-intl`. Note: AI content generation in 8 languages already works via Gemini prompt injection. This covers UI strings.
-- [ ] Mobile application (React Native)
-- [ ] Browser extension for one-click generation
-- [ ] Fine-tuned domain-specific models
+### 📋 v2.1 — Enhancement
+- Multi-model comparison (Gemini vs GPT vs Claude)
+- Writing Coach — improve YOUR writing, not replace it
+- Mobile application (React Native)
 
 <br/>
 
 ---
-
-<br/>
 
 ## 🤝 Contributing
 
 ```bash
-# 1. Fork on GitHub
-
-# 2. Clone your fork
-git clone https://github.com/YOUR_USERNAME/textforge-ai.git
-
-# 3. Create a feature branch (conventional naming)
-git checkout -b feat/your-feature-name
-git checkout -b fix/bug-description
-git checkout -b docs/documentation-update
-
-# 4. Make changes and commit (conventional commits)
-git commit -m "feat: add export to PDF functionality"
-git commit -m "fix: resolve CORS issue on Railway deployment"
-git commit -m "docs: update API reference with new endpoints"
-
-# Types: feat · fix · docs · style · refactor · perf · test · chore
-
-# 5. Push and open a Pull Request
-git push origin feat/your-feature-name
+git clone https://github.com/TUSHARTAMRAKAR/textforge-ai.git
+git checkout -b feat/your-feature
+git commit -m "feat: your feature description"
+git push origin feat/your-feature
+# Open Pull Request
 ```
+
+Commit types: `feat` · `fix` · `docs` · `refactor` · `perf` · `test`
 
 <br/>
 
 ---
-
-<br/>
 
 ## 📄 License
 
-Distributed under the **MIT License**.
-
-```
 MIT License — Free to use, modify, and distribute.
 Copyright (c) 2026 Tushar Tamrakar
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files, to deal
-in the Software without restriction — including the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software.
-```
-
-See [LICENSE](LICENSE) for the complete text.
 
 <br/>
 
 ---
-
-<br/>
 
 <div align="center">
 
@@ -1438,7 +889,6 @@ See [LICENSE](LICENSE) for the complete text.
 ╔═══════════════════════════════════════════════════════════════════╗
 ║                                                                   ║
 ║    "A notebook would have been sufficient to pass.               ║
-║                                                                   ║
 ║     TextForge AI is what happens when a developer               ║
 ║     refuses to do the minimum."                                  ║
 ║                                                                   ║
@@ -1451,114 +901,38 @@ See [LICENSE](LICENSE) for the complete text.
 
 <br/>
 
-**TextForge AI** — *Forge Your Text With AI*
+### 👨‍💻 About The Developer
+
+<br/>
+
+<a href="https://github.com/TUSHARTAMRAKAR">
+  <img src="https://github.com/TUSHARTAMRAKAR.png" width="80" height="80" style="border-radius:50%" alt="Tushar Tamrakar"/>
+</a>
+
+<br/><br/>
+
+**Made with ❤️ by [Tushar Tamrakar](https://github.com/TUSHARTAMRAKAR)**
+
+*B.Tech Student · Full-Stack Developer · AI Engineer*
+
+<br/>
+
+[![GitHub](https://img.shields.io/badge/GitHub-TUSHARTAMRAKAR-181717?style=flat-square&logo=github)](https://github.com/TUSHARTAMRAKAR)
+&nbsp;
+[![Live App](https://img.shields.io/badge/Live-TextForge%20AI-D47E30?style=flat-square)](https://textforge-ai-sable.vercel.app)
+&nbsp;
+[![Demo](https://img.shields.io/badge/Demo-Professor%20Mode-7C3AED?style=flat-square)](https://textforge-ai-sable.vercel.app/demo)
 
 <br/>
 
 [![Star on GitHub](https://img.shields.io/github/stars/TUSHARTAMRAKAR/textforge-ai?style=social)](https://github.com/TUSHARTAMRAKAR/textforge-ai)
-&nbsp;&nbsp;
-[![Live Demo](https://img.shields.io/badge/Live-Demo-D47E30?style=flat-square)](https://textforge-ai-sable.vercel.app)
 
-<br/>
-
----
-
-<br/>
-
-## 👨‍💻 About The Developer
-
-<br/>
-
-<div align="center">
-
-<img src="https://github.com/TUSHARTAMRAKAR.png" width="120" height="120" style="border-radius: 50%;" alt="Tushar Tamrakar"/>
-
-<br/>
-<br/>
-
-<!-- Animated name -->
-<img src="https://readme-typing-svg.demolab.com?font=Georgia&size=28&duration=3000&pause=1000&color=D47E30&center=true&vCenter=true&width=500&lines=Tushar+Tamrakar;Full-Stack+Developer;AI+%2F+ML+Enthusiast;Building+Real+Things" alt="Tushar Tamrakar"/>
-
-<br/>
-<br/>
-
-<p align="center">
-  <em>Computer Science Student · Full-Stack Developer · AI / ML Enthusiast</em><br/>
-  <em>Building production-grade applications from college assignments</em>
-</p>
-
-<br/>
-
-<p align="center">
-  <a href="https://github.com/TUSHARTAMRAKAR">
-    <img src="https://img.shields.io/badge/GitHub-TUSHARTAMRAKAR-181717?style=for-the-badge&logo=github&logoColor=white"/>
-  </a>
-</p>
-
-<br/>
-
-<p align="center">
-  &nbsp;&nbsp;
-</p>
-
-<br/>
-
-</div>
-
----
-
-<br/>
-
-<div align="center">
-
-<!-- Animated footer -->
-<img src="https://readme-typing-svg.demolab.com?font=Courier+New&size=14&duration=4000&pause=2000&color=D47E30&center=true&vCenter=true&width=600&lines=forge+your+text+with+ai+%E2%97%88;production-grade+%C2%B7+full-stack+%C2%B7+open-source;built+with+%F0%9F%94%A5+by+a+developer+who+refused+to+submit+just+a+notebook" alt="Footer tagline"/>
-
-<br/>
-<br/>
-
-**TextForge AI** — *Forge Your Text With AI*
-
-<br/>
-
-[![Star on GitHub](https://img.shields.io/github/stars/TUSHARTAMRAKAR/textforge-ai?style=social)](https://github.com/TUSHARTAMRAKAR/textforge-ai)
-&nbsp;&nbsp;
-[![Live Demo](https://img.shields.io/badge/Live-Demo-D47E30?style=flat-square)](https://textforge-ai-sable.vercel.app)
-
-<br/>
 <br/>
 
 *If this project helped you, consider giving it a ⭐ on GitHub*
 
 <br/>
 
----
-
-### 👨‍💻 About The Developer
-
-<br/>
-
-<a href="https://github.com/TUSHARTAMRAKAR">
-  <img src="https://github.com/TUSHARTAMRAKAR.png" width="80" height="80" alt="Tushar Tamrakar"/>
-</a>
-
-<br/>
-<br/>
-
-**Made with ❤️ by [Tushar Tamrakar](https://github.com/TUSHARTAMRAKAR)**
-
-*Full-Stack Developer · AI Enthusiast*
-
-<br/>
-
-[![GitHub](https://img.shields.io/badge/GitHub-TUSHARTAMRAKAR-181717?style=flat-square&logo=github)](https://github.com/TUSHARTAMRAKAR)
-&nbsp;
-[![Live Demo](https://img.shields.io/badge/Live-TextForge%20AI-D47E30?style=flat-square)](https://textforge-ai-sable.vercel.app)
-
-<br/>
-
-&nbsp;
-
-<br/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=D47E30&height=100&section=footer" width="100%"/>
 
 </div>
