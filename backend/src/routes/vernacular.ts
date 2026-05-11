@@ -38,12 +38,12 @@ router.post("/generate", generateLimiter, async (req: Request, res: Response, ne
         topic:      `[${language.toUpperCase()}] ${topic}`,
         tone,
         length,
-        language,
+        language:   "en",   // MongoDB text index only supports standard language codes
         prompt,
         output:     fullOutput,
         modelName:  config.gemini.model,
         userId:     userIdFromReq(req),
-        templateId: `vernacular_${language}`,
+        templateId: `vernacular_${language}`,  // actual language stored here
       });
 
       if (!res.writableEnded) {
