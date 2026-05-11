@@ -21,6 +21,13 @@ import { exportPDF, exportDOCX, exportMarkdown } from "@/lib/exporters";
 import { LANGUAGES } from "@/lib/languages";
 import { setApiUserId } from "@/lib/api";
 
+const REFINE_ACTIONS = [
+  { id: "shorter",    label: "Shorter",     instruction: "Make this text noticeably shorter while keeping the key ideas." },
+  { id: "longer",     label: "Longer",      instruction: "Expand this text with more detail, examples, and supporting points." },
+  { id: "formal",     label: "More formal", instruction: "Rewrite in a more formal, professional tone." },
+  { id: "simpler",    label: "Simpler",     instruction: "Rewrite in simpler language a 12-year-old could understand." },
+];
+
 const TONE_COLORS: Record<string, string> = {
   formal:   "#7EB8E8",
   casual:   "#5EC49A",
@@ -582,8 +589,90 @@ function MessageBubble({ message, index, totalCount }: { message: ChatMessage; i
         <p className="generation-output">{message.output}</p>
       </div>
 
-      {/* AI Detection Panel */}
-      <AIDetectionPanel text={message.output} />
+      {/* Refine buttons — only on the most recent bubble */}
+      {index === totalCount - 1 && (
+        <RefineBar message={message} />
+      )}
+
+      {/* AI Detection Panel — below refine with spacing */}
+      <div style={{ marginTop: "8px" }}>
+        <AIDetectionPanel text={message.output} />
+      </div>
+    </div>
+  );
+}
+
+/* ── Refine bar ─────────────────────────────────────────────── */
+function RefineBar({ message }: { message: ChatMessage }) {
+  const [refining, setRefining] = useState<string | null>(null);
+  const {
+    topic, tone, length, language,
+    appendOutput, setIsStreaming, setIsDone,
+    setError, setSavedId, resetOutput,
+  } = useGenerateStore();
+
+  const handleRefine = async (action: typeof REFINE_ACTIONS[number]) => {
+    if (!message.output || !message.savedId) return;
+    setRefining(action.id);
+    resetOutput();
+    setIsStreaming(true);
+    try {
+      await api.postRefine(
+        {
+          originalText: message.output,
+          instruction:  action.instruction,
+          topic:        message.topic,
+          tone:         message.tone as any,
+          length:       message.length as any,
+          language:     message.language as any,
+          refinementOf: message.savedId,
+        },
+        (text) => appendOutput(text),
+        (newId) => {
+          setIsStreaming(false);
+          setIsDone(true);
+          if (newId) setSavedId(newId);
+          toast.success(`Refined: ${action.label}`);
+          setRefining(null);
+        },
+        (err) => {
+          setIsStreaming(false);
+          setError(err);
+          toast.error(err);
+          setRefining(null);
+        }
+      );
+    } catch (e: any) {
+      setIsStreaming(false);
+      toast.error(e?.message || "Refine failed");
+      setRefining(null);
+    }
+  };
+
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", paddingTop: "4px" }}>
+      <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--text-4)", letterSpacing: "0.06em" }}>
+        ✦ REFINE
+      </span>
+      {REFINE_ACTIONS.map((action) => (
+        <button key={action.id}
+          onClick={() => handleRefine(action)}
+          disabled={!!refining}
+          style={{
+            padding: "6px 14px", borderRadius: "99px",
+            background: "var(--bg-2)", border: "1px solid var(--border)",
+            cursor: refining ? "not-allowed" : "pointer",
+            color: refining === action.id ? "var(--brand)" : "var(--text-2)",
+            fontFamily: "var(--font-sans)", fontSize: "13px",
+            transition: "all 0.12s",
+            opacity: refining && refining !== action.id ? 0.5 : 1,
+          }}
+          onMouseEnter={(e) => { if (!refining) { (e.currentTarget as HTMLElement).style.borderColor = "var(--border-hover)"; (e.currentTarget as HTMLElement).style.color = "var(--text-1)"; }}}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; (e.currentTarget as HTMLElement).style.color = "var(--text-2)"; }}
+        >
+          {refining === action.id ? "⏳ Refining…" : action.label}
+        </button>
+      ))}
     </div>
   );
 }
