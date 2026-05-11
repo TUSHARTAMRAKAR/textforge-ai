@@ -596,7 +596,7 @@ function MessageBubble({ message, index, totalCount }: { message: ChatMessage; i
 
       {/* AI Detection Panel — below refine with spacing */}
       <div style={{ marginTop: "8px" }}>
-        <AIDetectionPanel text={message.output} />
+        <AIDetectionPanel text={message.output} tone={message.tone} topic={message.topic} />
       </div>
     </div>
   );

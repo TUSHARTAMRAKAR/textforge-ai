@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { generateTextStream, buildPrompt, buildRefinementPrompt } from "../services/geminiService";
+import { generateTextStream, generateText, buildPrompt, buildRefinementPrompt, buildHumanisePrompt } from "../services/geminiService";
 import { saveGeneration } from "../services/historyService";
 import { generateLimiter } from "../middleware/rateLimiter";
 import { createError } from "../middleware/errorHandler";
@@ -103,6 +103,61 @@ router.get("/preview", async (req: Request, res: Response, next: NextFunction) =
       length: length as any, language: language as any, keywords,
     });
     res.json({ success: true, prompt });
+  } catch (error) { next(error); }
+});
+
+// POST /api/generate/humanise
+router.post("/humanise", generateLimiter, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { text, tone, topic } = req.body;
+    if (!text || text.length < 50) return next(createError("Text too short to humanise", 400));
+
+    const prompt = buildHumanisePrompt({ text, tone: tone || "formal", topic: topic || "general" });
+
+    // Set SSE headers
+    res.setHeader("Content-Type",      "text/event-stream");
+    res.setHeader("Cache-Control",     "no-cache");
+    res.setHeader("Connection",        "keep-alive");
+    res.setHeader("X-Accel-Buffering", "no");
+
+    // Use generateText (non-streaming) to avoid parse errors on rewrites
+    const fullOutput = await generateText(prompt);
+
+    if (!fullOutput) {
+      res.write(`data: ${JSON.stringify({ error: "Humanise failed", done: true })}
+
+`);
+      res.end();
+      return;
+    }
+
+    // Stream the result in chunks manually for UI compatibility
+    const words  = fullOutput.split(" ");
+    const chunkSize = 5;
+    for (let i = 0; i < words.length; i += chunkSize) {
+      const chunk = words.slice(i, i + chunkSize).join(" ") + (i + chunkSize < words.length ? " " : "");
+      res.write(`data: ${JSON.stringify({ text: chunk, done: false })}
+
+`);
+    }
+
+    // Save to MongoDB
+    const saved = await saveGeneration({
+      topic:     `[HUMANISED] ${topic || "text"}`,
+      tone:      tone || "formal",
+      length:    "medium",
+      language:  "en",
+      prompt,
+      output:    fullOutput,
+      modelName: config.gemini.model,
+      userId:    userIdFromReq(req),
+    });
+
+    res.write(`data: ${JSON.stringify({ id: String(saved._id), done: true })}
+
+`);
+    res.end();
+
   } catch (error) { next(error); }
 });
 

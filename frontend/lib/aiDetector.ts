@@ -86,6 +86,43 @@ const AI_PHRASES = [
   "cutting-edge",
   "state-of-the-art",
   "paradigm shift",
+  // Gemini-specific patterns
+  "it's worth",
+  "stands as",
+  "serves as",
+  "remains a",
+  "continues to",
+  "plays a key",
+  "key role",
+  "significant role",
+  "crucial role",
+  "vital role",
+  "important role",
+  "shaping the",
+  "landscape of",
+  "in the realm of",
+  "across the globe",
+  "around the world",
+  "throughout history",
+  "over the centuries",
+  "has long been",
+  "have long been",
+  "it is no surprise",
+  "it comes as no surprise",
+  "the importance of",
+  "the significance of",
+  "the impact of",
+  "a wide range of",
+  "a variety of",
+  "a number of",
+  "a wealth of",
+  "the ability to",
+  "the potential to",
+  "the opportunity to",
+  "ensuring that",
+  "allowing for",
+  "resulting in",
+  "leading to",
 ];
 
 // ── Tokenise text into sentences ─────────────────────────────
@@ -178,7 +215,7 @@ function measureAIPhraseDensity(text: string, wordCount: number): number {
   const density = (hits / wordCount) * 100;
 
   // density > 3 = very AI-like, density < 0.5 = human-like
-  const score = Math.min(100, Math.round(density * 25));
+  const score = Math.min(100, Math.round(density * 35));  // more sensitive
   return score;
 }
 
@@ -248,9 +285,9 @@ export function detectAI(text: string): DetectionResult {
   // Weighted overall score
   // AI phrases and burstiness are most reliable signals
   const overallScore = Math.round(
-    burstinessScore    * 0.30 +  // 30% weight — most reliable
-    aiPhraseScore      * 0.30 +  // 30% weight — very reliable
-    vocabularyScore    * 0.20 +  // 20% weight
+    burstinessScore    * 0.25 +  // 25% weight
+    aiPhraseScore      * 0.40 +  // 40% weight — Gemini overuses these heavily
+    vocabularyScore    * 0.15 +  // 15% weight
     sentenceStartScore * 0.10 +  // 10% weight
     punctuationScore   * 0.10    // 10% weight
   );

@@ -437,3 +437,43 @@ HR WRITING STANDARDS:
 
 Generate the complete document now:`;
 }
+
+// ─────────────────────────────────────────────────────────────
+//  HUMANISE PROMPT BUILDER
+//  Takes AI-generated text and rewrites it to sound more human.
+//  Targets the exact patterns our detector measures.
+// ─────────────────────────────────────────────────────────────
+
+export interface HumaniseOptions {
+  text:     string;
+  tone:     string;
+  topic:    string;
+}
+
+export function buildHumanisePrompt({ text, tone, topic }: HumaniseOptions): string {
+  return `You are an expert editor who specialises in making AI-generated text sound authentically human-written.
+
+Rewrite the following text about "${topic}" to sound more natural and human. Apply these specific techniques:
+
+HUMANISATION TECHNIQUES:
+1. VARY sentence lengths dramatically — mix very short sentences with longer ones. "This matters. A lot." followed by a complex sentence.
+2. REMOVE these AI phrases completely: "furthermore", "moreover", "in conclusion", "it is worth noting", "it is important to note", "delve into", "tapestry", "nuanced", "multifaceted", "a testament to", "in today's world"
+3. ADD natural human imperfections — occasional rhetorical questions, direct address ("think about it"), conversational asides
+4. VARY sentence openings — don't start multiple sentences with "The" or "This"
+5. USE contractions where appropriate for ${tone} tone — "it's", "that's", "isn't"
+6. REPLACE generic adjectives with specific, unexpected ones
+7. ADD one concrete example or analogy that a human would naturally reach for
+8. REDUCE comma usage — break long comma-separated lists into separate sentences
+
+CRITICAL RULES:
+- Preserve ALL the factual information and meaning
+- Keep the same approximate length (within 10%)
+- Maintain ${tone} tone throughout
+- Do NOT add new facts that weren't in the original
+- Output ONLY the rewritten text — no preamble, no explanation
+
+ORIGINAL TEXT TO HUMANISE:
+${text}
+
+REWRITTEN VERSION:`;
+}

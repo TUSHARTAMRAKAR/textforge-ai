@@ -157,6 +157,16 @@ export const api = {
     return streamSSE(`${BASE_URL}/api/generate/refine`, options, onChunk, onDone, onError);
   },
 
+  // Humanise text — reduce AI detection score
+  async postHumanise(
+    options: { text: string; tone: string; topic: string },
+    onChunk: (text: string) => void,
+    onDone: (savedId?: string) => void,
+    onError: (err: string) => void
+  ): Promise<void> {
+    return streamSSE(`${BASE_URL}/api/generate/humanise`, options, onChunk, onDone, onError);
+  },
+
   // Deep Domain Template generation
   async postDomainGenerate(
     options: { domain: string; outputType: string; fields: Record<string, string> },
